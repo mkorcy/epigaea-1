@@ -28,13 +28,13 @@
                     "notifications": [
                         {
                             "notification_type": "email",
-                            "name": "Hyrax::Workflow::DepositedNotification",
+                            "name": "Hyrax::Workflow::ReviewedNotification",
                             "to": ["approving"]
                         }
                     ],
                     "methods": [
                         "Hyrax::Workflow::GrantReadToDepositor",
-                        "Hyrax::Workflow::ActivateObject"
+                        "Hyrax::Workflow::DeactivateObject"
                     ]
                 }, {
                     "name": "publish",
@@ -43,7 +43,7 @@
                     "notifications": [
                         {
                             "notification_type": "email",
-                            "name": "Hyrax::Workflow::DepositedNotification",
+                            "name": "Hyrax::Workflow::PublishedNotification",
                             "to": ["approving"]
                         }
                     ],
@@ -53,7 +53,7 @@
                     ]
                 }, {
                     "name": "request_changes",
-                    "from_states": [{"names": ["published", "pending_review"], "roles": ["approving"]}],
+                    "from_states": [{"names": ["published", "pending_review", "reviewed"], "roles": ["approving"]}],
                     "transition_to": "changes_required",
                     "notifications": [
                         {
@@ -86,6 +86,13 @@
                     "from_states": [
                         { "names": ["pending_review", "published", "changes_required"], "roles": ["approving"] },
                         { "names": ["changes_required"], "roles": ["depositing"] }
+                    ],
+                    "notifications": [
+                        {
+                            "notification_type": "email",
+                            "name": "Hyrax::Workflow::CommentNotification",
+                            "to": ["approving"]
+                        }
                     ]
                 }
             ]
