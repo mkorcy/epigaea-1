@@ -38,3 +38,5 @@ coverage
 .env.production
 
 config/initializers/explain_partials.rb
+
+public/assets/
