@@ -479,6 +479,7 @@ GEM
       slop
     legato (0.7.0)
       multi_json
+    libv8 (3.16.14.19)
     link_header (0.0.8)
     linkeddata (2.2.3)
       equivalent-xml (~> 0.6)
@@ -563,6 +564,9 @@ GEM
     parser (2.4.0.0)
       ast (~> 2.2)
     parslet (1.8.0)
+    passenger (5.1.12)
+      rack
+      rake (>= 0.8.1)
     poltergeist (1.15.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -701,6 +705,7 @@ GEM
       redis (>= 2.2, < 5)
     redlock (0.2.1)
       redis (>= 3.0.0, < 5.0)
+    ref (2.0.0)
     representable (3.0.4)
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
@@ -840,6 +845,9 @@ GEM
     temple (0.8.0)
     term-ansicolor (1.6.0)
       tins (~> 1.0)
+    therubyracer (0.12.3)
+      libv8 (~> 3.16.14.15)
+      ref
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.8)
@@ -909,6 +917,7 @@ DEPENDENCIES
   mysql2
   nokogiri (>= 1.8.2)
   okcomputer
+  passenger
   poltergeist
   puma (~> 3.0)
   rack-protection (~> 2.0.1)
@@ -928,6 +937,7 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3
+  therubyracer
   tufts-curation!
   turbolinks (~> 5)
   tzinfo-data
