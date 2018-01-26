@@ -40,3 +40,13 @@ coverage
 config/initializers/explain_partials.rb
 
 public/assets/
+
+# ignore config files
+config/blacklight.yml
+config/database.yml
+config/fedora.yml
+config/redis.yml
+config/secrets.yml
+config/solr.yml
+config/devise.yml
+
