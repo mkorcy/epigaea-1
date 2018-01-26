@@ -8,6 +8,13 @@ jdk:
 rvm:
   - 2.3.4
 before_script:
+  - cp config/fedora.yml.sample config/fedora.yml
+  - cp config/solr.yml.sample config/solr.yml
+  - cp config/devise.yml.sample config/devise.yml
+  - cp config/redis.yml.sample config/redis.yml
+  - cp config/database.yml.sample config/database.yml
+  - cp config/blacklight.yml.sample config/blacklight.yml
+  - cp config/secrets.yml.sample config/secrets.yml
   - bundle exec sidekiq -d -l /tmp/sidekiq.log
   - bundle exec rake db:create
 script:
