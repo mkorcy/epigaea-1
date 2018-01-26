@@ -79,6 +79,11 @@ gem 'rsolr', '>= 1.0'
 gem 'sanitize', '~> 4.6', '>= 4.6.3'
 gem 'sidekiq'
 
+group :production do
+  gem 'therubyracer'
+  gem 'passenger'
+end
+
 group :development, :test do
   gem 'bixby'
   gem 'capybara'
