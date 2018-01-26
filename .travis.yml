@@ -20,4 +20,5 @@ addons:
 services:
   - redis-server
 notifications:
-  email: false
+  email:
+    - tdl-commiters@googlegroups.com
