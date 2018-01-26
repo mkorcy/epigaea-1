@@ -15,8 +15,8 @@ Devise.setup do |config|
   config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
 
   # keep secret key in yml config
-  yaml_config = YAML.load(File.read(File.join(File.dirname(__FILE__), '../devise.yml')))[Rails.env]
-  config.secret_key =  yaml_config['secret_key']
+  yaml_config = YAML.safe_load(File.read(File.join(File.dirname(__FILE__), '../devise.yml')))[Rails.env]
+  config.secret_key = yaml_config['secret_key']
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
