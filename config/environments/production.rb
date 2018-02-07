@@ -60,16 +60,13 @@ Rails.application.configure do
   # Mail Settings
   # Ignore bad email addresses and do not raise email delivery errors.
   config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = { host: ENV["ACTION_MAILER_HOST"] }
+  config.action_mailer.default_url_options = { host: "tdrmira-prod-01.uit.tufts.edu" }
   config.action_mailer.perform_caching = false
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: ENV['ACTION_MAILER_SMTP_ADDRESS'],
-    port: ENV['ACTION_MAILER_PORT'],
-    user_name: ENV['ACTION_MAILER_USER_NAME'],
-    password: ENV['ACTION_MAILER_PASSWORD'],
-    enable_starttls_auto: true
+    address: "smtp.tufts.edu",
+    port: 25
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
@@ -96,14 +93,14 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Configure the application strorage directories
-  config.drafts_storage_dir    = Pathname.new('/opt/drafts')
-  config.exports_storage_dir   = Pathname.new('/opt/exports')
-  config.templates_storage_dir = Pathname.new('/opt/templates')
-  config.metadata_upload_dir   = Pathname.new('/opt/metadata')
+  config.drafts_storage_dir    = Pathname.new('/usr/local/hydra/mira-data/current/drafts')
+  config.exports_storage_dir   = Pathname.new('/usr/local/hydra/mira-data/current/exports')
+  config.templates_storage_dir = Pathname.new('/usr/local/hydra/mira-data/current/templates')
+  config.metadata_upload_dir   = Pathname.new('/usr/local/hydra/mira-data/current/metadata')
 end
 
 Hyrax.config do |config|
-  config.derivatives_path = Pathname.new('/opt/derivatives')
-  config.upload_path = ->() { Pathname.new('/opt/uploads') }
-  config.cache_path  = ->() { Pathname.new('/opt/cache') }
+  config.derivatives_path = Pathname.new('/usr/local/hydra/mira-data/current/derivatives')
+  config.upload_path = ->() { Pathname.new('/usr/local/hydra/mira-data/current/uploads') }
+  config.cache_path  = ->() { Pathname.new('/usr/local/hydra/mira-data/current/cache') }
 end
