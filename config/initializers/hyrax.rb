@@ -63,7 +63,7 @@ Hyrax.config do |config|
   # config.persistent_hostpath = 'http://localhost/files/'
 
   # If you have ffmpeg installed and want to transcode audio and video set to true
-  config.enable_ffmpeg = true
+  config.enable_ffmpeg = true unless Rails.env.development?
 
   # Hyrax uses NOIDs for files and collections instead of Fedora UUIDs
   # where NOID = 10-character string and UUID = 32-character string w/ hyphens
@@ -126,8 +126,10 @@ Hyrax.config do |config|
 
   # Temporary paths to hold uploads before they are ingested into FCrepo
   # These must be lambdas that return a Pathname. Can be configured separately
-  config.upload_path = ->() { Rails.root.join('tmp', 'uploads') }
-  config.cache_path  = ->() { Rails.root.join('tmp', 'uploads', 'cache') }
+  if Rails.env.development?
+    config.upload_path = ->() { Rails.root.join('tmp', 'uploads') }
+    config.cache_path = ->() { Rails.root.join('tmp', 'uploads', 'cache') }
+  end
 
   # Location on local file system where derivatives will be stored
   # If you use a multi-server architecture, this MUST be a shared volume
@@ -162,7 +164,7 @@ Hyrax.config do |config|
   # config.owner_permission_levels = { "Edit Access" => "edit" }
 
   # Path to the ffmpeg tool
-  # config.ffmpeg_path = 'ffmpeg'
+  config.ffmpeg_path = 'ffmpeg'
 
   # Max length of FITS messages to display in UI
   # config.fits_message_length = 5
