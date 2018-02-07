@@ -1,9 +1,6 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
-  # ==> LDAP Configuration
-  config.ldap_logger = true
-  config.ldap_create_user = true
   # config.ldap_update_password = true
   # config.ldap_config = "#{Rails.root}/config/ldap.yml"
   # config.ldap_check_group_membership = false
@@ -29,6 +26,9 @@ Devise.setup do |config|
   yaml_config = YAML.safe_load(File.read(File.join(File.dirname(__FILE__), '../devise.yml')))[Rails.env]
   config.secret_key = yaml_config['secret_key']
 
+  # ==> LDAP Configuration
+  config.ldap_logger = true
+  config.ldap_create_user = yaml_config['ldap_create_user']
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
 
