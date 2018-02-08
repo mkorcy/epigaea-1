@@ -13,6 +13,7 @@ unless Rails.env.production?
       port: 8985,
       verbose: true,
       managed: true
+      version: '6.6.2'
     }
     fcrepo_params = {
       port: 8986,
@@ -25,7 +26,7 @@ unless Rails.env.production?
       solr.with_collection(
         name: "hydra-test",
         persist: false,
-        dir: Rails.root.join("solr", "config")
+        dir: Rails.root.join("solr", "conf")
       ) do
         FcrepoWrapper.wrap(fcrepo_params) do
           Rake::Task["spec"].invoke
