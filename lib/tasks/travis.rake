@@ -12,7 +12,7 @@ unless Rails.env.production?
     solr_params = {
       port: 8985,
       verbose: true,
-      managed: true
+      managed: true,
       version: '6.6.2'
     }
     fcrepo_params = {
