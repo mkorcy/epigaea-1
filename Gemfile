@@ -80,8 +80,8 @@ gem 'sanitize', '~> 4.6', '>= 4.6.3'
 gem 'sidekiq'
 
 group :production do
-  gem 'therubyracer'
   gem 'passenger'
+  gem 'therubyracer'
 end
 
 group :development, :test do
