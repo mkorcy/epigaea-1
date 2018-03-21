@@ -17,6 +17,12 @@ shared_examples 'a work with Tufts metadata attributes' do
         .to match(/purl.org\/dc\/terms\/spatial/)
     end
 
+    it 'has geog_names' do
+      work.geog_name = ['China']
+      expect(work.resource.dump(:ttl))
+        .to match(/dl.tufts.edu\/terms#geog_name/)
+    end
+
     it 'has held by' do
       work.held_by = ['United States']
       expect(work.resource.dump(:ttl))
