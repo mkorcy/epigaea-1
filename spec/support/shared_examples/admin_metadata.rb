@@ -24,6 +24,11 @@ shared_examples 'and has admin metadata attributes' do
     expect(work.resource.dump(:ttl)).to match(/dl.tufts.edu\/terms#steward/)
   end
 
+  it 'has downloadable' do
+    work.downloadable = 'no-link'
+    expect(work.resource.dump(:ttl)).to match(/dl.tufts.edu\/terms#downloadable/)
+  end
+
   it 'has internal_note' do
     work.internal_note = 'An internal note'
     expect(work.resource.dump(:ttl))
