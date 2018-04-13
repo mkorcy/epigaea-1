@@ -4,6 +4,14 @@
   - [batch, 2]
   - [handle, 1]
   - [default, 1]
+  - [tdr_derivative_queue, 1]
+
+:limits:
+  tdr_derivative_queue: 1
+  ingest: 5
+  batch: 5
+  handle: 5
+  default: 5
 
 test:
   :concurrency: 5
@@ -12,4 +20,4 @@ development:
   :concurrency: 5
 
 production:
-  :concurrency: 5
+  :concurrency: 10
