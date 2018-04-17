@@ -36,6 +36,7 @@ coverage
 .env
 .env.development
 .env.production
+.env.stage
 
 config/initializers/explain_partials.rb
 
