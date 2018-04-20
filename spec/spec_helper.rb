@@ -48,8 +48,8 @@ RSpec.configure do |config|
   # including command line seeds passed in using --seed nnn,
   # in order to return the same data every time the same seed is used
   # see: https://github.com/ffaker/ffaker/blob/master/RANDOM.md#rspec
-  config.before(:all)  { FFaker::Random.seed = config.seed }
-  config.before(:each) { FFaker::Random.reset! }
+  config.before(:all) { FFaker::Random.seed = config.seed }
+  config.before { FFaker::Random.reset! }
 
   # The settings below are suggested to provide a good initial experience
   # with RSpec, but feel free to customize to your heart's content.

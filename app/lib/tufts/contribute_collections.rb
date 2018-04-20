@@ -30,7 +30,7 @@ module Tufts
     end
 
     def create
-      @seed_data.keys.each do |collection_id|
+      @seed_data.each_key do |collection_id|
         find_or_create_collection(collection_id)
       end
     end

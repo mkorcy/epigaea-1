@@ -27,7 +27,7 @@ module Tufts
       # For keep_newline_fields, keep single newlines, compress 2+ newlines to 2,
       # and otherwise strip whitespace as usual
       keep_newline_fields = ['description', 'abstract']
-      params[hash_key_for_curation_concern].keys.each do |key|
+      params[hash_key_for_curation_concern].each_key do |key|
         params[hash_key_for_curation_concern][key] = if keep_newline_fields.include?(key)
                                                        strip_whitespace_keep_newlines(params[hash_key_for_curation_concern][key])
                                                      else
