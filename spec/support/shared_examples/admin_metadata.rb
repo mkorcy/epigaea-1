@@ -30,7 +30,7 @@ shared_examples 'and has admin metadata attributes' do
   end
 
   it 'has internal_note' do
-    work.internal_note = 'An internal note'
+    work.internal_note = ['An internal note']
     expect(work.resource.dump(:ttl))
       .to match(/dl.tufts.edu\/terms#internal_note/)
   end

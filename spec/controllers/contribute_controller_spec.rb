@@ -135,7 +135,7 @@ describe ContributeController do
 
           contribution = Pdf.find(assigns[:contribution].tufts_pdf.id)
 
-          expect(contribution.internal_note).to eq "Mickey Mouse self-deposited on #{now.strftime('%Y-%m-%d at %H:%M:%S %Z')} using the Deposit Form for the Tufts Digital Library"
+          expect(contribution.internal_note).to eq ["Mickey Mouse self-deposited on #{now.strftime('%Y-%m-%d at %H:%M:%S %Z')} using the Deposit Form for the Tufts Digital Library"]
           expect(contribution.date_available).to eq [now.to_s]
           expect(contribution.date_uploaded).to eq now
           expect(contribution.createdby).to eq [Contribution::SELFDEP]
