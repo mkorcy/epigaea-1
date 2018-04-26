@@ -113,12 +113,21 @@ Rails.application.routes.draw do
   end
 
   # Unauthenticated users should only be able to reach the /contribute controller and the log in page
-  resources :contribute, as: 'contributions', controller: :contribute, only: [:index, :new, :create, :redirect] do
-    collection do
-      get 'license'
+  deployed_as_dark_archive = ActiveModel::Type::Boolean.new.cast(ENV['DEPLOY_AS_DARK_ARCHIVE'])
+  unless deployed_as_dark_archive
+    resources :contribute, as: 'contributions', controller: :contribute, only: [:index, :new, :create, :redirect] do
+      collection do
+        get 'license'
+      end
     end
   end
 
-  root to: 'contribute#redirect'
-  get '*path' => redirect { 'contribute#redirect' }
+  if deployed_as_dark_archive
+    devise_scope :user do
+      root to: "devise/sessions#new"
+    end
+  else
+    root to: 'contribute#redirect'
+    get '*path' => redirect { 'contribute#redirect' }
+  end
 end
