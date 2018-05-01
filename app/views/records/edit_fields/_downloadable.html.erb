@@ -1,0 +1,12 @@
+    <div class="form-group">
+    <%= f.label :downloadable, 'Downloadable'.html_safe, class: 'control-label' %>
+
+      <label class="downloadable radio">
+        <%= f.radio_button :downloadable, Tufts::Downloadable::DOWNLOADABLE_TEXT_PUBLIC %>
+        <%= t('download.allow.label_html') %>
+      </label>
+      <label class="downloadable radio">
+        <%= f.radio_button :downloadable, Tufts::Downloadable::DOWNLOADABLE_TEXT_NO_LINK_SHOWN %>
+        <%= t('download.disallow.label_html') %>
+      </label>
+    </div>

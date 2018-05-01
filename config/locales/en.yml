@@ -27,3 +27,8 @@ en:
       subject_reply: "Epigaea reply: %{subject}"
     notification_mailer:
       subject: "Epigaea notification: %{subject}"
+  download:
+    disallow:
+      label_html: "Do not show a download link to any users"
+    allow:
+      label_html: "Show a download link to all users"
