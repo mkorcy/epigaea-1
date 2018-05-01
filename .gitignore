@@ -51,6 +51,7 @@ config/secrets.yml
 config/solr.yml
 config/devise.yml
 config/ldap.yml
+config/fedora3.yml
 
 # Rubymine
 .idea
