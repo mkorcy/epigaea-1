@@ -112,7 +112,7 @@ class CatalogController < ApplicationController
         date_modified_tesim date_uploaded_tesim description_tesim
         displays_in_tesim ead_tesim embargo_note_tesim end_date_tesim extent_tesim
         format_label_tesim funder_tesim genre_tesim geographic_name_tesim
-        has_format_tesim has_part_tesim internal_note_tesim is_format_of_tesim
+        has_part_tesim internal_note_tesim
         is_part_of_tesim is_replaced_by_tesim language_tesim
         tufts_license_tesim license_tesim held_by_tesim identifier_tesim
         personal_name_tesim provenance_tesim publisher_tesim qr_note_tesim

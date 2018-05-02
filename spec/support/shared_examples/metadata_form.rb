@@ -11,7 +11,7 @@ shared_examples 'a form with Tufts metadata attributes' do
                                     :date_available, :date_copyrighted, :date_issued, :steward,
                                     :internal_note, :audience, :embargo_note, :end_date, :accrual_policy,
                                     :rights_note, :rights_holder, :format_label, :replaces, :is_replaced_by,
-                                    :has_format, :is_format_of, :has_part, :tufts_license,
+                                    :has_part, :tufts_license,
                                     :retention_period, :admin_start_date, :qr_status, :rejection_reason,
                                     :qr_note, :creator_department, :legacy_pid, :temporal, :extent,
                                     :personal_name, :corporate_name, :genre, :provenance, :funder, :createdby,

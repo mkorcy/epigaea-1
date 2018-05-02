@@ -113,18 +113,6 @@ shared_examples 'a work with Tufts metadata attributes' do
         .to match(/purl.org\/dc\/terms\/isReplacedBy/)
     end
 
-    it 'has "has format"' do
-      work.has_format = ['a format']
-      expect(work.resource.dump(:ttl))
-        .to match(/purl.org\/dc\/terms\/hasFormat/)
-    end
-
-    it 'has "is format of"' do
-      work.is_format_of = ['another format']
-      expect(work.resource.dump(:ttl))
-        .to match(/purl.org\/dc\/terms\/isFormatOf/)
-    end
-
     it 'has "has part"' do
       work.has_part = ['a part']
       expect(work.resource.dump(:ttl))

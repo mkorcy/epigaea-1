@@ -17,8 +17,6 @@ shared_examples 'a Tufts presenter' do
     it { is_expected.to delegate_method(:format_label).to(:solr_document) }
     it { is_expected.to delegate_method(:replaces).to(:solr_document) }
     it { is_expected.to delegate_method(:is_replaced_by).to(:solr_document) }
-    it { is_expected.to delegate_method(:has_format).to(:solr_document) }
-    it { is_expected.to delegate_method(:is_format_of).to(:solr_document) }
     it { is_expected.to delegate_method(:has_part).to(:solr_document) }
     it { is_expected.to delegate_method(:extent).to(:solr_document) }
     it { is_expected.to delegate_method(:personal_name).to(:solr_document) }

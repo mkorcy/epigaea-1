@@ -25,11 +25,9 @@
 <%= presenter.attribute_to_html(:funder, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:geog_name, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:genre, render_as: :linked, search_field: 'all_fields') %>
-<%= presenter.attribute_to_html(:has_format, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:has_part, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:held_by, render_as: :faceted) %>
 <%= presenter.attribute_to_html(:internal_note, render_as: :linked, search_field: 'all_fields') %>
-<%= presenter.attribute_to_html(:is_format_of, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:is_replaced_by, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:is_part_of, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:language, render_as: :faceted) %>
