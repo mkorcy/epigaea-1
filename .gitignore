@@ -55,3 +55,6 @@ config/fedora3.yml
 
 # Rubymine
 .idea
+
+# Local development
+Gemfile.local
