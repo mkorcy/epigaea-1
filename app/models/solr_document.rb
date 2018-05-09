@@ -44,6 +44,26 @@ class SolrDocument
     Hyrax::ResourceTypesService.microdata_type(types.first)
   end
 
+  def bits_per_sample
+    fetch(Solrizer.solr_name('bits_per_sample', :stored_searchable), [])
+  end
+
+  def resolution_unit
+    fetch(Solrizer.solr_name('resolution_unit', :stored_searchable), [])
+  end
+
+  def samples_per_pixel
+    fetch(Solrizer.solr_name('samples_per_pixel', :stored_searchable), [])
+  end
+
+  def x_resolution
+    fetch(Solrizer.solr_name('x_resolution', :stored_searchable), [])
+  end
+
+  def y_resolution
+    fetch(Solrizer.solr_name('y_resolution', :stored_searchable), [])
+  end
+
   def ead
     self[Solrizer.solr_name('ead')]
   end

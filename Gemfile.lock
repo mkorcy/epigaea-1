@@ -279,6 +279,10 @@ GEM
       nokogiri (>= 1.4.3)
     erubis (2.7.0)
     execjs (2.7.0)
+    exiftool (1.2.1)
+      json
+    exiftool_vendored (10.65.0)
+      exiftool (>= 0.7.0)
     factory_girl (4.8.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.8.0)
@@ -915,6 +919,7 @@ DEPENDENCIES
   devise-guests (~> 0.6)
   devise_ldap_authenticatable
   dotenv-rails
+  exiftool_vendored
   factory_girl_rails
   fcrepo_wrapper
   ffaker

@@ -8,6 +8,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'dotenv-rails'
+gem 'exiftool_vendored'
 gem 'honeybadger', '~> 3.1'
 gem 'hydra-role-management'
 gem 'hyrax', '2.0.0'
