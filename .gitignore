@@ -58,3 +58,6 @@ config/fedora3.yml
 
 # Local development
 Gemfile.local
+
+# migration reports
+migration_report/
