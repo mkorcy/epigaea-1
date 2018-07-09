@@ -330,7 +330,6 @@ GEM
       concurrent-ruby (~> 1.0)
     handle-system (0.1.1)
     hiredis (0.6.1)
-    honeybadger (3.1.2)
     htmlentities (4.3.4)
     http_logger (0.5.1)
     httparty (0.15.6)
@@ -924,7 +923,6 @@ DEPENDENCIES
   fcrepo_wrapper
   ffaker
   handle-system (= 0.1.1)
-  honeybadger (~> 3.1)
   hydra-role-management
   hyrax (= 2.0.0)
   jbuilder (~> 2.5)
