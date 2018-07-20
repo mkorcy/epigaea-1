@@ -1,4 +1,3 @@
-require 'honeybadger'
 require 'net/smtp'
 
 # Check to ensure we can connect to SMTP as expected. We are writing our own because the
@@ -10,8 +9,7 @@ class SmtpCheck < OkComputer::Check
     smtp.start('curationexperts.com', ENV['ACTION_MAILER_USER_NAME'], ENV['ACTION_MAILER_PASSWORD'], :plain) do
       mark_message "SMTP connection working"
     end
-  rescue => exception
-    Honeybadger.notify(exception)
+  rescue
     mark_failure
     mark_message "Cannot connect to SMTP"
   end

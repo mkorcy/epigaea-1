@@ -9,7 +9,6 @@ end
 
 gem 'dotenv-rails'
 gem 'exiftool_vendored'
-gem 'honeybadger', '~> 3.1'
 gem 'hydra-role-management'
 gem 'hyrax', '2.0.0'
 gem 'nokogiri', '>=1.8.2' # 1.8.2 fixes security issue https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15412
