@@ -31,7 +31,7 @@ module Tufts
 
       def map_fields_to_properties(exif_data)
         {}.tap do |hash|
-          FIELDS.keys.each do |field|
+          FIELDS.each_key do |field|
             hash[field.to_s] = exif_data.dig(*FIELDS[field])
           end
         end.compact
