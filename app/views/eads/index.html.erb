@@ -1,0 +1,24 @@
+<h1>Collection Cheatsheet</h1>
+<div class='clear'></div>
+
+<table id="ead-collection-map">
+  <thead>
+  <tr>
+    <th> Collection ID </th>
+    <th> EAD </th>
+    <th> Title </th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @results.each do |result| %>
+    <tr>
+      <td class='id'> <%= result[:id] %> </td>
+      <td class='ead'> <%= result[:ead_tesim].first unless result[:ead_tesim].nil? %> </td>
+      <td class='title'> <%= result[:title_tesim].first %> </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<script>
+  Tufts.activateDataTable({selector: '#ead-collection-map', paging: false})
+</script>

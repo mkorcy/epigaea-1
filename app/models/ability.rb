@@ -16,6 +16,7 @@ class Ability
       can [:manage], Batch
       can [:manage], HandleLog
       can [:manage], DepositType
+      can [:manage], Ead
     end
 
     if registered_user? # rubocop:disable Style/GuardClause

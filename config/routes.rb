@@ -30,7 +30,7 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
 
     resources :batches, controller: 'hyrax/batches', only: [:index, :show, :create]
-
+    resources :eads, only: [:index]
     resources :metadata_exports,
               controller: 'hyrax/metadata_exports',
               only:       [:create]
