@@ -43,7 +43,8 @@ gem 'whenever', require: false
 
 gem 'blacklight_advanced_search'
 
-gem 'tufts-curation', github: 'TuftsUniversity/tufts-curation', ref: '17169d6'
+gem 'tufts-curation', git: 'https://github.com/TuftsUniversity/tufts-curation', tag: '1.0.11'
+#gem 'tufts-curation', :path => '../tufts-curation'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
