@@ -40,7 +40,7 @@ RSpec.feature 'Fletcher School Capstone ProjectF', :clean, js: true do
       expect(created_pdf.admin_set.title.first).to eq "Default Admin Set"
       expect(created_pdf.active_workflow.name).to eq "mira_publication_workflow"
       expect(created_pdf.visibility).to eq Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
-      expect(created_pdf.member_of_collections.first.identifier.first).to eq("tufts:UA069.001.DO.UA015")
+      expect(created_pdf.member_of_collections.first.ead.first).to eq("tufts:UA069.001.DO.UA015")
     end
   end
 end
