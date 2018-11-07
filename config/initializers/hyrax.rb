@@ -47,7 +47,7 @@ Hyrax.config do |config|
   # Defaults to false
   # Requires a Google Analytics id and OAuth2 keyfile.  See README for more info
   # config.analytics = false
-  config.google_analytics_id = 'UA-38431398-6' if Rails.env == 'production'
+  #config.google_analytics_id = 'UA-38431398-6' if Rails.env == 'production'
 
   # Date you wish to start collecting Google Analytic statistics for
   # Leaving it blank will set the start date to when ever the file was uploaded by
