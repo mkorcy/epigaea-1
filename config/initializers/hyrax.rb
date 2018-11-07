@@ -40,16 +40,14 @@ Hyrax.config do |config|
 
   # -- Tufts Note on GA -- #
   # You only need the google_analytics_id if you want to use GA.
-  # You don't need the keyfile or to set config.analytics = true unless you want the 
+  # You don't need the keyfile or to set config.analytics = true unless you want the
   #    Hyrax dashboard.
 
   # Enable displaying usage statistics in the UI
   # Defaults to false
   # Requires a Google Analytics id and OAuth2 keyfile.  See README for more info
   # config.analytics = false
-  if Rails.env == 'production'
-    config.google_analytics_id = 'UA-38431398-6'
-  end
+  config.google_analytics_id = 'UA-38431398-6' if Rails.env == 'production'
 
   # Date you wish to start collecting Google Analytic statistics for
   # Leaving it blank will set the start date to when ever the file was uploaded by
