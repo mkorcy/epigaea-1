@@ -29,7 +29,6 @@ RSpec.feature 'Create a GenericObject', :clean, js: true do
       end
       find(:xpath, '//option[contains(text(), "nowhere")]').select_option
       fill_in 'Abstract', with: " A short   description    with  \t wonky spaces   "
-      fill_in 'Accrual Policy', with: 'Accrual Policy'
       fill_in 'Alternate Title', with: 'Alternate Title'
       fill_in 'Audience', with: 'Audience'
       fill_in 'Bibliographic Citation', with: " bibliographic   citation  \n with     spaces    "
@@ -93,7 +92,6 @@ RSpec.feature 'Create a GenericObject', :clean, js: true do
       expect(page).to have_content 'Title with condensed spaces'
       expect(page).to have_content 'nowhere'
       expect(page).to have_content 'A short description with wonky spaces'
-      expect(page).to have_content 'Accrual Policy'
       expect(page).to have_content 'Alternate Title'
       expect(page).to have_content 'Audience'
       expect(page).to have_content 'bibliographic citation with spaces'

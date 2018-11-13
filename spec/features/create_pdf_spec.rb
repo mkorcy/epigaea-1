@@ -30,7 +30,6 @@ RSpec.feature 'Create a PDF', :clean, js: true do
       end
       find(:xpath, '//option[contains(text(), "nowhere")]').select_option
       fill_in 'Abstract', with: 'Abstract'
-      fill_in 'Accrual Policy', with: 'Accrual Policy'
       fill_in 'Alternate Title', with: 'Alternate Title'
       fill_in 'Audience', with: 'Audience'
       fill_in 'Bibliographic Citation', with: 'Bibliographic Citation'
@@ -108,7 +107,6 @@ RSpec.feature 'Create a PDF', :clean, js: true do
       expect(page).to have_content 'Displays in Portal'
       expect(page).to have_content 'nowhere'
       expect(page).to have_content 'Abstract'
-      expect(page).to have_content 'Accrual Policy'
       expect(page).to have_content 'Alternate Title'
       expect(page).to have_content 'Audience'
       expect(page).to have_content 'Bibliographic Citation'
