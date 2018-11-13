@@ -52,6 +52,7 @@ RSpec.feature 'Create a GenericObject', :clean, js: true do
       fill_in 'Spatial', with: 'Spatial'
       fill_in 'Held By', with: 'Held By'
       fill_in 'Internal Note', with: 'Internal Note'
+      fill_in 'Is Part Of', with: 'Is Part Of'
       fill_in 'Is Replaced By', with: 'Is Replaced By'
       fill_in 'Language', with: 'Language'
       fill_in 'Legacy PID', with: 'Legacy PID'
