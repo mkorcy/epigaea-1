@@ -29,7 +29,6 @@ RSpec.feature 'Create a GenericObject', :clean, js: true do
       end
       find(:xpath, '//option[contains(text(), "nowhere")]').select_option
       fill_in 'Abstract', with: " A short   description    with  \t wonky spaces   "
-      fill_in 'Accrual Policy', with: 'Accrual Policy'
       fill_in 'Alternate Title', with: 'Alternate Title'
       fill_in 'Audience', with: 'Audience'
       fill_in 'Bibliographic Citation', with: " bibliographic   citation  \n with     spaces    "
@@ -39,7 +38,6 @@ RSpec.feature 'Create a GenericObject', :clean, js: true do
       fill_in 'Creator', with: '     Name   with   Spaces   '
       fill_in 'Creator Department', with: 'Creator Department'
       fill_in 'Date Accepted', with: 'Date Accepted'
-      fill_in 'Date Available', with: 'Date Available'
       fill_in 'Date Copyrighted', with: 'Date Copyrighted'
       fill_in 'Date Created', with: 'Date Created'
       fill_in 'Date Issued', with: 'Date Issued'
@@ -52,7 +50,6 @@ RSpec.feature 'Create a GenericObject', :clean, js: true do
       fill_in 'Funder', with: 'Funder'
       fill_in 'Genre', with: 'Genre'
       fill_in 'Spatial', with: 'Spatial'
-      fill_in 'Has Part', with: 'Has Part'
       fill_in 'Held By', with: 'Held By'
       fill_in 'Internal Note', with: 'Internal Note'
       fill_in 'Is Part Of', with: 'Is Part Of'
@@ -93,7 +90,6 @@ RSpec.feature 'Create a GenericObject', :clean, js: true do
       expect(page).to have_content 'Title with condensed spaces'
       expect(page).to have_content 'nowhere'
       expect(page).to have_content 'A short description with wonky spaces'
-      expect(page).to have_content 'Accrual Policy'
       expect(page).to have_content 'Alternate Title'
       expect(page).to have_content 'Audience'
       expect(page).to have_content 'bibliographic citation with spaces'
@@ -103,7 +99,6 @@ RSpec.feature 'Create a GenericObject', :clean, js: true do
       expect(page).to have_content 'Name with Spaces'
       expect(page).to have_content 'Creator Department'
       expect(page).to have_content 'Date Accepted'
-      expect(page).to have_content 'Date Available'
       expect(page).to have_content 'Date Copyrighted'
       expect(page).to have_content 'Date Created'
       expect(page).to have_content 'Date Issued'
@@ -116,7 +111,6 @@ RSpec.feature 'Create a GenericObject', :clean, js: true do
       expect(page).to have_content 'Funder'
       expect(page).to have_content 'Genre'
       expect(page).to have_content 'Spatial'
-      expect(page).to have_content 'Has Part'
       expect(page).to have_content 'Held By'
       expect(page).to have_content 'Internal Note'
       expect(page).to have_content 'Is Part Of'
