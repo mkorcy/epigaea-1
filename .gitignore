@@ -61,3 +61,7 @@ Gemfile.local
 
 # migration reports
 migration_report/
+
+# sidekiq files
+epigaea-lock
+epigaea.pid
