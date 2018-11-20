@@ -1,11 +1,11 @@
 GIT
   remote: https://github.com/TuftsUniversity/tufts-curation
-  revision: 75cefd83969269d0c08684524878329a43fe8978
-  tag: 1.0.13
+  revision: 1bd47361ee26340a89373f37931409a5ebdd0902
   specs:
     tufts-curation (0.1.0)
       active-fedora (>= 11.5, <= 12.99)
       activesupport
+      chronic
       hyrax (>= 2.0.0, <= 2.2.0)
 
 GIT
@@ -15,6 +15,13 @@ GIT
   specs:
     shoulda-matchers (3.1.2)
       activesupport (>= 4.2.0)
+
+PATH
+  remote: ../fedora-migrate
+  specs:
+    fedora-migrate (0.4.0)
+      rchardet
+      rubydora (~> 1.8)
 
 GEM
   remote: https://rubygems.org/
@@ -234,6 +241,8 @@ GEM
       net-ldap (>= 0.6.0, <= 0.11)
     diff-lcs (1.3)
     docile (1.1.5)
+    domain_name (0.5.20180417)
+      unf (>= 0.0.5, < 1.0.0)
     dotenv (2.2.1)
     dotenv-rails (2.2.1)
       dotenv (= 2.2.1)
@@ -330,7 +339,10 @@ GEM
       concurrent-ruby (~> 1.0)
     handle-system (0.1.1)
     hiredis (0.6.1)
+    hooks (0.3.3)
     htmlentities (4.3.4)
+    http-cookie (1.0.3)
+      domain_name (~> 0.5)
     http_logger (0.5.1)
     httparty (0.15.6)
       multi_xml (>= 0.5.2)
@@ -547,6 +559,7 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (4.1.0)
+    netrc (0.11.0)
     nio4r (2.1.0)
     noid (0.9.0)
     nokogiri (1.8.2)
@@ -634,6 +647,7 @@ GEM
     rb-fsevent (0.10.2)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    rchardet (1.8.0)
     rdf (2.2.12)
       hamster (~> 3.0)
       link_header (~> 0.0, >= 0.0.8)
@@ -724,6 +738,10 @@ GEM
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
+    rest-client (2.0.2)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
     retriable (3.0.2)
     rsolr (2.0.2)
       builder (>= 2.1.2)
@@ -760,6 +778,15 @@ GEM
       multipart-post
       oauth2
     ruby-progressbar (1.8.1)
+    rubydora (1.9.1)
+      activemodel
+      activesupport
+      deprecation
+      equivalent-xml
+      hooks (~> 0.3)
+      mime-types
+      nokogiri
+      rest-client
     rubyzip (1.2.1)
     sanitize (4.6.4)
       crass (~> 1.0.2)
@@ -879,6 +906,9 @@ GEM
     uber (0.1.0)
     uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.5)
     unicode-display_width (1.3.0)
     warden (1.2.7)
       rack (>= 1.0)
@@ -921,6 +951,7 @@ DEPENDENCIES
   exiftool_vendored
   factory_girl_rails
   fcrepo_wrapper
+  fedora-migrate!
   ffaker
   handle-system (= 0.1.1)
   hydra-role-management
