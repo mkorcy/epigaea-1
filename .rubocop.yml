@@ -86,3 +86,9 @@ Style/FileName:
 Style/MethodMissing:
   Exclude:
     - app/models/concerns/hyrax/file_set/characterization.rb
+RSpec/InstanceVariable:
+  Exclude:
+    - spec/models/metadata_import_spec.rb
+    - spec/lib/tufts/handle_registrar_spec.rb
+    - spec/lib/tufts/handle_registrar_spec.rb
+    - spec/lib/tufts/handle_registrar_spec.rb
