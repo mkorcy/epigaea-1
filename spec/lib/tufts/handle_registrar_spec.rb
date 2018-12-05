@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-# rubocop:disable Lint/HandleExceptions, RSpec/InstanceVariable
+# rubocop:disable Lint/HandleExceptions
 describe Tufts::HandleRegistrar do
   subject(:service) do
     described_class.new(connection: stubbed_connection.new(record: record))

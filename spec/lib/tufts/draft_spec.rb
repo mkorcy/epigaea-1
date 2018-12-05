@@ -10,9 +10,7 @@ RSpec.describe Tufts::Draft do
   let(:model_class) { FakeWork }
 
   before(:context) do
-    unless File.directory?(described_class::STORAGE_DIR)
-      FileUtils.mkdir_p(described_class::STORAGE_DIR)
-    end
+    FileUtils.mkdir_p(described_class::STORAGE_DIR) unless File.directory?(described_class::STORAGE_DIR)
   end
 
   after { draft.delete }
