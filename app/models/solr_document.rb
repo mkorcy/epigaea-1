@@ -64,6 +64,14 @@ class SolrDocument
     fetch(Solrizer.solr_name('y_resolution', :stored_searchable), [])
   end
 
+  def file_format
+    fetch(Solrizer.solr_name('file_format', :stored_searchable), [])
+  end
+
+  def file_date_created
+    fetch(Solrizer.solr_name('file_date_created', :stored_searchable), [])
+  end
+
   def ead
     self[Solrizer.solr_name('ead')]
   end
