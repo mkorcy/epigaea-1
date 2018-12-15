@@ -169,7 +169,7 @@ Hyrax.config do |config|
   config.ffmpeg_path = 'ffmpeg'
 
   # Max length of FITS messages to display in UI
-  # config.fits_message_length = 5
+  config.fits_message_length = 25
 
   # ActiveJob queue to handle ingest-like jobs
   config.ingest_queue_name = :ingest
