@@ -92,3 +92,7 @@ RSpec/InstanceVariable:
     - spec/lib/tufts/handle_registrar_spec.rb
     - spec/lib/tufts/handle_registrar_spec.rb
     - spec/lib/tufts/handle_registrar_spec.rb
+Security/YAMLLoad:
+  Exclude:
+    - config/initializers/devise.rb
+    - config/initializers/redis_config.rb
