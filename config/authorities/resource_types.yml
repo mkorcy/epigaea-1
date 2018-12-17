@@ -21,3 +21,5 @@ terms:
     term: StillImage
   - id: http://purl.org/dc/dcmitype/Text
     term: Text
+  - id: http://purl.org/dc/dcmitype/Sound
+    term: Sound
