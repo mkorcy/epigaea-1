@@ -55,7 +55,7 @@ RSpec.feature 'Faculty Scholarship', :clean, js: true do
       expect(created_pdf.visibility).to eq Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
       expect(created_pdf.abstract.first).to eq abstract
       expect(created_pdf.bibliographic_citation.first).to eq bibliographic_citation
-      expect(created_pdf.embargo_note).to eq "2015-07-01T12:00:00Z"
+      expect(created_pdf.end_date).to eq "2015-07-01T12:00:00Z"
 
       logout
       login_as admin
@@ -65,7 +65,7 @@ RSpec.feature 'Faculty Scholarship', :clean, js: true do
       expect(page).to have_content(bibliographic_citation)
       expect(page).to have_content("In Collection")
       expect(page).to have_content("Tufts Published Scholarship, 1987-2014")
-      expect(page).to have_content('Embargo Note')
+      expect(page).to have_content('End Date')
       visit("/concern/pdfs/#{created_pdf.id}/edit")
       expect(find_by_id("pdf_abstract").value).to eq abstract
       expect(find_by_id("pdf_bibliographic_citation").value).to eq bibliographic_citation

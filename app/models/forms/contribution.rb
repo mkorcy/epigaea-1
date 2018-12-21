@@ -106,7 +106,7 @@ protected
 
   def insert_embargo_date
     return unless @tufts_pdf
-    @tufts_pdf.embargo_note = (Time.zone.now + embargo.to_i.months).iso8601 unless (embargo || '0').eql? '0'
+    @tufts_pdf.end_date = (Time.zone.now + embargo.to_i.months).iso8601 unless (embargo || '0').eql? '0'
   end
 
   def attachment_has_valid_content_type
