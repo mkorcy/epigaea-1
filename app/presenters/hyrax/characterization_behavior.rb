@@ -48,20 +48,21 @@ module Hyrax
     # @param [Symbol] term found in the characterization_metadata hash
     # @return [Array] of truncated values
     def primary_characterization_values(term)
-      values = values_for(term)
-      values.slice!(Hyrax.config.fits_message_length, (values.length - Hyrax.config.fits_message_length))
-      truncate_all(values)
+      values_for(term)
+      #      values.slice!(Hyrax.config.fits_message_length, (values.length - Hyrax.config.fits_message_length))
+      #      truncate_all(values)
     end
 
     # Returns an array of characterization values truncated to 250 characters that are in
     # excess of the maximum number of configured values.
     # @param [Symbol] term found in the characterization_metadata hash
     # @return [Array] of truncated values
-    def secondary_characterization_values(term)
-      values = values_for(term)
-      additional_values = values.slice(Hyrax.config.fits_message_length, values.length - Hyrax.config.fits_message_length)
-      return [] unless additional_values
-      truncate_all(additional_values)
+    def secondary_characterization_values(_term)
+      []
+      # values = values_for(term)
+      # additional_values = values.slice(Hyrax.config.fits_message_length, values.length - Hyrax.config.fits_message_length)
+      # return [] unless additional_values
+      # truncate_all(additional_values)
     end
 
     private
@@ -71,7 +72,7 @@ module Hyrax
       end
 
       def truncate_all(values)
-        values.map { |v| v.to_s.truncate(250) }
+        values.map { |v| v.to_s.truncate(25_000) }
       end
 
       def build_characterization_metadata

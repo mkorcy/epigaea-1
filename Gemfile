@@ -6,9 +6,9 @@ git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
-
 gem 'dotenv-rails'
 gem 'exiftool_vendored'
+# gem 'fedora-migrate', path: '../fedora-migrate'
 gem 'hydra-role-management'
 gem 'hyrax', '2.0.0'
 gem 'nokogiri', '>=1.8.2' # 1.8.2 fixes security issue https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15412
@@ -43,7 +43,7 @@ gem 'whenever', require: false
 
 gem 'blacklight_advanced_search'
 
-gem 'tufts-curation', git: 'https://github.com/TuftsUniversity/tufts-curation', tag: '1.0.13'
+gem 'tufts-curation', git: 'https://github.com/TuftsUniversity/tufts-curation' # , tag: '1.0.13'
 # gem 'tufts-curation', :path => '../tufts-curation'
 
 group :development, :test do

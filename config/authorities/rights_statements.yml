@@ -32,3 +32,6 @@ terms:
     - id: http://rightsstatements.org/page/CNE/1.0/?language=en
       term: Copyright Not Evaluated
       active: true
+    - id: http://sites.tufts.edu/dca/about-us/research-help/citations/copyright-and-citations-for-material-from-the-edward-r-murrow-collection/
+      term: Murrow rights
+      active: true

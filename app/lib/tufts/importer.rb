@@ -179,9 +179,7 @@ module Tufts
         identifier = file_or_id(record)
         required_fields = ["dc:title", "tufts:displays_in", "model:hasModel"]
         required_fields.each do |field|
-          if record.xpath(field).text.empty?
-            errors << Importer::Error.new(record.line, type: :serious, message: "Missing required field: #{identifier} is missing #{field}")
-          end
+          errors << Importer::Error.new(record.line, type: :serious, message: "Missing required field: #{identifier} is missing #{field}") if record.xpath(field).text.empty?
         end
       end
 

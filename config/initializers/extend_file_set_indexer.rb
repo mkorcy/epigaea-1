@@ -30,6 +30,7 @@ Hyrax::FileSetIndexer.class_eval do
       solr_doc['samples_per_pixel_tesim'] = object.samples_per_pixel
       solr_doc['x_resolution_tesim'] = object.x_resolution
       solr_doc['y_resolution_tesim'] = object.y_resolution
+      solr_doc['file_date_created_tesim'] = object.characterization_proxy.date_created
     end
   end
 end

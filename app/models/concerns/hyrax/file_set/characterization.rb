@@ -21,7 +21,7 @@ module Hyrax
           :format_label, :file_size, :height, :width, :filename, :well_formed,
           :page_count, :file_title, :last_modified, :original_checksum,
           :duration, :sample_rate, :bits_per_sample, :resolution_unit,
-          :samples_per_pixel, :y_resolution, :x_resolution
+          :samples_per_pixel, :y_resolution, :x_resolution, :file_date_created
         ]
         self.characterization_proxy = :original_file
 
@@ -33,6 +33,10 @@ module Hyrax
 
         def characterization_proxy?
           !characterization_proxy.is_a?(NullCharacterizationProxy)
+        end
+
+        def file_date_created
+          @date_created ||= characterization_proxy.date_created
         end
 
         def mime_type

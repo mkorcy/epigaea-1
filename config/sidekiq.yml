@@ -4,10 +4,10 @@
   - [batch, 2]
   - [handle, 1]
   - [default, 1]
-  - [tdr_derivative_queue, 1]
+  - [tdr_derivative_queue, 3]
 
 :limits:
-  tdr_derivative_queue: 1
+  tdr_derivative_queue: 3
   ingest: 5
   batch: 5
   handle: 5

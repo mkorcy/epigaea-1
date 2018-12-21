@@ -17,6 +17,10 @@ Metrics/BlockLength:
     - spec/**/*
     - app/models/concerns/tufts/**/*
     - lib/tasks/**/*
+    - Rakefile
+Style/GuardClause:
+  Exclude:
+    - Rakefile
 Metrics/ClassLength:
   Exclude:
     - app/lib/tufts/importer.rb
@@ -82,3 +86,13 @@ Style/FileName:
 Style/MethodMissing:
   Exclude:
     - app/models/concerns/hyrax/file_set/characterization.rb
+RSpec/InstanceVariable:
+  Exclude:
+    - spec/models/metadata_import_spec.rb
+    - spec/lib/tufts/handle_registrar_spec.rb
+    - spec/lib/tufts/handle_registrar_spec.rb
+    - spec/lib/tufts/handle_registrar_spec.rb
+Security/YAMLLoad:
+  Exclude:
+    - config/initializers/devise.rb
+    - config/initializers/redis_config.rb

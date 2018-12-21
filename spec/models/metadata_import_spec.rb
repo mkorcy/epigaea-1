@@ -12,8 +12,6 @@ RSpec.describe MetadataImport, :clean, type: :model do
 
   it_behaves_like 'a batchable' do
     let(:parser) { parser_class.new(ids: ids) }
-
-    # rubocop:disable RSpec/InstanceVariable
     let(:parser_class) do
       Class.new do
         def initialize(ids:)
