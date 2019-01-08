@@ -31,14 +31,36 @@ task apply_embargos: :environment do
   end
 end
 
+desc "update_fileset_index"
+task update_fileset_index: :environment do
+  puts "Loading File"
+  CSV.foreach("/usr/local/hydra/epigaea/file_sets.txt", headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
+    pid = row[0]
+    puts pid.to_s
+    # puts "#{pid}"
+    begin
+      a = FileSet.find(pid)
+      a.update_index
+    rescue Ldp::HttpError
+      puts "ERROR on #{pid}"
+    rescue ActiveFedora::ObjectNotFoundError
+      puts "ERROR not found #{pid}"
+    end
+  end
+end
+
 desc "update_object_index"
 task update_object_index: :environment do
   puts "Loading File"
   CSV.foreach("/usr/local/hydra/epigaea/objects_to_update.csv", headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
     pid = row[0]
     puts pid.to_s
-    a = ActiveFedora::Base.find(pid, cast: true)
-    a.update_index
+    begin
+      a = ActiveFedora::Base.find(pid, cast: true)
+      a.update_index
+    rescue Ldp::HttpError
+      puts "ERROR on #{pid}"
+    end
   end
 end
 
