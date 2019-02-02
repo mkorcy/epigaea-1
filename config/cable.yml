@@ -1,9 +1,6 @@
-development:
-  adapter: async
-
-test:
-  adapter: async
-
+stage: &stage
+  adapter: redis
+  url: redis://localhost:6379/1
 production:
   adapter: redis
   url: redis://localhost:6379/1
