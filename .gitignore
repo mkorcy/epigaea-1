@@ -52,6 +52,7 @@ config/solr.yml
 config/devise.yml
 config/ldap.yml
 config/fedora3.yml
+config/handle.yml
 
 # Rubymine
 .idea
