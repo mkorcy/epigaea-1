@@ -10,6 +10,7 @@ AllCops:
 Metrics/AbcSize:
   Exclude:
     - app/models/xml_import.rb
+    - app/lib/tufts/importer.rb
 Metrics/BlockLength:
   Exclude:
     - config/**/*
@@ -27,6 +28,7 @@ Metrics/ClassLength:
     - app/controllers/catalog_controller.rb
 Metrics/LineLength:
   Exclude:
+    - app/lib/tufts/importer.rb
     - spec/controllers/tufts/draft_controller_spec.rb
     - spec/support/stub/stub_exif.rb
 Metrics/MethodLength:

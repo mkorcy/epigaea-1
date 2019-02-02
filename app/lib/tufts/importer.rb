@@ -163,6 +163,7 @@ module Tufts
           check_that_collections_exist(record)
           check_for_one_and_only_one_id(record) if @import_type == 'metadata'
           check_for_valid_ids(record) if @import_type == 'metadata'
+          ban_existing_ids(record) if @import_type == 'xml'
         end
       end
 
@@ -177,9 +178,19 @@ module Tufts
       # @param [Nokogiri::XML::Element] record
       def check_for_required_fields(record)
         identifier = file_or_id(record)
-        required_fields = ["dc:title", "tufts:displays_in", "model:hasModel"]
+
+        models = Tufts::Curation.const_get(:MODELS).values.map { |s| s.to_s.gsub("Tufts::Curation::", "") }
+
+        required_fields = ["dc:title", "tufts:displays_in", "tufts:visibility"]
         required_fields.each do |field|
           errors << Importer::Error.new(record.line, type: :serious, message: "Missing required field: #{identifier} is missing #{field}") if record.xpath(field).text.empty?
+        end
+        required_controlled_fields = ["model:hasModel"]
+        required_controlled_fields.each do |field|
+          errors << Importer::Error.new(record.line, type: :serious, message: "Missing required field: #{identifier} is missing #{field}") if record.xpath(field).text.empty?
+          if field == "model:hasModel"
+            errors << Importer::Error.new(record.line, type: :serious, message: "Model value not within vocabulary: #{identifier}'s model needs to be one of #{models} and is currently #{record.xpath(field).text}") unless models.include? record.xpath(field).text
+          end
         end
       end
 
@@ -207,6 +218,22 @@ module Tufts
         elsif ids.count > 1
           errors << Importer::Error.new(record.line, type: :serious, message: "Only one id field can be specified per metadata import record")
         end
+      end
+
+      # Each id in a metadata import record must refer to a real object
+      # @param [Nokogiri::XML::Element] record
+      def ban_existing_ids(record)
+        return if record.xpath('tufts:id').empty?
+        id = record.xpath('tufts:id').first.text
+        exists = true
+        begin
+          ActiveFedora::Base.find(id)
+        rescue ActiveFedora::ObjectNotFoundError
+          exists = false
+        end
+
+        errors << Importer::Error.new(record.line, type: :serious, message: "#{id} already exists!") if exists
+        nil
       end
 
       # Each id in a metadata import record must refer to a real object
