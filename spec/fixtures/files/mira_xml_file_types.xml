@@ -15,6 +15,7 @@ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
           <tufts:filename type="transcript">2.pdf</tufts:filename>
           <tufts:filename type="representative">pdf-sample.pdf</tufts:filename>
 	  <tufts:displays_in>dl</tufts:displays_in>
+	  <tufts:visibility>open</tufts:visibility>
           <model:hasModel>Audio</model:hasModel>
           <dc:title>Record with Representative and Transcript</dc:title>
         </mira_import>
@@ -26,6 +27,7 @@ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
           <tufts:filename>3.pdf</tufts:filename>
           <tufts:filename type="thumbnail">fake.png</tufts:filename>
 	  <tufts:displays_in>dl</tufts:displays_in>
+	  <tufts:visibility>open</tufts:visibility>
           <model:hasModel>Pdf</model:hasModel>
           <dc:title>Record with Representative and Thumbnail</dc:title>
         </mira_import>
