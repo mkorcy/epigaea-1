@@ -5,6 +5,7 @@
 # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
 require File.expand_path('../config/application', __FILE__)
+require 'byebug'
 
 Rails.application.load_tasks
 
@@ -28,6 +29,62 @@ task apply_embargos: :environment do
       work.save
     end
     puts a.to_s
+  end
+end
+
+desc "iterate collections"
+task iterate_and_fix_collections1: :environment do
+  colls = Collection.all
+  colls.each do |col|
+    ead_id = col.ead
+    ead_id = ead_id.to_a.first
+    substring = "DO"
+    ead_id = "" if ead_id.nil?
+    count =  ead_id.scan(/(?=#{substring})/).count
+
+    if count > 1
+      ead_id = ead_id.sub(substring + ".", "")
+      puts "FIX #{ead_id}"
+      col.ead = [ead_id]
+      col.save
+    else
+      puts "OK"
+    end
+  end
+end
+
+desc "apply genres"
+task apply_genre: :environment do
+  file = File.read('genre.json')
+  data_hash = JSON.parse(file)
+  data_hash["response"]["docs"].each do |doc|
+    next if doc['genre_tesim'].nil? || doc['genre_tesim'].empty?
+    id = doc['id'].gsub("draft:", "tufts:")
+    obj = ActiveFedora::Base.where(legacy_pid_tesim: id)
+    next if obj.empty?
+    o = obj.first
+    o.genre = doc['genre_tesim']
+    o.save!
+    puts "#{o.id} #{doc['genre_tesim']}"
+  end
+end
+
+desc "iterate collections"
+task iterate_and_fix_collections: :environment do
+  colls = Collection.all
+  colls.each do |col|
+    ead_id = col.ead
+    ead_id = ead_id.to_a.first
+    puts "class #{ead_id.class}"
+    eads = Ead.where(legacy_pid_tesim: ead_id)
+    eads = eads.to_a.first unless eads.to_a.empty?
+    if eads.instance_of? Ead
+      eads.member_of_collections = [col]
+      eads.save
+      puts "Add #{eads} with legacy_pid (#{ead_id}) to #{col.id}"
+    else
+      puts "SKIPPING"
+    end
   end
 end
 
