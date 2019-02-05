@@ -9,9 +9,11 @@
     
     <div class="row pull-right col-md-4" id="copyright">
       <span> &copy; <%= Date.today.year %> Tufts University </span>
+<% if false %>
       <div class="version">
       Version <span title="<%= GIT_SHA %>"><%= BRANCH %> updated <%= LAST_DEPLOYED %></span>
       </div>
+<% end %>
     </div>    
   </div>
 </div>
