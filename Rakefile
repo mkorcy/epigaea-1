@@ -38,13 +38,12 @@ task f3_updates: :environment do
   CSV.foreach("/usr/local/hydra/epigaea/f3_updates.txt", headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
     id = row[0]
     updated = row[1]
-    
+
     next if id.starts_with?('tufts:')
-    id = id.gsub("draft:","tufts:")
+    id = id.gsub("draft:", "tufts:")
     puts "UPDATE select_ingest_dates set f3_edited_date='#{updated}' where legacy_pid_tesim='#{id}';"
   end
 end
-
 
 desc "iterate collections"
 task iterate_and_fix_collections1: :environment do
