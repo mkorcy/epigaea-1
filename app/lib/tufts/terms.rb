@@ -9,7 +9,7 @@ module Tufts
                     :personal_name, :primary_date, :provenance, :publisher, :qr_note, :qr_status,
                     :rejection_reason, :replaces, :resource_type, :retention_period, :rights_holder, :rights_note,
                     :geographic_name, :steward, :subject, :table_of_contents, :temporal, :is_part_of, :tufts_license,
-                    :geog_name, :downloadable].freeze
+                    :geog_name, :downloadable, :aspace_cuid].freeze
 
     REMOVE_TERMS = [:keyword, :based_near, :location].freeze
     def self.shared_terms

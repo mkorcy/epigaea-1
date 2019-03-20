@@ -43,7 +43,7 @@ gem 'whenever', require: false
 
 gem 'blacklight_advanced_search'
 
-gem 'tufts-curation', git: 'https://github.com/TuftsUniversity/tufts-curation', tag: '1.0.15'
+gem 'tufts-curation', git: 'https://github.com/TuftsUniversity/tufts-curation', tag: '1.0.16'
 # gem 'tufts-curation', :path => '../tufts-curation'
 
 group :development, :test do

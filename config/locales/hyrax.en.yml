@@ -81,6 +81,7 @@ en:
           temporal_tesim:  'Temporal'
           tufts_is_part_of_tesim:  'Tufts Is Part Of'
           tufts_license_tesim:  'Tufts License'
+          aspace_cuid_tesim: 'Component ID'
         show:
           abstract:  'Abstract'
           access_control_id:  'Access Control'
@@ -150,6 +151,7 @@ en:
           temporal:  'Temporal'
           tufts_is_part_of:  'Tufts Is Part Of'
           tufts_license:  'Tufts License'
+          aspace_cuid: 'Component ID'
   activefedora:
     models:
       ead: 'EAD'
@@ -262,3 +264,4 @@ en:
           temporal:  'Temporal'
           tufts_is_part_of:  'Tufts Is Part Of'
           tufts_license:  'Tufts License'
+          aspace_cuid: 'Component ID'
