@@ -12,44 +12,157 @@ Rails.application.load_tasks
 task(:default).clear
 task default: ['tufts:ci']
 
+desc "compute handles2"
+task compute_handles2: :environment do
+  puts "Loading File"
+  CSV.foreach("/usr/local/hydra/epigaea/book.txt", headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
+    pid = row[3]
+    handle_id = row[0]
+
+    a = ActiveFedora::Base.where(legacy_pid_tesim: pid)
+    if a.empty?
+      puts "NOPE #{pid}"
+    else
+      handles = a.first.identifier
+      handles.each do |_handle|
+        # handle = handle.gsub("http://hdl.handle.net/", "")
+        model = a.first.class.to_s
+        case  model
+        when "Image"
+          model = 'images/'
+        when "Pdf"
+          model = 'pdfs/'
+        when "Ead"
+          model = 'eads/'
+        when "Rcr"
+          model = 'rcrs/'
+        when "Audio"
+          model = 'audios/'
+        when "Video"
+          model = 'videos/'
+        when "GenericObject"
+          model = 'generic_objects/'
+        when "Tei"
+          model = 'teis/'
+        when "VotingRecord"
+          model = 'voting_records/'
+        else
+          puts "NOPE NO MODEL FOUND #{model}"
+        end
+        url = 'https://dl.tufts.edu/conern/' + model + a.first.id
+        puts "UPDATE handles set data='#{url}' WHERE handle='#{handle_id}' and type='URL';"
+      end
+    end
+  end
+end
+
 desc "compute handles"
 task compute_handles: :environment do
   puts "Loading File"
   CSV.foreach("/usr/local/hydra/epigaea/b.out", headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
     pid = row[0]
-    a = ActiveFedora::Base.find(pid)
+    a = ActiveFedora::Base.where(legacy_pid_tesim: pid)
     if a.empty?
       puts "NOPE #{pid}"
     else
       handles = a.first.identifier
       handles.each do |handle|
-      handle = handle.gsub("http://hdl.handle.net/","")
-      model = a.first.class.to_s
-      case  model
-      when "Image"
-        model = 'images/'
-      when "Pdf"
-        model = 'pdfs/'
-      when "Ead"
-        model = 'eads/'
-      when "Rcr"
-        model = 'rcrs/'
-      when "Audio"
-        model = 'audios/'
-      when "Video"
-        model = 'videos/'
-      when "GenericObject"
-        model = 'generic_objects/'
-      when "Tei"
-        model = 'teis/'
-      when "VotingRecord"
-        model = 'voting_records/'
+        handle = handle.gsub("http://hdl.handle.net/", "")
+        model = a.first.class.to_s
+        case  model
+        when "Image"
+          model = 'images/'
+        when "Pdf"
+          model = 'pdfs/'
+        when "Ead"
+          model = 'eads/'
+        when "Rcr"
+          model = 'rcrs/'
+        when "Audio"
+          model = 'audios/'
+        when "Video"
+          model = 'videos/'
+        when "GenericObject"
+          model = 'generic_objects/'
+        when "Tei"
+          model = 'teis/'
+        when "VotingRecord"
+          model = 'voting_records/'
+        else
+          puts "NOPE NO MODEL FOUND #{model}"
+        end
+        url = 'https://dl.tufts.edu/conern/' + model + a.first.id
+        puts "UPDATE handles set data='#{url}' WHERE handle='#{handle}' and type='URL';"
+      end
+    end
+  end
+end
+
+desc "collection by title"
+task collection_by_title: :environment do
+  puts "Loading File"
+  CSV.foreach("/usr/local/hydra/epigaea/collect_items.csv", headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
+    pid = row[0]
+    title = row[1]
+    begin
+      puts "PROCESSING PID : #{pid}"
+      obj = ActiveFedora::Base.find(pid)
+      if obj.class.to_s == "Ead"
+        puts "FOUND EAD NEXT"
+        next
+      end
+
+      col = Collection.find(title)
+      obj.member_of_collections = [col]
+      obj.save!
+    rescue ActiveFedora::ObjectNotFoundError
+      puts "ERROR not found #{pid} #{title}"
+    end
+  end
+end
+
+desc "ead matching"
+task ead_matching: :environment do
+  puts "Loading File"
+  CSV.foreach("/usr/local/hydra/epigaea/eads.txt", headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
+    begin
+      pid = row[0]
+      title = row[1]
+      obj = ActiveFedora::Base.find(pid)
+      cols = Collection.where(title_tesim: title)
+      col_desc = Collection.find('vd66vz89n')
+
+      if cols.empty?
+        puts "EAD #{pid} has no matching collection"
+        a = Collection.new(title: [title])
+        a.apply_depositor_metadata 'apruit01'
+        a.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+        a.save!
+        a = a.reload
+        obj.member_of_collections = [a, col_desc]
       else
-        puts "NOPE NO MODEL FOUND #{model}"
+        puts "EAD #{pid} has a matching collection and can be added."
+        col = cols.first
+        obj.member_of_collections = [col, col_desc]
       end
-      url = 'https://dl.tufts.edu/conern/' + model + a.first.id
-      puts "UPDATE handles set data='#{url}' WHERE handle='#{handle}' and type='URL';"
-      end
+
+      obj.save!
+    rescue ActiveFedora::ObjectNotFoundError
+      puts "ERROR not found #{pid}"
+    end
+  end
+end
+
+desc "publish objects"
+task publish_objects: :environment do
+  puts "Loading File"
+  CSV.foreach("/usr/local/hydra/epigaea/publish_objects.txt", headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
+    begin
+      pid = row[0]
+      # a = ActiveFedora::Base.find(pid)
+      PublishJob.perform_later(pid)
+    rescue ActiveFedora::ObjectNotFoundError
+      puts "ERROR not found #{pid}"
     end
   end
 end
@@ -61,7 +174,7 @@ task sipity_updates: :environment do
     begin
       pid = row[0]
       a = ActiveFedora::Base.find(pid)
-      puts "insert into sipity_entities (proxy_for_global_id, workflow_id, workflow_state_id, created_at, updated_at) values ('gid://epigaea/#{a.class}/#{pid}',1,1, NOW(), NOW());"
+      puts "insert into sipity_entities (proxy_for_global_id, workflow_id, workflow_state_id, created_at, updated_at) values ('gid://epigaea/#{a.class}/#{pid}',1,2, NOW(), NOW());"
     rescue ActiveFedora::ObjectNotFoundError
       puts "ERROR not found #{pid}"
     end
@@ -82,7 +195,6 @@ task f3_to_f4: :environment do
   end
 end
 
-
 desc "check if fedora 3 pids are migrated"
 task do_these_exist: :environment do
   puts "Loading File"
@@ -90,7 +202,14 @@ task do_these_exist: :environment do
     pid = row[0]
     a = ActiveFedora::Base.where(legacy_pid_tesim: pid)
     if a.empty?
-      puts "NOPE #{pid}"
+
+      a = ActiveFedora::Base.where(legacy_pid_tesim: pid.gsub("tufts:", "draft:"))
+      if a.empty?
+        puts "NOPE #{pid}"
+      else
+        pid = pid.gsub("tufts:", "draft:")
+        puts "YEP #{pid}"
+      end
     else
       puts "YEP #{pid}"
     end
@@ -103,12 +222,11 @@ task make_filesets_public: :environment do
   CSV.foreach("/usr/local/hydra/epigaea/file_sets.txt", headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
     pid = row[0]
     a = FileSet.find(pid)
-puts "ABOUT TO UPDATE : #{pid}"
+    puts "ABOUT TO UPDATE : #{pid}"
     a.visibility = 'open'
     a.save!
   end
 end
-
 
 desc "apply embargos"
 task apply_embargos: :environment do
