@@ -1,3 +1,6 @@
+require 'shellwords'
+require 'mimemagic'
+
 module Tufts
   class CharacterizationService
     FIELDS = {
@@ -18,6 +21,16 @@ module Tufts
     end
 
     def characterize
+      if !@object.mime_type.nil? && @object.mime_type == "TBD"
+        mimetype = `file --brief --mime-type - < #{Shellwords.shellescape(@source)}`.strip
+        if mimetype == "application/octet-stream"
+          # if we don't characterize this as a video it won't get derivatives
+          type_obj = MimeMagic.by_path(@source)
+          mimetype = type_obj.type unless type_obj.nil?
+          # mimetype = "video/mp4"
+        end
+        append_property_value("mime_type", mimetype)
+      end
       extracted_md = map_fields_to_properties(exif_data)
       extracted_md.each { |property, value| append_property_value(property, value) }
     end
