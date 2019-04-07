@@ -14,19 +14,16 @@ module Hyrax
 
       def call
         Rails.logger.warn "EmbargoSummaryReportNotification sent: #{@message}"
-        user = ::User.find_by(username: 'mkorcy01')
         recipients.each do |recipient|
           Rails.logger.warn "EmbargoSummaryReportNotification sent to #{recipient.email}"
-          user.send_message(recipient, @message, @subject)
+          EmbargoMailer.new.embargo_email(recipient, @subject, @message).deliver
         end
       end
 
       # Only send this to the application admins
       def recipients
-        # admin_role = Role.find_by(username: "mkorcy01")
-        u = ::User.find_by(username: 'mkorcy01')
-        [u]
-        # admin_role.users.to_a
+        admin_role = Role.find_by(name: "embargo_admin")
+        admin_role.users.to_a
       end
     end
   end

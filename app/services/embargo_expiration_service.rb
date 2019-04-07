@@ -34,50 +34,29 @@ class EmbargoExpirationService
   def initialize(date)
     @date = date
     @summary_report = "Summary embargo report for #{date}\n"
-    @summary_report_subject = "ETD embargos summary: #{date}"
+    @summary_report_subject = "MIRA/TDR Embargos Summary: #{date}"
   end
 
   # Given a work, format it for inclusion in the summary report
   def format_for_summary_report(work)
-    "\n#{work.creator.first}. #{work.title.first} (#{document_path(work)})"
-  end
-
-  def document_path(document)
-    key = document.model_name.singular_route_key
-    Rails.application.routes.url_helpers.send(key + "_path", document.id)
+    "\n Embargo Release Date: #{work.embargo.embargo_release_date}\n Creator: #{work.creator.first}\n Title: #{work.title.first}\n ID: #{work.id} \n\n"
   end
 
   def run
-    send_today_notifications
-    send_seven_day_notifications
-    send_sixty_day_notifications
+    items = find_expirations
+    report_and_expire unless items.empty?
+  end
+
+  def report_and_expire
+    create_summary_report
     expire_embargoes
     send_summary_report
   end
 
-  def send_sixty_day_notifications
-    @summary_report << "\n\nETD embargoes expiring in 60 days\n"
-    expirations = find_expirations(60)
+  def create_summary_report
+    @summary_report << "\n"
+    expirations = find_expirations
     expirations.each do |expiration|
-      Hyrax::Workflow::SixtyDayEmbargoNotification.send_notification(expiration.id)
-      @summary_report << format_for_summary_report(expiration)
-    end
-  end
-
-  def send_seven_day_notifications
-    @summary_report << "\n\nETD embargoes expiring in 7 days\n"
-    expirations = find_expirations(7)
-    expirations.each do |expiration|
-      Hyrax::Workflow::SevenDayEmbargoNotification.send_notification(expiration.id)
-      @summary_report << format_for_summary_report(expiration)
-    end
-  end
-
-  def send_today_notifications
-    @summary_report << "\n\nETD embargoes expiring today (#{@date})\n"
-    expirations = find_expirations(0)
-    expirations.each do |expiration|
-      Hyrax::Workflow::TodayEmbargoNotification.send_notification(expiration.id)
       @summary_report << format_for_summary_report(expiration)
     end
   end
@@ -87,7 +66,7 @@ class EmbargoExpirationService
   end
 
   def expire_embargoes
-    expirations = find_expirations(0)
+    expirations = find_expirations
     expirations.each do |expiration|
       Rails.logger.warn "ETD #{expiration.id}: Expiring embargo"
       expiration.visibility = expiration.visibility_after_embargo if expiration.visibility_after_embargo
@@ -99,8 +78,13 @@ class EmbargoExpirationService
 
   # Find all ETDs what will expire in the given number of days
   # @param [Integer] number of days
-  def find_expirations(days)
-    expiration_date = solrize_date(@date + days.send(:days))
-    ActiveFedora::Base.where("embargo_release_date_dtsi:#{RSolr.solr_escape(expiration_date)}")
+  def find_expirations
+    days_to_check = Array(1..180)
+    items = []
+    days_to_check.each do |day|
+      expiration_date = solrize_date(@date - day.send(:days))
+      items += ActiveFedora::Base.where("embargo_release_date_dtsi:#{RSolr.solr_escape(expiration_date)}")
+    end
+    items
   end
 end
