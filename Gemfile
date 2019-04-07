@@ -70,7 +70,6 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'active_job_status', '~> 1.2.1'
-gem 'devise'
 gem 'devise-guests', '~> 0.6'
 gem 'devise_ldap_authenticatable'
 gem 'handle-system', git: 'https://github.com/TuftsUniversity/handle.git'
@@ -106,3 +105,8 @@ group :development, :test do
   gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
   gem 'solr_wrapper', '>= 0.3'
 end
+
+# github security updates list
+gem "devise", ">= 4.6.0"
+gem "rubyzip", ">= 1.2.2"
+
