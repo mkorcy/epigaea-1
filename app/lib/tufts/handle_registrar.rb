@@ -52,6 +52,7 @@ module Tufts
       handle = @builder.build(hint: object.id)
       record = @connection.create_record(handle)
       update_record(object: object, record: record)
+      #      LOGGER.log(nil,record.to_s, "BLAH")
       record.save
       record
     rescue Handle::HandleError, NullIdError => err
@@ -79,6 +80,7 @@ module Tufts
     # @raise [NullIdError] when the object has no stable id
     def update!(handle:, object:)
       check_id!(object)
+      handle = handle.gsub("http://hdl.handle.net/", "") if handle.to_s.starts_with?("http")
       record = @connection.resolve_handle(handle)
       old_fields = record.to_a.dup
       update_record(object: object, record: record)
