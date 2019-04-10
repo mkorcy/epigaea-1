@@ -8,7 +8,9 @@ module Tufts
       bits_per_sample:            [:ifd0, 'BitsPerSample'],
       samples_per_pixel:          [:ifd0, 'SamplesPerPixel'],
       x_resolution:               [:ifd0, 'XResolution'],
-      y_resolution:               [:ifd0, 'YResolution']
+      y_resolution:               [:ifd0, 'YResolution'],
+      height:                     [:ifd0, 'ImageHeight'],
+      width:                      [:ifd0, 'ImageWidth']
     }.freeze
 
     def self.run(object, source)
