@@ -23,4 +23,4 @@ stage:
   :concurrency: 3
 
 production:
-  :concurrency: 5
+  :concurrency: 3
