@@ -1,3 +1,5 @@
+require 'byebug'
+
 module Tufts
   ##
   # A record for import.
@@ -105,6 +107,18 @@ module Tufts
                 .children.map(&:content).first || file
     end
 
+    def visibility_during_embargo
+      metadata.xpath('./tufts:visibility_during_embargo', mapping.namespaces).children.map(&:content).first
+    end
+
+    def visibility_after_embargo
+      metadata.xpath('./tufts:visibility_after_embargo', mapping.namespaces).children.map(&:content).first
+    end
+
+    def embargo_release_date
+      metadata.xpath('./tufts:embargo_release_date', mapping.namespaces).children.map(&:content).first
+    end
+
     ##
     # @return [Array<String>]
     def collections
@@ -119,7 +133,15 @@ module Tufts
         attrs[field.first] = field.last
       end
 
-      attributes[:visibility] = visibility
+      # set additional attributes
+      if embargo_release_date
+        attributes[:visibility_during_embargo] = visibility_during_embargo
+        attributes[:visibility_after_embargo] = visibility_after_embargo
+        attributes[:embargo_release_date] = embargo_release_date
+      else
+        attributes[:visibility] = visibility
+      end
+
       attributes[:member_of_collections] = ActiveFedora::Base.find(collections)
 
       return object_class.new(**attributes) unless id
