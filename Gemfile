@@ -1,16 +1,17 @@
 source 'https://rubygems.org'
 
-ruby '2.3.4'
+ruby '2.3.8'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
+gem 'active-fedora', '11.5.2'
 gem 'dotenv-rails'
 gem 'exiftool_vendored'
 # gem 'fedora-migrate', path: '../fedora-migrate'
 gem 'hydra-role-management'
-gem 'hyrax', '2.0.0'
+gem 'hyrax', '2.1.0'
 gem 'nokogiri', '>=1.8.2' # 1.8.2 fixes security issue https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15412
 gem 'okcomputer'
 gem 'rack-protection', '~> 2.0.1' # 2.0.1 fixes security issue https://github.com/sinatra/sinatra/pull/1379
@@ -40,10 +41,10 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'whenever', require: false
-
+gem 'blacklight', '~> 6.20.0'
 gem 'blacklight_advanced_search'
 
-gem 'tufts-curation', git: 'https://github.com/TuftsUniversity/tufts-curation', tag: '1.0.16'
+gem 'tufts-curation', git: 'https://github.com/TuftsUniversity/tufts-curation', branch: 'hyrax-2.1'
 # gem 'tufts-curation', :path => '../tufts-curation'
 
 group :development, :test do
