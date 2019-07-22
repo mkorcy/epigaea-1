@@ -105,6 +105,21 @@ module Tufts
                 .children.map(&:content).first || file
     end
 
+    def visibility_during_embargo
+      return nil if metadata.nil?
+      metadata.xpath('./tufts:visibility_during_embargo', mapping.namespaces).children.map(&:content).first
+    end
+
+    def visibility_after_embargo
+      return nil if metadata.nil?
+      metadata.xpath('./tufts:visibility_after_embargo', mapping.namespaces).children.map(&:content).first
+    end
+
+    def embargo_release_date
+      return nil if metadata.nil?
+      metadata.xpath('./tufts:embargo_release_date', mapping.namespaces).children.map(&:content).first
+    end
+
     ##
     # @return [Array<String>]
     def collections
