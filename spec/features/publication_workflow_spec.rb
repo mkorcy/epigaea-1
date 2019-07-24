@@ -63,6 +63,7 @@ RSpec.feature 'deposit and publication', :clean, :workflow do
 
       # The admin user approves the work, changing its status to "published"
       Tufts::WorkflowStatus.publish(work: work, current_user: publishing_user, comment: "Published in publication_workflow_spec.rb")
+      sleep(2)
       expect(work.to_sipity_entity.reload.workflow_state_name).to eq "published"
 
       # Check it appears as published in the admin dashboard
