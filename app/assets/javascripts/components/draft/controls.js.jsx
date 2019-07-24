@@ -1,4 +1,5 @@
-var DraftControls = React.createClass({
+
+var DraftControls = createReactClass({
 
   render: function() {
     return <div>
@@ -6,4 +7,3 @@ var DraftControls = React.createClass({
            </div>
   }
 });
-
