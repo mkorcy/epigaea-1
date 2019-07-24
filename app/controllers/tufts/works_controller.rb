@@ -8,13 +8,18 @@ module Tufts
     before_action :redirect_non_admins
 
     def create
-      normalize_whitespace(params)
+      p = params.to_unsafe_hash
+      normalize_whitespace(p)
+      # normalize_whitespace(params)
+      # params = p
       super
       Hyrax::Workflow::SelfDepositNotification.new(curation_concern).call
     end
 
     def update
-      normalize_whitespace(params)
+      p = params.to_unsafe_hash
+      normalize_whitespace(p)
+      params = p
       delete_draft(params)
       super
     end
