@@ -1,22 +1,22 @@
 source 'https://rubygems.org'
 
-ruby '2.3.8'
+ruby '2.6.2'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
-gem 'active-fedora', '11.5.2'
+gem 'active-fedora'
 gem 'dotenv-rails'
 gem 'exiftool_vendored'
 # gem 'fedora-migrate', path: '../fedora-migrate'
 gem 'hydra-role-management'
-gem 'hyrax', '2.1.0'
+gem 'hyrax', '2.5.1'
 gem 'nokogiri', '>=1.8.2' # 1.8.2 fixes security issue https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15412
 gem 'okcomputer'
 gem 'rack-protection', '~> 2.0.1' # 2.0.1 fixes security issue https://github.com/sinatra/sinatra/pull/1379
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.4'
+gem 'rails', '~> 5.1.7'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use Puma as the app server
@@ -40,16 +40,19 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-gem 'whenever', require: false
 gem 'blacklight', '~> 6.20.0'
 gem 'blacklight_advanced_search'
+gem 'whenever', require: false
 
-gem 'tufts-curation', git: 'https://github.com/TuftsUniversity/tufts-curation', branch: 'hyrax-2.1'
+gem 'tufts-curation', git: 'https://github.com/TuftsUniversity/tufts-curation', branch: 'update'
+
 # gem 'tufts-curation', :path => '../tufts-curation'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  gem 'launchy'
+  gem 'pry'
 end
 
 group :development do
