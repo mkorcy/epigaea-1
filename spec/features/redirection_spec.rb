@@ -68,7 +68,7 @@ RSpec.feature 'redirection' do
     describe 'getting redirected to the dashboard when visiting root' do
       scenario do
         visit '/'
-        expect(page).to have_content 'Administration'
+        expect(page).to have_content 'Dashboard'
       end
     end
 
