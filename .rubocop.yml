@@ -98,3 +98,10 @@ Security/YAMLLoad:
   Exclude:
     - config/initializers/devise.rb
     - config/initializers/redis_config.rb
+Lint/UselessAssignment:
+  Exclude:
+    - app/lib/tufts/contribute_collections.rb
+RSpec/LetSetup:
+  Exclude:
+    - spec/features/create_collection_spec.rb
+    - spec/features/add_work_to_collection_spec.rb
