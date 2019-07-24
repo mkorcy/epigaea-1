@@ -38,9 +38,14 @@ RSpec.feature 'Edit a PDF', js: true do
 
       # Now we're on the show page for the PDF.
       # The descriptions should be in correct order.
-      expect(page).to have_content 'desc 0 desc 1 desc 2 desc 3'
+      expect(page).to have_text 'desc 0'
+      expect(page).to have_text 'desc 1'
+      expect(page).to have_text 'desc 2'
+      expect(page).to have_text 'desc 3'
       # Creators should be in correct order
-      expect(page).to have_content 'creator 0 creator 1 creator 2'
+      expect(page).to have_content 'creator 0'
+      expect(page).to have_content 'creator 1'
+      expect(page).to have_content 'creator 2'
     end
   end
 end
