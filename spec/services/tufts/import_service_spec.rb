@@ -7,9 +7,9 @@ describe Tufts::ImportService, :workflow, :clean do
   let(:import)         { FactoryGirl.create(:xml_import, uploaded_file_ids: files.map(&:id)) }
   let(:object)         { FactoryGirl.build(:pdf, id: object_id) }
   let(:object_id)      { SecureRandom.uuid }
-  let(:collection1)     { FactoryGirl.create(:collection, id: 'a_collection_id') }
-  let(:collection2)     { FactoryGirl.create(:collection, id: 'another_collection_id') }
-  let(:collections)    { collection_ids.map { |id| FactoryGirl.create(:collection, id: id) }.to_a }
+  let(:collection1)     { FactoryGirl.create(:collection_lw, id: 'a_collection_id') }
+  let(:collection2)     { FactoryGirl.create(:collection_lw, id: 'another_collection_id') }
+  let(:collections)    { collection_ids.map { |id| FactoryGirl.create(:collection_lw, id: id) }.to_a }
   let(:collection_ids) { import.records.first.collections }
 
   before do
