@@ -13,7 +13,7 @@ class XmlImport < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validate :file_is_correctly_formatted
   validate :uploaded_files_exist
 
-  NOID_SERVICE = ActiveFedora::Noid::Service.new
+  NOID_SERVICE = Noid::Rails::Service.new
   TYPE_STRING  = 'XML Import'.freeze
 
   ##
