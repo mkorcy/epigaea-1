@@ -18,7 +18,7 @@ before_script:
   - cp config/secrets.yml.sample config/secrets.yml
   - bundle exec sidekiq -d -l /tmp/sidekiq.log
   - bundle exec rake db:create
-  - rails db:migrate RAILS_ENV=test
+  - RAILS_ENV=test bundle exec rake db:migrate --trace
 script:
   - bundle exec rubocop
   - xvfb-run -a bundle exec rake travis
