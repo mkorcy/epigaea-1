@@ -6,7 +6,7 @@ dist: trusty
 jdk:
   - oraclejdk8
 rvm:
-  - 2.3.4
+  - 2.6.2
 before_script:
   - cp config/fedora.yml.sample config/fedora.yml
   - cp config/solr.yml.sample config/solr.yml
