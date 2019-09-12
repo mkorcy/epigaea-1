@@ -1,11 +1,9 @@
 require 'active_fedora'
 
 namespace :tufts do
-
   desc 'change https to http in the rights_statement attribute of all DL objects'
 
   task fix_https_rights_statements: :environment do
-
     if ARGV.size != 2
       puts('example usage: rake tufts:fix_https_rights_statements https_pids.txt')
     else
@@ -34,7 +32,7 @@ namespace :tufts do
           if rights == new_rights
             msg = id + ': ' + rights + ' is OK'
           else
-            work[:rights_statement]=[new_rights]
+            work[:rights_statement] = [new_rights]
             work.save!
             modified += 1
             msg = id + ': ' + rights + ' became ' + new_rights
