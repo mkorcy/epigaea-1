@@ -7,6 +7,8 @@ AllCops:
     - script/**/*
     - vendor/**/*
     - tmp/**/*
+    - app/models/concerns/hyrax/ability.rb
+    - lib/active_fedora/solr_service.rb
 Metrics/AbcSize:
   Exclude:
     - app/models/xml_import.rb
@@ -79,12 +81,12 @@ RSpec/ScatteredSetup:
 Rails/TimeZone:
   Exclude:
     - config/initializers/git_sha.rb
-Style/FileName:
+Naming/FileName:
   Exclude:
     - "**/Capfile"
     - "**/Gemfile"
     - "**/*.rake"
-    - config/deploy/*
+    - "config/deploy/*"
 Style/MethodMissing:
   Exclude:
     - app/models/concerns/hyrax/file_set/characterization.rb
