@@ -24,6 +24,7 @@
 <%= presenter.attribute_to_html(:extent, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:format_label, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:funder, render_as: :linked, search_field: 'all_fields') %>
+<%= presenter.attribute_to_html(:geographic_name, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:geog_name, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:genre, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:has_part, render_as: :linked, search_field: 'all_fields') %>
@@ -48,7 +49,6 @@
 <%= presenter.attribute_to_html(:rights_holder, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:rights_note, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:source, render_as: :linked, search_field: 'all_fields') %>
-<%= presenter.attribute_to_html(:geographic_name, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:admin_start_date, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:steward, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:subject, render_as: :faceted) %>
