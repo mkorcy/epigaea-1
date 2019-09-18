@@ -15,6 +15,7 @@ class CatalogController < ApplicationController
 
   configure_blacklight do |config|
     # default advanced config values
+    config.http_method = :post
     config.advanced_search ||= Blacklight::OpenStructWithHashAccess.new
     config.advanced_search[:url_key] ||= 'advanced'
     config.advanced_search[:query_parser] ||= 'dismax'
