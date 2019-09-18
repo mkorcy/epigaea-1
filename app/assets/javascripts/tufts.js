@@ -13,6 +13,19 @@ var Tufts = {
     $('[data-search-option="/catalog"]').click()
   },
   activateDataTable: function(options) {
+      $(document).on('turbolinks:load', function() {
+      if ($.fn.dataTable.isDataTable(options.selector)) {
+        table = $(options.selector).DataTable()
+      }
+      else {
+        table = $(options.selector).DataTable( {
+          paging: options.paging
+        })
+      }
+    })
+    $(document).on("turbolinks:before-cache", function() {
+      $(options.selector).DataTable().destroy()
+    })
   },
   activateBatchesTable: function() {
     $(document).on('turbolinks:load', function() {
