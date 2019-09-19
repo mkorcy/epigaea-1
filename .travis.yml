@@ -21,6 +21,7 @@ before_script:
   - RAILS_ENV=test bundle exec rake db:migrate --trace
 script:
   - bundle exec rubocop
+  - bundle exec rails assets:precompile &> /dev/null
   - xvfb-run -a bundle exec rake travis
 addons:
   apt:
