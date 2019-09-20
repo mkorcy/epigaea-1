@@ -115,10 +115,10 @@ RSpec.feature 'Import Metadata', :clean, js: true, batch: true do
     context 'with collections' do
       let(:file)             { file_fixture('mira_export_with_collections.xml') }
       let(:collections)      { [collection_1, collection_2, collection_3] }
-      let(:collection_1)     { create(:collection, id: 'collection_1') }
-      let(:collection_2)     { create(:collection, id: 'collection_2') }
-      let(:collection_3)     { create(:collection, id: 'collection_3') }
-      let(:other_collection) { create(:collection) }
+      let(:collection_1)     { create(:collection_lw, id: 'collection_1') }
+      let(:collection_2)     { create(:collection_lw, id: 'collection_2') }
+      let(:collection_3)     { create(:collection_lw, id: 'collection_3') }
+      let(:other_collection) { create(:collection_lw) }
 
       let(:pdf) do
         create(:pdf, id: 'test_pdf_with_collections', member_of_collections: [other_collection])

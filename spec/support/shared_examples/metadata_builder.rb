@@ -46,7 +46,7 @@ shared_examples 'a MetadataBuilder' do
     end
 
     context 'with collections' do
-      let(:collections) { create_list(:collection, 3) }
+      let(:collections) { create_list(:collection_lw, 3) }
 
       before { object.member_of_collections = collections }
 

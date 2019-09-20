@@ -1,4 +1,5 @@
-var ContributeOtherAuthors = React.createClass({
+
+var ContributeOtherAuthors = createReactClass({
   removeStyle: {
     'display': 'inline',
     'marginLeft': '.5em'

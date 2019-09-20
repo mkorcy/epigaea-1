@@ -34,6 +34,7 @@ module Tufts
                                                        strip_whitespace(params[hash_key_for_curation_concern][key])
                                                      end
       end
+      params
     end
 
     ##

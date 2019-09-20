@@ -14,7 +14,8 @@ RSpec.describe XmlImport, :batch, :clean, :workflow, type: :model do
     subject(:batchable) do
       FactoryGirl.create(:xml_import, uploaded_file_ids: uploads.map(&:id))
     end
-
+    let(:service) { instance_double(::Noid::Rails::Service, mint: noid) }
+    let(:noid) { 'wd3763094' }
     let(:uploads) do
       # run these in a different order from the xml to confirm looping logic
       [FactoryGirl.create(:hyrax_uploaded_file,

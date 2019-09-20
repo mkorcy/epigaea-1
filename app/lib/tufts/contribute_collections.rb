@@ -21,8 +21,10 @@ module Tufts
     end
 
     def create
+      default = Hyrax::CollectionType.find_or_create_default_collection_type
+      admin_set = Hyrax::CollectionType.find_or_create_admin_set_type
       @seed_data.each_key do |collection_id|
-        find_or_create_collection(collection_id)
+        find_or_create_collection(collection_id, default)
       end
     end
 
@@ -31,19 +33,20 @@ module Tufts
     # re-used, and re-create the collection object.
     # @param [String] ead_id
     # @return [Collection]
-    def find_or_create_collection(ead_id)
+    def find_or_create_collection(ead_id, default)
       col = Collection.where(ead: ead_id)
-      create_collection(ead_id) if col.empty?
+      create_collection(ead_id, default) if col.empty?
     end
 
     # @param [String] ead_id
     # @return [Collection]
-    def create_collection(ead_id)
+    def create_collection(ead_id, default = Hyrax::CollectionType.find_or_create_default_collection_type)
       collection = Collection.new
       collection_hash = @seed_data[ead_id]
       collection.title = Array(collection_hash[:title])
       collection.ead = Array(collection_hash[:ead])
       collection.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+      collection.collection_type = default
       collection.save
       collection
     end

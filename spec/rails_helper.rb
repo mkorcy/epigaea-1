@@ -50,10 +50,11 @@ Capybara::Screenshot.autosave_on_failure = false
 # Found in this thread: https://github.com/teampoltergeist/poltergeist/issues/375
 poltergeist_options = {
   js_errors: false,
-  timeout: 30,
+  timeout: 60,
   logger: false,
   debug: false,
   phantomjs_logger: StringIO.new,
+  phantom_js: "/usr/local/bin/phantomjs",
   phantomjs_options: [
     '--load-images=no',
     '--ignore-ssl-errors=yes'
@@ -68,7 +69,6 @@ end
 #  profile = Selenium::WebDriver::Chrome::Profile.new
 #  Capybara::Selenium::Driver.new(app, :browser => :chrome, profile: profile)
 # end
-
 Capybara.javascript_driver = :poltergeist
 
 Capybara.register_driver :chrome do |app|
@@ -77,7 +77,7 @@ Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, profile: profile)
 end
 
-Capybara.default_max_wait_time = 10
+Capybara.default_max_wait_time = 20
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
@@ -122,7 +122,6 @@ RSpec.configure do |config|
   config.before do |example|
     # Pass `:clean' to destroy objects in fedora/solr and start from scratch
     ActiveFedora::Cleaner.clean! if example.metadata[:clean]
-
     if example.metadata[:type] == :feature && Capybara.current_driver != :rack_test
       DatabaseCleaner.strategy = :truncation
     else
@@ -132,6 +131,14 @@ RSpec.configure do |config|
 
     Tufts::WorkflowSetup.setup if
       example.metadata[:type] == :feature || example.metadata[:workflow]
+  end
+
+  config.before(:suite) do
+    ActiveFedora::Cleaner.clean!
+  end
+
+  config.after do
+    ActiveFedora::Cleaner.clean!
   end
 
   config.after(:each, type: :feature) do

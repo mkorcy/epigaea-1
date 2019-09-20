@@ -23,10 +23,15 @@ RSpec.feature 'Create a GenericObject', :clean, js: true do
       # Hyrax::BasicMetadata attributes that we don't want in the form
       expect(page).to have_no_content('Keywords')
       expect(page).to have_no_content('Location')
+      click_link "Files"
+
+      execute_script("$('.fileinput-button input:first').css({'opacity':'1', 'display':'block', 'position':'relative'})")
+      attach_file('files[]', File.absolute_path(file_fixture('pdf-sample.pdf')))
+      sleep(1)
+      find('#with_files_submit').click
+      click_link "Descriptions"
       # Fill out the form with everything
-      within('.generic_object_title') do
-        fill_in "Title", with: "Title \n with \t condensed   spaces  "
-      end
+      fill_in "Title", with: "Title \n with \t condensed   spaces  ", match: :prefer_exact
       find(:xpath, '//option[contains(text(), "nowhere")]').select_option
       fill_in 'Abstract', with: " A short   description    with  \t wonky spaces   "
       fill_in 'Alternate Title', with: 'Alternate Title'
@@ -81,13 +86,8 @@ RSpec.feature 'Create a GenericObject', :clean, js: true do
       fill_in 'Tufts License', with: 'Tufts License'
       select 'Text', from: 'Type'
       # Attach a file
-      click_link "Files"
 
-      execute_script("$('.fileinput-button input:first').css({'opacity':'1', 'display':'block', 'position':'relative'})")
-      attach_file('files[]', File.absolute_path(file_fixture('pdf-sample.pdf')))
-      sleep(1)
       find('#with_files_submit').click
-
       expect(page).to have_content 'Title with condensed spaces'
       expect(page).to have_content 'nowhere'
       expect(page).to have_content 'A short description with wonky spaces'

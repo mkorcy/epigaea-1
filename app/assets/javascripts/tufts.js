@@ -13,7 +13,7 @@ var Tufts = {
     $('[data-search-option="/catalog"]').click()
   },
   activateDataTable: function(options) {
-    $(document).on('turbolinks:load', function() {
+      $(document).on('turbolinks:load', function() {
       if ($.fn.dataTable.isDataTable(options.selector)) {
         table = $(options.selector).DataTable()
       }

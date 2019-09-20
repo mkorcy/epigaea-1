@@ -25,9 +25,19 @@ RSpec.feature 'Create a PDF', :clean, js: true do
       # We don't want the transcript UI to show up on the Pdf form
       expect(page).not_to have_content('You will need to attach an XML file to to this work to select a transcript.')
       # Fill out the form with everything
-      within('.pdf_title') do
-        fill_in "Title", with: "Example \nTitle   "
-      end
+      sleep(2)
+      click_link "Files"
+
+      execute_script("$('.fileinput-button input:first').css({'opacity':'1', 'display':'block', 'position':'relative'})")
+      attach_file('files[]', File.absolute_path(file_fixture('pdf-sample.pdf')))
+      sleep(1)
+      find('#with_files_submit').click
+      click_link "Descriptions"
+      choose('pdf_visibility_open')
+      find('body').click
+      sleep(5)
+
+      fill_in "Title", with: "Example Title   ", match: :prefer_exact
       find(:xpath, '//option[contains(text(), "nowhere")]').select_option
       fill_in 'Abstract', with: 'Abstract'
       fill_in 'Alternate Title', with: 'Alternate Title'
@@ -95,13 +105,7 @@ RSpec.feature 'Create a PDF', :clean, js: true do
       fill_in 'Tufts License', with: 'Tufts License'
       select 'Text', from: 'Type'
       # Attach a file
-      click_link "Files"
-
-      execute_script("$('.fileinput-button input:first').css({'opacity':'1', 'display':'block', 'position':'relative'})")
-      attach_file('files[]', File.absolute_path(file_fixture('pdf-sample.pdf')))
-      sleep(1)
-      find('#with_files_submit').click
-
+      click_on 'Save'
       expect(page).to have_content 'Example Title'
       expect(page).to have_content 'Displays in Portal'
       expect(page).to have_content 'nowhere'
@@ -113,7 +117,8 @@ RSpec.feature 'Create a PDF', :clean, js: true do
       expect(page).to have_content 'Corporate Name'
       expect(page).to have_content 'Created By'
       # Creators should be in the correct order
-      expect(page).to have_content 'Creator 1 Creator 2'
+      expect(page).to have_content 'Creator 1'
+      expect(page).to have_content 'Creator 2'
       expect(page).to have_content 'Creator Department'
       expect(page).to have_content 'Date Accepted'
       expect(page).to have_content 'Date Copyrighted'
@@ -121,7 +126,8 @@ RSpec.feature 'Create a PDF', :clean, js: true do
       expect(page).to have_content 'Date Issued'
       expect(page).to have_content 'Depositor'
       # Description should be in the correct order
-      expect(page).to have_content 'Description 1 Description 2'
+      expect(page).to have_content 'Description 1'
+      expect(page).to have_content 'Description 2'
       expect(page).to have_content 'Embargo Note'
       expect(page).to have_content 'End Date'
       expect(page).to have_content 'Extent'

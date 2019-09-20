@@ -1,4 +1,5 @@
-var InputField = React.createClass({
+
+var InputField = createReactClass({
   inputStyle: {
     'marginBottom':'1em'
   },

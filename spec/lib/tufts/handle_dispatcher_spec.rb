@@ -43,7 +43,7 @@ describe Tufts::HandleDispatcher do
   end
 
   describe '#assign_for!' do
-    let(:id)     { ActiveFedora::Noid::Service.new.mint }
+    let(:id)     { Noid::Rails::Service.new.mint }
     let(:object) { Pdf.new(id: id, title: ['Moomin']) }
 
     include_examples 'performs handle assignment', :assign_for!

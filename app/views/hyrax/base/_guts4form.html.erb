@@ -12,14 +12,14 @@
             <li role="presentation">
           <% end %>
               <a href="#<%= tab %>" aria-controls="<%= tab %>" role="tab" data-toggle="tab">
-                <i class="fa icon-<%= tab %>"></i> <%= t("hyrax.works.form.tab.#{tab}") %>
+                <%= t("hyrax.works.form.tab.#{tab}") %>
               </a>
             </li>
         <% end %>
 
         <li role="presentation" id="tab-share" class="hidden">
           <a href="#share" aria-controls="share" role="tab" data-toggle="tab">
-            <i class="fa icon-share"></i> <%= t("hyrax.works.form.tab.share") %>
+            <%= t("hyrax.works.form.tab.share") %>
           </a>
         </li>
       </ul>
@@ -42,31 +42,29 @@
 
         <div role="tabpanel" class="tab-pane" id="share" data-param-key="<%= f.object.model_name.param_key %>">
             <div class="form-tab-content">
-                <%= render "form_share", f: f %>
+              <%= render "form_share", f: f %>
             </div>
         </div>
-            </div>
-      </div>   
+      </div>
     </div>
-
+  </div>
     <div class="save-controls">
-    <% if @curation_concern.persisted?  %>
-      <% workflow_status_with_draft = Tufts::WorkflowStatus.status(@curation_concern.id) %>
-      <% unless workflow_status_with_draft == 'unpublished'%>
-     <div class="col-xs-12 col-sm-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Manage Draft</h3>
-            </div>
-            <div class="list-group-item">
-                <%= react_component('DraftControls', {curation_concern_id: curation_concern.id, draft_saved: curation_concern.draft_saved?}, {camelize_props: true}) %>
-            </div>
-        </div>
-    </div>
-      <% end %>
+  <% if @curation_concern.persisted?  %>
+    <% workflow_status_with_draft = Tufts::WorkflowStatus.status(@curation_concern.id) %>
+    <% unless workflow_status_with_draft == 'unpublished'%>
+   <div class="col-xs-12 col-sm-4">
+      <div class="panel panel-default">
+          <div class="panel-heading">
+              <h3 class="panel-title">Manage Draft</h3>
+          </div>
+          <div class="list-group-item">
+              <%= react_component('DraftControls', {curation_concern_id: curation_concern.id, draft_saved: curation_concern.draft_saved?}, {camelize_props: true}) %>
+          </div>
+      </div>
+  </div>
     <% end %>
-    
-  <div id="savewidget" class="col-xs-12 col-sm-4" role="complementary">
+  <% end %>
+  <div id="savewidget" class="col-xs-12 col-sm-4 fixedsticky" role="complementary">
     <%= render 'form_progress', f: f %>
   </div>
   </div>

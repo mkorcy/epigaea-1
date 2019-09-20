@@ -4,7 +4,7 @@ RSpec.describe Tufts::ImportRecord do
   subject(:record)   { described_class.new }
   let(:id)           { 'IMPORT_RECORD_FAKE_ID' }
   let(:title)        { "President Jean Mayer speaking\n          at commencement, 1987" }
-  let!(:collections) { record.collections.map { |id| create(:collection, id: id) } }
+  let!(:collections) { record.collections.map { |id| create(:collection_lw, id: id) } }
 
   shared_context 'with metadata' do
     subject(:record) { described_class.new(metadata: node) }

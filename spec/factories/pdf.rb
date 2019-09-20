@@ -2,7 +2,7 @@ require 'ffaker'
 
 FactoryGirl.define do
   factory :pdf do
-    id { ActiveFedora::Noid::Service.new.mint }
+    id { Noid::Rails::Service.new.mint }
     title [FFaker::Book.title]
     visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
     displays_in ['nowhere']

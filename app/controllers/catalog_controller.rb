@@ -15,6 +15,7 @@ class CatalogController < ApplicationController
 
   configure_blacklight do |config|
     # default advanced config values
+    config.http_method = :post
     config.advanced_search ||= Blacklight::OpenStructWithHashAccess.new
     config.advanced_search[:url_key] ||= 'advanced'
     config.advanced_search[:query_parser] ||= 'dismax'
@@ -28,7 +29,7 @@ class CatalogController < ApplicationController
     config.show.partials.insert(1, :openseadragon)
 
     config.search_builder_class = TuftsCatalogSearchBuilder
-
+    #     config.search_builder_class = Hyrax::CatalogSearchBuilder
     # Show gallery view
     config.view.gallery.partials = [:index_header, :index]
     config.view.slideshow.partials = [:index]

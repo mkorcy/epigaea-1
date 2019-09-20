@@ -1,4 +1,5 @@
-var DraftSaveButton = React.createClass ({
+
+var DraftSaveButton = createReactClass({
     getInitialState: function() {
         var draftState = {
             isSaved:this.props.draftSaved,
@@ -42,7 +43,7 @@ var DraftSaveButton = React.createClass ({
         // Clear out existing draft
         var deleteDraft = this.delete()
         var draftSaveButton = this
-  
+
         draftSaveButton.setState({isSaving: true})
         deleteDraft.then(function() {
           var request = new XMLHttpRequest()
@@ -50,7 +51,7 @@ var DraftSaveButton = React.createClass ({
           $('[name="_method"]').val('post')
           var form = document.querySelector('.simple_form')
             var formData = new FormData(form)
-          
+
             request.open('POST', '/draft/save_draft/'+draftSaveButton.props.curationConcernId)
             request.send(formData)
 

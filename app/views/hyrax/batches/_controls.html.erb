@@ -1,16 +1,16 @@
 <ul class="batch-controls">
   <li>
-    <%= button_to "Publish Batches", main_app.batches_path, method: :post, params: { batch: { ids: @batch.object.ids, batchable_attributes: { batch_type: "Publish" } } }, class: "btn btn-primary" %>
+    <%= button_to "Publish Batch", main_app.batches_path, method: :post, params: { batch: { ids: @batch.object.ids, batchable_attributes: { batch_type: "Publish" } } }, class: "btn btn-primary" %>
   </li>
   <li>
   <li>
-    <%= button_to "Unpublish Batches", main_app.batches_path, method: :post, params: { batch: { ids: @batch.object.ids, batchable_attributes: { batch_type: "Unpublish" } } }, class: "btn btn-primary" %>
+    <%= button_to "Unpublish Batch", main_app.batches_path, method: :post, params: { batch: { ids: @batch.object.ids, batchable_attributes: { batch_type: "Unpublish" } } }, class: "btn btn-primary" %>
   </li>
   </li>
   <li>
-    <%= button_to "Purge Batches", main_app.batches_path, method: :post, params: { batch: { ids: @batch.object.ids, batchable_attributes: { batch_type: "Purge" } } }, class: "btn btn-primary" %>
+    <%= button_to "Purge Batch", main_app.batches_path, method: :post, params: { batch: { ids: @batch.object.ids, batchable_attributes: { batch_type: "Purge" } } }, class: "btn btn-primary" %>
   </li>
   <li>
-    <%= button_to "Revert Drafts", main_app.batches_path, method: :post, params: { batch: { ids: @batch.object.ids, batchable_attributes: { batch_type: "Revert" } } }, class: "btn btn-primary" %>
+    <%= button_to "Revert to Draft", main_app.batches_path, method: :post, params: { batch: { ids: @batch.object.ids, batchable_attributes: { batch_type: "Revert" } } }, class: "btn btn-primary" %>
   </li>
 </ul>

@@ -20,8 +20,8 @@ module Tufts
       rescue ActiveRecord::RecordNotUnique
         Rails.logger.debug "Tried to make default permission template but it already exists"
       end
-      Hyrax::PermissionTemplate.create!(admin_set_id: AdminSet::DEFAULT_ID) unless Hyrax::PermissionTemplate.find_by(admin_set_id: AdminSet::DEFAULT_ID)
-      permission_template = Hyrax::PermissionTemplate.find_by(admin_set_id: AdminSet::DEFAULT_ID)
+      Hyrax::PermissionTemplate.create!(source_id: AdminSet::DEFAULT_ID) unless Hyrax::PermissionTemplate.find_by(source_id: AdminSet::DEFAULT_ID)
+      permission_template = Hyrax::PermissionTemplate.find_by(source_id: AdminSet::DEFAULT_ID)
       load_workflows
       mira_publication_workflow = permission_template.available_workflows.where(name: Tufts::WorkflowSetup::MIRA_WORKFLOW_NAME).first
       # If the workflow is already active, calling activate! will *deactive* it

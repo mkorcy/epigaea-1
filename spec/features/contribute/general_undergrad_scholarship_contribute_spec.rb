@@ -54,7 +54,8 @@ RSpec.feature 'General Undergraduate Scholarship', :clean, js: true do
       expect(page).to have_content "#{created_pdf.title.first} (#{created_pdf.id}) has been deposited by #{user.display_name} (#{user.user_key}) and is awaiting publication."
       visit("/concern/pdfs/#{created_pdf.id}")
       expect(page).to have_content(title)
-      expect(page).to have_content(abstract)
+
+      expect(page).to have_content(abstract[0...10])
       visit("/concern/pdfs/#{created_pdf.id}/edit")
       expect(find_by_id("pdf_abstract").value[0...10]).to eq abstract[0...10]
     end
