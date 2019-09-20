@@ -6,11 +6,12 @@ GIT
 
 GIT
   remote: https://github.com/TuftsUniversity/tufts-curation
-  revision: 497639e83109d497c78b782e13dde740c358d801
-  branch: update
+  revision: cd59696114eb46fa201d946ea7e20b02f46ce0d2
+  tag: 1.1.0
   specs:
     tufts-curation (0.1.0)
       active-fedora (>= 11.5, <= 12.99)
+      activerecord
       activesupport
       chronic
       hyrax (>= 2.0.0, < 2.6.0)
