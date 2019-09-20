@@ -50,7 +50,7 @@ Capybara::Screenshot.autosave_on_failure = false
 # Found in this thread: https://github.com/teampoltergeist/poltergeist/issues/375
 poltergeist_options = {
   js_errors: false,
-  timeout: 30,
+  timeout: 60,
   logger: false,
   debug: false,
   phantomjs_logger: StringIO.new,
@@ -77,7 +77,7 @@ Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, profile: profile)
 end
 
-Capybara.default_max_wait_time = 10
+Capybara.default_max_wait_time = 20 
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures

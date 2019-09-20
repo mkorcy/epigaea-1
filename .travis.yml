@@ -17,8 +17,9 @@ before_script:
   - cp config/handle.yml.sample config/handle.yml
   - cp config/secrets.yml.sample config/secrets.yml
   - bundle exec sidekiq -d -l /tmp/sidekiq.log
-  - bundle exec rake db:create
+  - RAILS_ENV=test bundle exec rake db:create
   - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - RAILS_ENV=test bundle exec rake hyrax:workflow:load
 script:
   - bundle exec rubocop
   - bundle exec rails assets:precompile &> /dev/null
