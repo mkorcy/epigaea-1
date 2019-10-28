@@ -55,7 +55,7 @@ namespace :tufts do
         end
       end
 
-      puts('examined ' + examined.to_s + (modified == 1 ? ' rights statement' : ' rights statements'))
+      puts('examined ' + examined.to_s + (examined == 1 ? ' rights statement' : ' rights statements'))
       puts('  ' + modified.to_s + (modified == 1 ? ' was modified' : ' were modified'))
       puts('  ' + unknown.to_s + (unknown == 1 ? ' is unknown' : ' are unknown'))
       puts('  ' + inactive.to_s + (inactive == 1 ? ' is inactive' : ' are inactive'))
