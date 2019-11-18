@@ -1,4 +1,4 @@
-require 'active_fedora'	
+require 'active_fedora'
 
 namespace :tufts do
   desc 'update the rights_statement attribute of DL objects'
@@ -7,7 +7,7 @@ namespace :tufts do
     if ARGV.size != 2
       puts('example usage: rake tufts:update_rights_statements some_pids.txt')
     else
-      updates = {
+      updates_hash = {
         'http://dca.tufts.edu/ua/access/rights-creator.html'                => 'http://dca.tufts.edu/research/policies-fees/reproductions-and-use',
         'http://dca.tufts.edu/ua/access/rights-creator.htm'                 => 'http://dca.tufts.edu/research/policies-fees/reproductions-and-use',
         'http://dca.tufts.edu/ua/access/rights-creators.html'               => 'http://dca.tufts.edu/research/policies-fees/reproductions-and-use',
@@ -23,6 +23,10 @@ namespace :tufts do
 
         'http://creativecommons.org/licenses/by/2.0'                        => 'http://creativecommons.org/licenses/by/2.0/',
         'http://creativecommons.org/licenses/by/4.0/deed.en_US'             => 'http://creativecommons.org/licenses/by/4.0/',
+
+        'http://creativecommons.org/licenses/by/4.0'                        => 'http://creativecommons.org/licenses/by/4.0/',
+        'http://www.creativecommons.org/licenses/by/2.0'                    => 'http://creativecommons.org/licenses/by/2.0/',
+        'https://creativecommons.org/licenses/by-nc/4.0/'                   => 'http://creativecommons.org/licenses/by-nc/4.0/',
 
         'http://pubs.acs.org/page/policy/authorchoice_termsofuse.html'      => 'http://rightsstatements.org/page/InC/1.0/',
         'http://www.elsevier.com/about/our-business/policies/sharing'       => 'http://rightsstatements.org/page/InC/1.0/',
@@ -64,6 +68,7 @@ namespace :tufts do
       updated_hash = {}
       not_updated_count = 0
       not_updated_hash = {}
+      exception_array = []
 
       filename = ARGV[1]
 
@@ -79,11 +84,11 @@ namespace :tufts do
 
           msg += rights
 
-          updated_rights = updates[rights]
+          updated_rights = updates_hash[rights]
 
           if updated_rights.nil?
-            # This work was not updated
-            msg += ' DOES NOT HAVE A REPLACEMENT IN THE RAKE TASK'
+            # This work was not updated, because there was no replacement in updates_hash.
+            msg += ' not updated'
             not_updated_count += 1
             hash_count = not_updated_hash[rights]
 
@@ -92,8 +97,8 @@ namespace :tufts do
             final_rights = rights
           else
             # Do the update.
-#            work[:rights_statement] = [updated_rights]
-#            work.save!
+            work[:rights_statement] = [updated_rights]
+            work.save!
 
             # This work was updated.
             msg += ' updated to ' + updated_rights
@@ -123,8 +128,13 @@ namespace :tufts do
         rescue ActiveFedora::ObjectNotFoundError
           # This work was not found.
           not_found_array << id
-
-          msg += ' NOT FOUND'
+          msg += 'not found'
+        rescue StandardError => ex
+          # Something went wrong.  For example, "ActiveFedora::RecordInvalid: Validation failed: Embargo release date Must be a future date".
+          exception_msg = ' ' + ex.class.name + ' ' + ex.message
+          exception_array << id + exception_msg
+          msg += ' caused the exception' + exception_msg
+          found_count += 1
         end
 
         puts(id + ': ' + msg)
@@ -139,13 +149,24 @@ namespace :tufts do
         puts(not_found_count.to_s + (not_found_count == 1 ? ' work was' : ' works were') + ' not found:')
 
         not_found_array.each do |not_found_id|
-            puts('  ' + not_found_id)
+          puts('  ' + not_found_id)
         end
       end
 
       # How many works were found?
       if found_count > 0
         puts(found_count.to_s + (found_count == 1 ? ' work was' : ' works were') + ' found.')
+      end
+
+      # How many works caused exceptions?
+      exception_count = exception_array.size
+
+      if exception_count > 0
+        puts('  ' + exception_count.to_s + (exception_count == 1 ? ' work caused an exception' : ' works caused exceptions') + ':')
+
+        exception_array.each do |exception_msg|
+          puts('    ' + exception_msg)
+        end
       end
 
       # How many works were updated?
