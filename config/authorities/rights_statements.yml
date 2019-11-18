@@ -41,9 +41,6 @@ terms:
     - id: http://creativecommons.org/licenses/by-nc-sa/2.5/
       term: Attribution-NonCommercial-ShareAlike 2.5 Generic
       active: true
-    - id: http://creativecommons.org/licenses/by/2.0/
-      term: Attribution 2.0 Generic
-      active: true
     - id: http://creativecommons.org/licenses/by-nc-nd/3.0/
       term: Attribution-NonCommercial-NoDerivs 3.0 Unported
       active: true
