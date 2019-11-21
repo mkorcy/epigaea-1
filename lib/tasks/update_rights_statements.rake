@@ -13,45 +13,49 @@ namespace :tufts do
         'http://dca.tufts.edu/ua/access/rights-creators.html'               => 'http://dca.tufts.edu/research/policies-fees/reproductions-and-use',
         'http://dca.tufts.edu/ua/access/rights-tufts.html'                  => 'http://dca.tufts.edu/research/policies-fees/reproductions-and-use',
 
-        'http://sites.tufts.edu/dca/research-help/copyright-and-citations/' => 'http://dca.tufts.edu/research/policies-fees/reproductions-and-use',
-        'http://sites.tufts.edu/dca/about-us/research-help/reproductions-and-use/' =>
-                                                                               'http://dca.tufts.edu/research/policies-fees/reproductions-and-use',
-        'http://sites.tufts.edu/dca/about-us/research-help/citations/copyright-and-citations-for-bostonian-society-images/' =>
-                                                                               'http://dca.tufts.edu/research/help-with-copyright/copyright-and-citations-for-bostonian-society-images',
-        'http://sites.tufts.edu/dca/about-us/research-help/citations/copyright-and-citations-for-material-from-the-edward-r-murrow-collection/' =>
-                                                                               'http://dca.tufts.edu/research/help-with-copyright/copyright-and-citations-for-material-from-the-edward-r-murrow-collection',
+        'http://sites.tufts.edu/dca/about-us/research-help/reproductions-and-use/' \
+                                                                            => 'http://dca.tufts.edu/research/policies-fees/reproductions-and-use',
+        'http://sites.tufts.edu/dca/about-us/research-help/citations/copyright-and-citations-for-bostonian-society-images/' \
+                                                                            => 'http://dca.tufts.edu/research/help-with-copyright/copyright-and-citations-for-bostonian-society-images',
+        'http://sites.tufts.edu/dca/about-us/research-help/citations/copyright-and-citations-for-material-from-the-edward-r-murrow-collection/' \
+                                                                            => 'http://dca.tufts.edu/research/help-with-copyright/copyright-and-citations-for-material-from-the-edward-r-murrow-collection',
 
-        'http://creativecommons.org/licenses/by/2.0'                        => 'http://creativecommons.org/licenses/by/2.0/',
+        'http://bostonhistory.org/photorequest.html'                        => 'http://dca.tufts.edu/research/help-with-copyright/copyright-and-citations-for-bostonian-society-images',
+
+        'http://creativecommons.org/licenses/by/2.0'                        => 'http://creativecommons.org/licenses/by/4.0/',
+        'http://www.creativecommons.org/licenses/by/2.0'                    => 'http://creativecommons.org/licenses/by/4.0/',
+        'http://creativecommons.org/licenses/by/2.0/'                       => 'http://creativecommons.org/licenses/by/4.0/',
         'http://creativecommons.org/licenses/by/4.0/deed.en_US'             => 'http://creativecommons.org/licenses/by/4.0/',
-
         'http://creativecommons.org/licenses/by/4.0'                        => 'http://creativecommons.org/licenses/by/4.0/',
-        'http://www.creativecommons.org/licenses/by/2.0'                    => 'http://creativecommons.org/licenses/by/2.0/',
         'https://creativecommons.org/licenses/by-nc/4.0/'                   => 'http://creativecommons.org/licenses/by-nc/4.0/',
 
-        'http://pubs.acs.org/page/policy/authorchoice_termsofuse.html'      => 'http://rightsstatements.org/page/InC/1.0/',
-        'http://www.elsevier.com/about/our-business/policies/sharing'       => 'http://rightsstatements.org/page/InC/1.0/',
-
-        'http://rightsstatements.org/page/1.0/?language=en'                 => 'http://rightsstatements.org/page/1.0/',
-        'http://rightsstatements.org/page/CNE/1.0/?language=en'             => 'http://rightsstatements.org/page/CNE/1.0/',
+        'http://rightsstatements.org/page/1.0/'                             => 'http://rightsstatements.org/page/InC/1.0/',
+        'http://rightsstatements.org/page/1.0/?language=en'                 => 'http://rightsstatements.org/page/InC/1.0/',
         'http://rightsstatements.org/page/InC/1.0/?language=en'             => 'http://rightsstatements.org/page/InC/1.0/',
         'http://rightsstatements.org/page/InC-EDU/1.0/?language=en'         => 'http://rightsstatements.org/page/InC-EDU/1.0/',
         'http://rightsstatements.org/page/InC-NC/1.0/?language=en'          => 'http://rightsstatements.org/page/InC-NC/1.0/',
         'http://rightsstatements.org/page/InC-RUU/1.0/?language=en'         => 'http://rightsstatements.org/page/InC-RUU/1.0/',
         'http://rightsstatements.org/page/NoC-US/1.0/?language=en'          => 'http://rightsstatements.org/page/NoC-US/1.0/',
+        'http://rightsstatements.org/page/CNE/1.0/?language=en'             => 'http://rightsstatements.org/page/CNE/1.0/',
         'http://rightsstatements.org/page/UND/1.0/?language=en'             => 'http://rightsstatements.org/page/UND/1.0/',
         'http://rightsstatements.org/page/NKC/1.0/?language=en'             => 'http://rightsstatements.org/page/NKC/1.0/',
-        'http://rightsstatements.org/vocab/CNE/1.0/'                        => 'http://rightsstatements.org/page/CNE/1.0/',
+
+        'http://rightsstatements.org/vocab/1.0/'                            => 'http://rightsstatements.org/page/InC/1.0/',
         'http://rightsstatements.org/vocab/InC/1.0/'                        => 'http://rightsstatements.org/page/InC/1.0/',
         'http://rightsstatements.org/vocab/InC-EDU/1.0/'                    => 'http://rightsstatements.org/page/InC-EDU/1.0/',
         'http://rightsstatements.org/vocab/InC-NC/1.0/'                     => 'http://rightsstatements.org/page/InC-NC/1.0/',
         'http://rightsstatements.org/vocab/InC-RUU/1.0/'                    => 'http://rightsstatements.org/page/InC-RUU/1.0/',
         'http://rightsstatements.org/vocab/NoC-US/1.0/'                     => 'http://rightsstatements.org/page/NoC-US/1.0/',
+        'http://rightsstatements.org/vocab/CNE/1.0/'                        => 'http://rightsstatements.org/page/CNE/1.0/',
         'http://rightsstatements.org/vocab/UND/1.0/'                        => 'http://rightsstatements.org/page/UND/1.0/',
         'http://rightsstatements.org/vocab/NKC/1.0/'                        => 'http://rightsstatements.org/page/NKC/1.0/',
 
+        'http://pubs.acs.org/page/policy/authorchoice_termsofuse.html'      => 'http://rightsstatements.org/page/InC/1.0/',
+        'http://www.elsevier.com/about/our-business/policies/sharing'       => 'http://rightsstatements.org/page/InC/1.0/',
+
         'http://www.acm.org/publications/policies/copyright_policy'         => 'http://www.acm.org/publications/policies/copyright-policy',
-        'http://www.springer.com/authors/journal+authors?SGWID=0-154202-12-467999-0' =>
-                                                                               'http://www.springer.com/us/authors-editors/journal-author',
+        'http://www.springer.com/authors/journal+authors?SGWID=0-154202-12-467999-0' \
+                                                                            => 'http://www.springer.com/us/authors-editors/journal-author',
       }
 
       # Read the rights_statement vocabulary file into a hash of {id => count}

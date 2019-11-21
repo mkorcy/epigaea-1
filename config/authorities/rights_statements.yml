@@ -23,9 +23,6 @@ terms:
     - id: http://creativecommons.org/licenses/by/4.0/
       term: Attribution 4.0 International
       active: true
-    - id: http://bostonhistory.org/photorequest.html
-      term: Bostonian Society License
-      active: true
     - id: http://creativecommons.org/licenses/by-nc-sa/3.0/
       term: Attribution-NonCommercial-ShareAlike 3.0 Unported
       active: true
@@ -48,7 +45,7 @@ terms:
       term: Attribution-NonCommercial 2.0 UK England & Wales
       active: true
     - id: http://creativecommons.org/publicdomain/zero/1.0/
-      term: Universal Public Domain Dedication
+      term: Public Domain Dedication 1.0 Universal
       active: true
     - id: http://rightsstatements.org/page/CNE/1.0/
       term: Copyright Not Evaluated
