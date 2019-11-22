@@ -55,7 +55,7 @@ namespace :tufts do
 
         'http://www.acm.org/publications/policies/copyright_policy'         => 'http://www.acm.org/publications/policies/copyright-policy',
         'http://www.springer.com/authors/journal+authors?SGWID=0-154202-12-467999-0' \
-                                                                            => 'http://www.springer.com/us/authors-editors/journal-author',
+                                                                            => 'http://www.springer.com/us/authors-editors/journal-author'
       }
 
       # Read the rights_statement vocabulary file into a hash of {id => count}
@@ -198,9 +198,7 @@ namespace :tufts do
         puts('  ' + known_count.to_s + (known_count == 1 ? ' work was' : ' works were') + ' known:')
 
         known_hash.each do |rights, count|
-          if count > 0
-            puts('    ' + rights + ': ' + count.to_s)
-          end
+          puts('    ' + rights + ': ' + count.to_s) if count > 0
         end
       end
 
