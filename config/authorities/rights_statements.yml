@@ -39,7 +39,7 @@ terms:
       term: Attribution-NonCommercial-NoDerivatives 4.0 International
       active: true
     - id: http://creativecommons.org/licenses/by-nc-nd/3.0/
-      term: Attribution-NonCommercial-NoDerivs 3.0 Unported
+      term: Attribution-NonCommercial-NoDerivatives 3.0 Unported
       active: true
     - id: http://creativecommons.org/publicdomain/zero/1.0/
       term: Public Domain Dedication 1.0 Universal
