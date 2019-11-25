@@ -2,53 +2,47 @@ terms:
     - id: http://dca.tufts.edu/research/policies-fees/reproductions-and-use
       term: DCA Detailed Rights
       active: true
-    - id: http://creativecommons.org/licenses/by-nc/4.0/
-      term: Attribution-NonCommercial 4.0 International
+    - id: http://dca.tufts.edu/research/help-with-copyright/copyright-and-citations-for-material-from-the-edward-r-murrow-collection
+      term: Murrow Collection Rights
       active: true
-    - id: http://creativecommons.org/licenses/by-nd/4.0/
-      term: Attribution-NoDerivatives 4.0 International
-      active: true
-    - id: http://creativecommons.org/licenses/by-sa/4.0/
-      term: Attribution-ShareAlike 4.0 International
-      active: true
-    - id: http://creativecommons.org/licenses/by-nc-sa/4.0/
-      term: Attribution-NonCommercial-ShareAlike 4.0 International
-      active: true
-    - id: http://creativecommons.org/licenses/by-nc-nd/4.0/
-      term: Attribution-NonCommercial-NoDerivatives 4.0 International
-      active: true
-    - id: http://creativecommons.org/licenses/by/3.0/
-      term: Attribution 3.0 Unported
+    - id: http://dca.tufts.edu/research/help-with-copyright/copyright-and-citations-for-bostonian-society-images
+      term: Bostonian Society Images
       active: true
     - id: http://creativecommons.org/licenses/by/4.0/
       term: Attribution 4.0 International
       active: true
-    - id: http://creativecommons.org/licenses/by-nc-sa/3.0/
-      term: Attribution-NonCommercial-ShareAlike 3.0 Unported
+    - id: http://creativecommons.org/licenses/by/3.0/
+      term: Attribution 3.0 Unported
       active: true
-    - id: http://www.aclweb.org/policies/resolutions.html
-      term: Association for Computational Linguistics License
+    - id: http://creativecommons.org/licenses/by-sa/4.0/
+      term: Attribution-ShareAlike 4.0 International
       active: true
-    - id: http://www.acm.org/publications/policies/copyright-policy
-      term: ACM Publishing Policy
+    - id: http://creativecommons.org/licenses/by-nd/4.0/
+      term: Attribution-NoDerivatives 4.0 International
       active: true
-    - id: http://www.springer.com/us/authors-editors/journal-author
-      term: Springer Policy
-      active: true
-    - id: http://creativecommons.org/licenses/by-nc-sa/2.5/
-      term: Attribution-NonCommercial-ShareAlike 2.5 Generic
-      active: true
-    - id: http://creativecommons.org/licenses/by-nc-nd/3.0/
-      term: Attribution-NonCommercial-NoDerivs 3.0 Unported
+    - id: http://creativecommons.org/licenses/by-nc/4.0/
+      term: Attribution-NonCommercial 4.0 International
       active: true
     - id: http://creativecommons.org/licenses/by-nc/2.0/uk/
       term: Attribution-NonCommercial 2.0 UK England & Wales
       active: true
+    - id: http://creativecommons.org/licenses/by-nc-sa/4.0/
+      term: Attribution-NonCommercial-ShareAlike 4.0 International
+      active: true
+    - id: http://creativecommons.org/licenses/by-nc-sa/3.0/
+      term: Attribution-NonCommercial-ShareAlike 3.0 Unported
+      active: true
+    - id: http://creativecommons.org/licenses/by-nc-sa/2.5/
+      term: Attribution-NonCommercial-ShareAlike 2.5 Generic
+      active: true
+    - id: http://creativecommons.org/licenses/by-nc-nd/4.0/
+      term: Attribution-NonCommercial-NoDerivatives 4.0 International
+      active: true
+    - id: http://creativecommons.org/licenses/by-nc-nd/3.0/
+      term: Attribution-NonCommercial-NoDerivs 3.0 Unported
+      active: true
     - id: http://creativecommons.org/publicdomain/zero/1.0/
       term: Public Domain Dedication 1.0 Universal
-      active: true
-    - id: http://rightsstatements.org/page/CNE/1.0/
-      term: Copyright Not Evaluated
       active: true
     - id: http://rightsstatements.org/page/InC/1.0/
       term: In Copyright
@@ -65,15 +59,21 @@ terms:
     - id: http://rightsstatements.org/page/NoC-US/1.0/
       term: No Copyright - United States
       active: true
+    - id: http://rightsstatements.org/page/CNE/1.0/
+      term: Copyright Not Evaluated
+      active: true
     - id: http://rightsstatements.org/page/UND/1.0/
       term: Copyright Undetermined
       active: true
     - id: http://rightsstatements.org/page/NKC/1.0/
       term: No Known Copyright
       active: true
-    - id: http://dca.tufts.edu/research/help-with-copyright/copyright-and-citations-for-material-from-the-edward-r-murrow-collection
-      term: Murrow Collection Rights
+    - id: http://www.aclweb.org/policies/resolutions.html
+      term: Association for Computational Linguistics License
       active: true
-    - id: http://dca.tufts.edu/research/help-with-copyright/copyright-and-citations-for-bostonian-society-images
-      term: Bostonian Society Images
+    - id: http://www.acm.org/publications/policies/copyright-policy
+      term: ACM Publishing Policy
+      active: true
+    - id: http://www.springer.com/us/authors-editors/journal-author
+      term: Springer Policy
       active: true
