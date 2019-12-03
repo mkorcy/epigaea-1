@@ -52,6 +52,7 @@ namespace :tufts do
         'http://pubs.acs.org/page/policy/authorchoice_termsofuse.html'      => 'http://rightsstatements.org/vocab/InC/1.0/',
         'http://www.elsevier.com/about/our-business/policies/sharing'       => 'http://rightsstatements.org/vocab/InC/1.0/',
 
+        'http://www.aclweb.org/policies/resolutions.html'                   => 'http://aclweb.org/adminwiki/index.php?title=ACL_Policies_for_Submission,_Review_and_Citation',
         'http://www.acm.org/publications/policies/copyright_policy'         => 'http://www.acm.org/publications/policies/copyright-policy',
         'http://www.springer.com/authors/journal+authors?SGWID=0-154202-12-467999-0' \
                                                                             => 'http://www.springer.com/us/authors-editors/journal-author'

@@ -68,7 +68,7 @@ terms:
     - id: http://rightsstatements.org/vocab/NKC/1.0/
       term: No Known Copyright
       active: true
-    - id: http://www.aclweb.org/policies/resolutions.html
+    - id: http://aclweb.org/adminwiki/index.php?title=ACL_Policies_for_Submission,_Review_and_Citation
       term: Association for Computational Linguistics License
       active: true
     - id: http://www.acm.org/publications/policies/copyright-policy
