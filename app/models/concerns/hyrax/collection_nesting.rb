@@ -33,7 +33,7 @@ module Hyrax
       def update_child_nested_collection_relationship_indices
         children = find_children_of(destroyed_id: id)
         children.each do |child|
-          #reindex_nested_relationships_for(id: child.id, extent: Hyrax::Adapters::NestingIndexAdapter::FULL_REINDEX)
+          # reindex_nested_relationships_for(id: child.id, extent: Hyrax::Adapters::NestingIndexAdapter::FULL_REINDEX)
           reindex_nested_relationships_for(id: child.id, extent: Hyrax::Adapters::NestingIndexAdapter::LIMITED_REINDEX)
         end
       end
@@ -57,7 +57,7 @@ module Hyrax
     # already in the object's solr document. Added to prevent unnecessary indexing of all ancestors of a parent
     # when one child gets added to the parent. By default, we do the full graph indexing.
     def reindex_extent
-      #@reindex_extent ||= Hyrax::Adapters::NestingIndexAdapter::FULL_REINDEX
+      # @reindex_extent ||= Hyrax::Adapters::NestingIndexAdapter::FULL_REINDEX
       @reindex_extent ||= Hyrax::Adapters::NestingIndexAdapter::LIMITED_REINDEX
     end
 
