@@ -69,3 +69,12 @@ epigaea-lock
 epigaea.pid
 
 racktmp/
+
+#local sqlite3 files
+db/development-mk.sqlite
+
+#local hyrax initializer overrides
+config/initializers/hyrax.rb.local_dev
+
+#script for configuring my local environment
+dev_env_configure.sh
