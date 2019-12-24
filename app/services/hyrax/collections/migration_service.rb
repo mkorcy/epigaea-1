@@ -8,7 +8,7 @@ module Hyrax
       # Migrate all legacy collections to extended collections with collection type assigned.  Legacy collections are those
       # created before Hyrax 2.1.0 and are identified by the lack of the collection having a collection type gid.
       def self.migrate_all_collections
-        Rails.logger.info "*** Migrating #{::Collection.count} collections"
+        Rails.logger.info "*** Migrating #{::Collection.count} collections with limited reindexing"
         ::Collection.all.each do |col|
           col.reindex_extent = Hyrax::Adapters::NestingIndexAdapter::LIMITED_REINDEX
           migrate_collection(col)
@@ -32,6 +32,7 @@ module Hyrax
         return if collection.collection_type_gid.present? # already migrated
         collection.collection_type_gid = Hyrax::CollectionType.find_or_create_default_collection_type.gid
         create_permissions(collection)
+        collection.reindex_extent = Hyrax::Adapters::NestingIndexAdapter::LIMITED_REINDEX
         collection.save
       end
       private_class_method :migrate_collection
