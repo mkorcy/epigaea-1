@@ -6,11 +6,241 @@
 
 require File.expand_path('../config/application', __FILE__)
 require 'byebug'
+require 'fileutils'
 
 Rails.application.load_tasks
 
 task(:default).clear
 task default: ['tufts:ci']
+desc "apply changes from f3"
+
+task apply_changes: :environment do
+  file = File.read('updates.json')
+  data_hash = JSON.parse(file)
+  data_hash.each do |obj|
+    pid = obj["pid"]
+    change = obj["subject"]
+    a = ActiveFedora::Base.where(legacy_pid_tesim: pid)
+    if a.empty?
+      puts "NOPE #{pid}"
+    else
+      fedora_object = a.first
+      fedora_object.subject = change
+      fedora_object.save!
+    end
+  end
+end
+desc "check_if_exists"
+task check_if_exists: :environment do
+  puts "Loading File"
+  logger = Logger.new('log/exists.log')
+  CSV.foreach("/usr/local/hydra/epigaea/exists.txt", headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
+    found = false
+    pid = row[0]
+    a = ActiveFedora::Base.where(legacy_pid_tesim: pid)
+    if a.empty?
+      pid = pid.gsub("draft:", "tufts:")
+      a = ActiveFedora::Base.where(legacy_pid_tesim: pid)
+      found = true unless a.empty?
+    else
+      found = true
+    end
+
+    logger.info "FOUND #{pid}" if found
+    logger.info "ERROR #{pid}" unless found
+  end
+end
+
+desc "apply_embargos"
+task apply_embargos: :environment do
+  puts "Loading File"
+  CSV.foreach("/usr/local/hydra/epigaea/apply_embargos.txt", headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
+    begin
+      pid = row[1]
+      embargo = row[0]
+      a = ActiveFedora::Base.find(pid)
+      a.visibility = 'restricted'
+      a.visibility_during_embargo = 'restricted'
+      a.visibility_after_embargo 'open'
+      a.embargo_release_date = embargo
+      a.save!
+    rescue ActiveFedora::RecordInvalid
+      a.visibility = 'open'
+      a.deactivate_embargo!
+      a.embargo.save
+      a.save!
+    rescue ActiveFedora::ObjectNotFoundError
+      puts "ERROR not found #{pid}"
+    end
+  end
+end
+
+desc "scattering"
+task scattering: :environment do
+  puts "Loading File"
+  CSV.foreach("/usr/local/hydra/epigaea/scattering.txt", headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
+    begin
+      pid = row[0]
+      a = ActiveFedora::Base.find(pid)
+      names = a.personal_name
+      names.delete("scattering")
+      subjects = a.subject
+      subjects.push("Scattering votes")
+      a.subject = subjects
+      a.personal_name = names
+      a.save!
+    rescue ActiveFedora::ObjectNotFoundError
+      puts "ERROR not found #{pid}"
+    end
+  end
+end
+
+desc "strip subjects"
+task strip_subjects: :environment do
+  puts "Loading File"
+  CSV.foreach("/usr/local/hydra/epigaea/strip_subjects.txt", headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
+    begin
+      pid = row[0]
+      a = ActiveFedora::Base.find(pid)
+      a.subject = []
+      a.save!
+    rescue ActiveFedora::ObjectNotFoundError
+      puts "ERROR not found #{pid}"
+    end
+  end
+end
+
+# rubocop:disable Lint/AmbiguousRegexpLiteral
+def sanitize_filename(filename)
+  # Split the name when finding a period which is preceded by some
+  # character, and is followed by some character other than a period,
+  # if there is no following period that is followed by something
+  # other than a period (yeah, confusing, I know)
+  fn = filename.split /(?<=.)\.(?=[^.])(?!.*\.[^.])/m
+
+  # We now have one or two parts (depending on whether we could find
+  # a suitable period). For each of these parts, replace any unwanted
+  # sequence of characters with an underscore
+  fn.map! { |s| s.gsub /[^a-z0-9\-]+/i, '_' }
+
+  # Finally, join the parts with a period and return the result
+  fn.join '.'
+end
+desc "chronopolis"
+task chronopolis: :environment do
+  logger = Logger.new('log/chronopolis.log')
+
+  CSV.foreach("/usr/local/hydra/epigaea/chronopolis.txt", headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
+    pid = row[0]
+    begin
+      logger.info "PROCESSING PID : #{pid}"
+      obj = ActiveFedora::Base.find(pid)
+
+      # get steward for top directory
+      steward = obj.steward
+      steward = if steward.nil? || steward.empty?
+                  "no_steward"
+                else
+                  steward
+                end
+      steward = sanitize_filename(steward)
+
+      logger.info "Steward for #{pid} is #{steward}"
+
+      # get collection for object
+      collections = obj.member_of_collections
+      collection = ""
+      if collections.nil? || collections.empty?
+        collection = "uncollected"
+      else
+        collection_titles = []
+        collection_ids = []
+
+        collections.each do |collection_inner|
+          collection_titles << collection_inner.title.first
+          collection_ids << collection_inner.id
+        end
+
+        index = collection_titles.index("Collection Descriptions")
+        saved_index = 0
+        if !index.nil? && collection_titles.length > 1
+          collection_titles.delete("Collection Descriptions")
+          saved_index = index > 0 ? 0 : 1
+        end
+        puts "COL TITLES : #{collection_titles}"
+
+        index = collection_titles.index("Electronic Theses and Dissertations")
+        collection = if index.nil?
+                       collections[saved_index].id + "_" + collections[saved_index].title.first
+                     else
+                       collection_ids[index] + "_" + "Electronic Theses and Dissertations"
+                     end
+
+        collection = collection.truncate(255)
+        collection = sanitize_filename(collection)
+
+      end
+
+      logger.info "Collection for #{pid} is #{collection}"
+
+      # mkdir for object
+
+      obj_dir = obj.id + "_" + obj.title.first
+      obj_dir = obj_dir.truncate(255)
+      obj_dir = sanitize_filename(obj_dir)
+
+      FileUtils.mkdir_p File.join('/', 'tdr', 'chronopolis', steward, collection, obj_dir)
+
+      # mkdirs for filesets
+      obj.file_sets.each do |file_set|
+        target_filename = file_set.id + "_" + file_set.title.first
+        target_filename = target_filename.truncate(255)
+        target_filename = sanitize_filename(target_filename)
+        FileUtils.mkdir_p File.join('/', 'tdr', 'chronopolis', steward, collection, obj_dir, target_filename)
+        target_file = File.join('/', 'tdr', 'chronopolis', steward, collection, obj_dir, target_filename, target_filename)
+        metadata_file = File.join('/', 'tdr', 'chronopolis', steward, collection, obj_dir, target_filename, "technical_metadata.json")
+
+        record = File.new target_file, 'wb'
+
+        logger.info "Writing fileset to #{target_file}"
+
+        record.write file_set.original_file.content
+        record.flush
+        record.close
+
+        json = JSON.parse(file_set.characterization_proxy.metadata.attributes.to_json)
+        json = JSON.pretty_generate(json)
+        metadata = File.new metadata_file, "w"
+
+        logger.info "Writing metadata to #{metadata_file}"
+
+        metadata.write json
+        metadata.flush
+        metadata.close
+      end
+
+      # write out metadata
+      json = JSON.parse(obj.to_json)
+      json = JSON.pretty_generate(json)
+      metadata_file = File.join('/', 'tdr', 'chronopolis', steward, collection, obj_dir, "metadata.json")
+      metadata = File.new metadata_file, "w"
+
+      logger.info "Writing metadata to #{metadata_file}"
+
+      metadata.write json
+      metadata.flush
+      metadata.close
+    rescue ActiveFedora::ObjectNotFoundError
+      puts "ERROR not found #{pid}"
+      logger.error "ERROR Pid not found #{pid}"
+      next
+    rescue Ldp::Gone
+      puts "ERROR not found #{pid}"
+      logger.error "ERROR Pid not found #{pid}"
+      next
+    end
+  end
+end
 
 desc "compute handles2"
 task compute_handles2: :environment do
@@ -225,6 +455,26 @@ task make_filesets_public: :environment do
     puts "ABOUT TO UPDATE : #{pid}"
     a.visibility = 'open'
     a.save!
+  end
+end
+
+desc "apply embargos"
+task apply_embargos_by_f4_ids: :environment do
+  puts "Loading File"
+  CSV.foreach("/usr/local/hydra/epigaea/embargos_to_apply.csv", headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
+    pid = row[0]
+    release = row[1]
+    puts pid.to_s
+    a = ActiveFedora::Base.find(pid)
+    work = a
+    unless work.nil?
+      work.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+      work.visibility_during_embargo = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE
+      work.visibility_after_embargo = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+      work.embargo_release_date = release
+      work.save
+    end
+    puts a.to_s
   end
 end
 
