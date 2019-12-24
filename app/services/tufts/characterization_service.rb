@@ -1,5 +1,6 @@
 require 'shellwords'
 require 'mimemagic'
+require 'fastimage'
 
 module Tufts
   class CharacterizationService
@@ -22,6 +23,7 @@ module Tufts
       @source = source
     end
 
+    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
     def characterize
       if !@object.mime_type.nil? && @object.mime_type == "TBD"
         mimetype = `file --brief --mime-type - < #{Shellwords.shellescape(@source)}`.strip
@@ -34,6 +36,11 @@ module Tufts
         append_property_value("mime_type", mimetype)
       end
       extracted_md = map_fields_to_properties(exif_data)
+      size_array = FastImage.size(@source)
+      unless size_array.nil?
+        append_property_value("width", size_array[0]) if size_array.length >= 2
+        append_property_value("height", size_array[1]) if size_array.length >= 2
+      end
       extracted_md.each { |property, value| append_property_value(property, value) }
     end
 
