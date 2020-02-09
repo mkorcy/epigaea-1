@@ -64,6 +64,8 @@ Rails.application.configure do
 
   config.active_job.queue_adapter = :sidekiq
 
+  config.fixity_failure_address = "mike.korcynski@tufts.edu"
+
   # Configure the drafts strorage directory
   config.drafts_storage_dir    = Rails.root.join('tmp', 'drafts')
   config.exports_storage_dir   = Rails.root.join('tmp', 'exports')

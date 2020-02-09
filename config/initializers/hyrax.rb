@@ -30,6 +30,7 @@ Hyrax.config do |config|
   config.realtime_notifications = false
   # How frequently should a file be fixity checked
   # config.max_days_between_fixity_checks = 7
+  config.max_days_between_fixity_checks = 1
 
   # Options to control the file uploader
   config.uploader = {

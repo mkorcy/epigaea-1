@@ -5,12 +5,14 @@
   - [handle, 1]
   - [default, 1]
   - [tdr_derivative_queue, 3]
+  - [fixity_check, 1]
 
 :limits:
   tdr_derivative_queue: 3
   ingest: 5
   batch: 5
   handle: 5
+  fixity_check: 1
   default: 5
 
 test:
