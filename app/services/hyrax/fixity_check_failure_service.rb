@@ -9,7 +9,7 @@ module Hyrax
       @log_date = checksum_audit_log.created_at
       user = select_notify_email
       FixityMailer.fixity_email(user, subject, message).deliver
-      super(file_set, user)
+      # super(file_set, user)
     end
 
     def message
