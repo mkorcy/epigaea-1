@@ -9,5 +9,4 @@ namespace :tdr do
   task fixity_monthly: :environment do
     ::Hyrax::RepositoryFixityCheckService.fixity_monthly_catchup
   end
-  nd
 end
