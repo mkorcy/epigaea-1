@@ -9,16 +9,6 @@ module Hyrax
       end
     end
 
-    def self.fixity_monthly_catchup
-      # current count 174884
-      results = ActiveFedora::SolrService.query(ActiveFedora::SolrQueryBuilder.construct_query(has_model_ssim: "FileSet"), rows: 500_000, fl: 'id')
-      ids = results.map { |o| o['id'] }
-      ids.each do |fs|
-        file_set = ::FileSet.find(fs)
-        Hyrax::FileSetFixityCheckService.new(file_set).fixity_check
-      end
-    end
-
     def self.fixity_check_random_sampling
       # current count 174884
       results = ActiveFedora::SolrService.query(ActiveFedora::SolrQueryBuilder.construct_query(has_model_ssim: "FileSet"), rows: 500_000, fl: 'id')
