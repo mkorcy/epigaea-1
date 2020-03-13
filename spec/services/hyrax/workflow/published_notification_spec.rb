@@ -21,13 +21,13 @@ RSpec.describe Hyrax::Workflow::PublishedNotification, :workflow do
     expect(notification.message).to match(/http/)
   end
   it "has steward" do
-    expect(notification.steward).to eq "dca"
+    expect(notification.handle).to eq "http://handle.net"
   end
   it "has contact email" do
     expect(notification.contact_email).to eq "archives@tufts.edu"
   end
   it "does not have an embargo" do
-    expect(notification.embargo).to eq false
+    expect(notification.embargo?).to eq false
   end
   it "can find depositor" do
     expect(notification.depositor).to be_instance_of(::User)
