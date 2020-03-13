@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Hyrax::Workflow::PublishedNotification, :workflow do
   let(:depositor) { FactoryGirl.create(:user) }
   let!(:admin)    { FactoryGirl.create(:admin) }
-  let(:work)      { FactoryGirl.actor_create(:pdf, depositor: depositor.user_key, user: depositor) }
+  let(:work)      { FactoryGirl.actor_create(:pdf, depositor: depositor.user_key, user: depositor, steward: 'dca', identifier: ['http://handle.net']) }
 
   let(:recipients) do
     { 'to' => [depositor] }
@@ -19,6 +19,15 @@ RSpec.describe Hyrax::Workflow::PublishedNotification, :workflow do
   it "includes a full url in the message" do
     expect(notification).to be_instance_of(described_class)
     expect(notification.message).to match(/http/)
+  end
+  it "has steward" do
+    expect(notification.steward).to eq "dca"
+  end
+  it "has contact email" do
+    expect(notification.contact_email).to eq "archives@tufts.edu"
+  end
+  it "does not have an embargo" do
+    expect(notification.embargo).to eq false
   end
   it "can find depositor" do
     expect(notification.depositor).to be_instance_of(::User)

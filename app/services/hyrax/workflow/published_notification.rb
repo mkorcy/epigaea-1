@@ -13,7 +13,9 @@ module Hyrax
       end
 
       def message
-        "#{title} (#{link_to work_id, document_url}) has been published by #{user.display_name} (#{user.user_key}).  #{comment}"
+        "Your submission \"#{title}\" is now available in the Tufts Digital library. Here is the link to access it: #{handle}.<br/><br/>" \
+          "If you have any questions about this submission, please contact us at #{contact_email}." +
+          (embargo? ? "<br/><br/>Note: This item is under embargo and may not be yet available when you receive this message." : "")
       end
     end
   end

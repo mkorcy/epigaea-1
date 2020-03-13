@@ -5,6 +5,8 @@ module Hyrax
       def initialize(entity, comment, user, recipients)
         super
         @recipients = workflow_recipients.with_indifferent_access
+        # @work = ::TuftsModel.find(document.id)
+        @work = ActiveFedora::Base.find(document.id, cast: true)
       end
 
       def workflow_recipients
@@ -21,6 +23,25 @@ module Hyrax
       # @return [Hyrax::User]
       def depositor
         ::User.find_by_user_key(document.depositor)
+      end
+
+      def handle
+        handle = @work.identifier.empty? ? nil : @work.identifier.first
+      end
+
+      def embargo?
+        @work.embargo ? true : false
+      end
+
+      def contact_email
+        steward = @work.steward
+        tisch_email = 'metadataservices@tufts.edu'
+        dca_email = 'archives@tufts.edu'
+        if steward == 'dca'
+          dca_email
+        else
+          tisch_email
+        end
       end
 
       ##
