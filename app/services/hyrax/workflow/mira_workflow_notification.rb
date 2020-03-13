@@ -26,7 +26,7 @@ module Hyrax
       end
 
       def handle
-        handle = @work.identifier.empty? ? nil : @work.identifier.first
+        @work.identifier.empty? ? nil : @work.identifier.first
       end
 
       def embargo?
