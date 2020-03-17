@@ -43,14 +43,25 @@ class FixityCheckJob < Hyrax::ApplicationJob
 
   private
 
+    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Lint/ShadowedException
     def run_check(file_set_id, file_id, uri)
-      service = ActiveFedora::FixityService.new(uri)
+      retries = 0
       begin
+        service = ActiveFedora::FixityService.new(uri)
         fixity_ok = service.check
         expected_result = service.expected_message_digest
+        raise "Exception!" unless fixity_ok
       rescue Ldp::NotFound
         # Either the #check or #expected_message_digest could raise this exception
         error_msg = 'resource not found'
+      rescue Faraday::TimeoutError, Net::ReadTimeout, RuntimeError
+        # retry
+        if (retries += 1) <= 4
+          sleep(100)
+          retry
+        end
+        error_msg = 'retrying'
       end
 
       log = ChecksumAuditLog.create_and_prune!(passed: fixity_ok, file_set_id: file_set_id, checked_uri: uri, file_id: file_id, expected_result: expected_result)

@@ -351,6 +351,24 @@ task collection_by_title: :environment do
   end
 end
 
+desc "add to collection"
+task add_to_collection_descriptions: :environment do
+  puts "Loading File"
+  CSV.foreach("/usr/local/hydra/epigaea/eads.txt", headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
+    begin
+      pid = row[0]
+      obj = ActiveFedora::Base.find(pid)
+      col = Collection.find("vd66vz89n")
+
+      obj.member_of_collections << col
+
+      obj.save!
+    rescue ActiveFedora::ObjectNotFoundError
+      puts "ERROR not found #{pid}"
+    end
+  end
+end
+
 desc "ead matching"
 task ead_matching: :environment do
   puts "Loading File"
@@ -420,6 +438,7 @@ task f3_to_f4: :environment do
     if a.empty?
       puts "NOPE #{pid}"
     else
+      puts "DUPE DUPE DUPE #{a} #{pid}" if a.length > 1
       puts "YEP #{a.first.id}"
     end
   end
