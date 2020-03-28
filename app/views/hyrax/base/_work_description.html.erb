@@ -1,6 +1,6 @@
 <% unless presenter.description.nil? %>
   <% presenter.description.each do |description| %>
-    <p class="work_description"><%= iconify_auto_link(description) %></p>
+    <p class="work_description"><%= iconify_auto_link(description.html_safe) %></p>
   <% end %>
 <% end %>
 <ul class="modified-info">

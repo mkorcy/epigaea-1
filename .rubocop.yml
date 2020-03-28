@@ -9,6 +9,7 @@ AllCops:
     - tmp/**/*
     - app/models/concerns/hyrax/ability.rb
     - lib/active_fedora/solr_service.rb
+    - spec/fixtures/**/*
 Metrics/AbcSize:
   Exclude:
     - app/models/xml_import.rb
@@ -33,6 +34,9 @@ Metrics/LineLength:
     - app/lib/tufts/importer.rb
     - spec/controllers/tufts/draft_controller_spec.rb
     - spec/support/stub/stub_exif.rb
+Metrics/ModuleLength:
+  Exclude:
+    - app/controllers/concerns/hyrax/works_controller_behavior.rb
 Metrics/MethodLength:
   Exclude:
     - app/lib/tufts/import_record.rb
@@ -40,6 +44,7 @@ Metrics/MethodLength:
     - app/models/forms/generic_tisch_deposit.rb
     - lib/tasks/import_test_file.rake
     - app/lib/tufts/importer.rb
+    - app/controllers/concerns/hyrax/works_controller_behavior.rb
 Performance/StringReplacement:
   Exclude:
     - app/controllers/tufts/works_controller.rb
@@ -63,6 +68,7 @@ RSpec/MessageSpies:
   Enabled: false
 RSpec/MultipleExpectations:
   Exclude:
+    - spec/lib/tufts/input_sanitizer_spec.rb
     - spec/controllers/contribute_controller_spec.rb
     - spec/controllers/tufts/publication_status_controller_spec.rb
     - spec/controllers/hyrax/audios_controller_spec.rb

@@ -77,7 +77,7 @@ class CatalogController < ApplicationController
     #   The ordering of the field names is the order of the display
     config.add_index_field solr_name("title", :stored_searchable), label: "Title", itemprop: 'name', if: false
     config.add_index_field 'id', label: 'ID'
-    config.add_index_field solr_name("description", :stored_searchable), itemprop: 'description', helper_method: :iconify_auto_link
+    config.add_index_field solr_name("description", :stored_searchable), itemprop: 'description', helper_method: :iconify_and_mark_safe
     config.add_index_field solr_name("identifier", :stored_searchable), itemprop: 'description', helper_method: :iconify_auto_link
 
     # solr fields to be displayed in the show (single result) view

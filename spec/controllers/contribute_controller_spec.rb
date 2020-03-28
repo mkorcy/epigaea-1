@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'byebug'
 
 describe ContributeController do
   let(:deposit_type) { FactoryGirl.create(:deposit_type) }
@@ -175,7 +176,7 @@ describe ContributeController do
       }
     end
     it "normalizes the text in the params hash" do
-      described_class.new.normalize_whitespace(params)
+      described_class.new.normalize_whitespace_hash_of_hash(params)
       expect(params["contribution"]["title"]).to eq "Space non normalized title"
       expect(params["contribution"]["creator"]).to eq "Name with Spaces"
       expect(params["contribution"]["description"]).to eq "A short description\n with wonky spaces\n\n But keep two newlines between paragraphs."

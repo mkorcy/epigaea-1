@@ -24,7 +24,7 @@ RSpec.describe Hyrax::AudiosController do
       }
     end
     it "normalizes the text in the params hash" do
-      described_class.new.normalize_whitespace(params)
+      described_class.new.normalize_whitespace_hash_of_hash(params)
       expect(params["audio"]["title"]).to eq "Space non normalized title"
       expect(params["audio"]["creator"]).to eq "Name with Spaces"
       expect(params["audio"]["accrual_policy"]).to eq nil

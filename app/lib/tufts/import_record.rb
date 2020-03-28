@@ -215,6 +215,22 @@ module Tufts
           .keys.map(&:to_sym)
       end
 
+      def sanitize_import_field(values)
+        if values
+          if values.is_a?(Array)
+            ary = []
+            values.each do |v|
+              ary << Tufts::InputSanitizer.sanitize(v)
+            end
+
+            values = ary
+          else
+            values = Tufts::InputSanitizer.sanitize(values.to_s)
+          end
+        end
+        values
+      end
+
       def values_for(field:)
         values =
           metadata
@@ -225,6 +241,7 @@ module Tufts
         values = values.map(&:content)
         values = values.first if singular_properties.include?(field.property)
         values = normalize_import_field(field, values)
+        values = sanitize_import_field(values)
         values
       end
   end

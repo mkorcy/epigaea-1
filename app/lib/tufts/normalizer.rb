@@ -20,6 +20,12 @@ module Tufts
       values
     end
 
+    def normalize_whitespace_hash_of_hash(params)
+      p2 = normalize_whitespace(params[hash_key_for_curation_concern])
+      params[hash_key_for_curation_concern] = p2
+      params
+    end
+
     # Go through the params hash and normalize whitespace before handing it off to
     # object creation
     # @param [ActionController::Parameters] params
@@ -27,12 +33,12 @@ module Tufts
       # For keep_newline_fields, keep single newlines, compress 2+ newlines to 2,
       # and otherwise strip whitespace as usual
       keep_newline_fields = ['description', 'abstract']
-      params[hash_key_for_curation_concern].each_key do |key|
-        params[hash_key_for_curation_concern][key] = if keep_newline_fields.include?(key)
-                                                       strip_whitespace_keep_newlines(params[hash_key_for_curation_concern][key])
-                                                     else
-                                                       strip_whitespace(params[hash_key_for_curation_concern][key])
-                                                     end
+      params.each_key do |key|
+        params[key] = if keep_newline_fields.include?(key)
+                        strip_whitespace_keep_newlines(params[key])
+                      else
+                        strip_whitespace(params[key])
+                      end
       end
       params
     end

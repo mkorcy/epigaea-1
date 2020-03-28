@@ -3,23 +3,15 @@ module Tufts
     include Hyrax::WorksControllerBehavior
     include Hyrax::BreadcrumbsForWorks
     include Tufts::Drafts::Editable
-    include Tufts::Normalizer
 
     before_action :redirect_non_admins
 
     def create
-      p = params.to_unsafe_hash
-      normalize_whitespace(p)
-      # normalize_whitespace(params)
-      # params = p
       super
       Hyrax::Workflow::SelfDepositNotification.new(curation_concern).call
     end
 
     def update
-      p = params.to_unsafe_hash
-      normalize_whitespace(p)
-      params = p
       delete_draft(params)
       super
     end

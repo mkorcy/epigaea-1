@@ -27,7 +27,7 @@ RSpec.describe Tufts::Normalizer do
     end
 
     it 'edits the params with whitespace normalization' do
-      expect { controller.normalize_whitespace(params) }
+      expect { controller.normalize_whitespace_hash_of_hash(params) }
         .to change { params[:concern] }
         .to include('string'           => 'moomin', 'description' => "moomin\n papa",
                     'array_of_strings' => ['moomin', "moomin", "moomin"],

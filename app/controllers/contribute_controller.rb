@@ -19,8 +19,7 @@ class ContributeController < ApplicationController
 
   def create
     p = params.to_unsafe_hash
-    normalize_whitespace(p)
-    #    params = p
+    p = normalize_whitespace_hash_of_hash(p)
 
     @contribution = @deposit_type.contribution_class.new(
       p[:contribution].merge(deposit_type: @deposit_type).merge(depositor: current_user.user_key)
