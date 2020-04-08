@@ -2,6 +2,7 @@
 inherit_gem:
   bixby: bixby_default.yml
 AllCops:
+  TargetRubyVersion: 2.1
   Exclude:
     - db/**/*
     - script/**/*
