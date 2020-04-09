@@ -26,7 +26,8 @@ module Hyrax
       end
 
       def handle
-        @work.identifier.empty? ? nil : @work.identifier.first
+        #@work.identifier.empty? ? nil : @work.identifier.first
+        "http://dl.tufts.edu/concern/" + @work.class.name.underscore.pluralize + "/" + @work.id
       end
 
       def embargo?
