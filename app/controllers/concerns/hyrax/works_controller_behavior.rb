@@ -151,8 +151,10 @@ module Hyrax
             end
 
             params[key] = ary
+          elsif val.is_a?(String)
+            params[key] = Tufts::InputSanitizer.sanitize(params[key])
           else
-            params[key] = Tufts::InputSanitizer.sanitize(params[key].to_s)
+            params[key] = params[key]
           end
         end
         params
@@ -282,7 +284,6 @@ module Hyrax
                      else
                        {}
                      end
-
         attributes = attributes.to_unsafe_h
         attributes = sanitize_input(attributes)
         attributes = normalize_whitespace(attributes)
