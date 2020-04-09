@@ -6,14 +6,14 @@ class Chronopolis::Exporter
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   def perform_export(pid)
-    logger.info "PROCESSING PID : #{pid}"
+    @logger.info "PROCESSING PID : #{pid}"
     obj = ActiveFedora::Base.find(pid)
 
     steward = steward_from_object(obj)
 
     collection = collection_from_object(obj)
 
-    logger.info "Collection for #{pid} is #{collection}"
+    @logger.info "Collection for #{pid} is #{collection}"
 
     # mkdir for object
 
@@ -34,7 +34,7 @@ class Chronopolis::Exporter
 
       record = File.new target_file, 'wb'
 
-      logger.info "Writing fileset to #{target_file}"
+      @logger.info "Writing fileset to #{target_file}"
 
       record.write file_set.original_file.content
       record.flush
@@ -44,7 +44,7 @@ class Chronopolis::Exporter
       json = JSON.pretty_generate(json)
       metadata = File.new metadata_file, "w"
 
-      logger.info "Writing metadata to #{metadata_file}"
+      @logger.info "Writing metadata to #{metadata_file}"
 
       metadata.write json
       metadata.flush
@@ -57,24 +57,22 @@ class Chronopolis::Exporter
     metadata_file = File.join('/', 'tdr', 'chronopolis', steward, collection, obj_dir, "metadata.json")
     metadata = File.new metadata_file, "w"
 
-    logger.info "Writing metadata to #{metadata_file}"
+    @logger.info "Writing metadata to #{metadata_file}"
 
     metadata.write json
     metadata.flush
     metadata.close
   rescue ActiveFedora::ObjectNotFoundError
-    logger.error "ERROR Pid not found #{pid}"
-    next
+    @logger.error "ERROR Pid not found #{pid}"
   rescue Ldp::Gone
-    logger.error "ERROR Pid not found #{pid}"
-    next
+    @logger.error "ERROR Pid not found #{pid}"
   end
 
   private
 
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
-    def collection_from_object
+    def collection_from_object(obj)
       # get collection for object
       collections = obj.member_of_collections
 
@@ -94,7 +92,7 @@ class Chronopolis::Exporter
         collection_titles.delete("Collection Descriptions")
         saved_index = index > 0 ? 0 : 1
       end
-      logger.info "COL TITLES : #{collection_titles}"
+      @logger.info "COL TITLES : #{collection_titles}"
 
       index = collection_titles.index("Electronic Theses and Dissertations")
       collection = if index.nil?
@@ -107,7 +105,7 @@ class Chronopolis::Exporter
       sanitize_filename(collection)
     end
 
-    def steward_from_object
+    def steward_from_object(obj)
       # get steward for top directory
       steward = obj.steward
       steward = if steward.nil? || steward.empty?
@@ -116,7 +114,7 @@ class Chronopolis::Exporter
                   steward
                 end
 
-      logger.info "Steward for #{pid} is #{steward}"
+      @logger.info "Steward for #{obj.id} is #{steward}"
 
       sanitize_filename(steward)
     end
