@@ -156,7 +156,6 @@ end
 
 desc "eradicate records by f4 pid from records_to_eradicate.txt"
 task eradicate_records_from_file: :environment do
-  objs = []
   pids = File.open("records_to_eradicate.txt").read
   pids.each_line do |pid|
     begin
@@ -166,6 +165,7 @@ task eradicate_records_from_file: :environment do
       ActiveFedora::Base.eradicate(pid.squish)
     rescue ActiveFedora::ObjectNotFoundError
       # no-op
+      puts "#{pid} doesn't exist"
     rescue Ldp::Gone
       puts "#{pid} doesn't exist"
     end
