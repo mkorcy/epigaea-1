@@ -154,6 +154,24 @@ task compute_handles2: :environment do
   end
 end
 
+desc "eradicate records by f4 pid from records_to_eradicate.txt"
+task eradicate_records_from_file: :environment do
+  objs = []
+  pids = File.open("records_to_eradicate.txt").read
+  pids.each_line do |pid|
+    begin
+      puts "Get #{pid}"
+      work = ActiveFedora::Base.find(pid.squish)
+      work.delete
+      ActiveFedora::Base.eradicate(pid.squish)
+    rescue ActiveFedora::ObjectNotFoundError
+      # no-op
+    rescue Ldp::Gone
+      puts "#{pid} doesn't exist"
+    end
+  end
+end
+
 desc "compute handles"
 task compute_handles: :environment do
   puts "Loading File"
