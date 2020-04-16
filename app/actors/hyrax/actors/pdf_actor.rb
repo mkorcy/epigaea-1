@@ -2,7 +2,7 @@ module Hyrax
   module Actors
     class PdfActor < ApplicationModelActor
       def self.create_pdf_pages(object:)
-        PdfPagesJob.perform_later(object.id)
+        PdfPagesJob.perform_later(object)
 
         true
       end

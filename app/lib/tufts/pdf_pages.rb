@@ -10,7 +10,8 @@ module Tufts
     end
 
     # rubocop:disable Metrics/MethodLength
-    def convert_to_png(pid)
+    def convert_to_png(object)
+      pid = object.id
       success = false
       return success if pid.nil?
 
