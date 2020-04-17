@@ -21,7 +21,7 @@ RSpec.describe Hyrax::Workflow::PublishedNotification, :workflow do
     expect(notification.message).to match(/http/)
   end
   it "has url for notification email" do
-    expect(notification.handle).to eq "http://dl.tufts.edu/concern/pdfs/5h73pw048"
+    expect(notification.handle).to start_with "http://dl.tufts.edu/concern/pdfs/"
   end
   it "has contact email" do
     expect(notification.contact_email).to eq "archives@tufts.edu"
