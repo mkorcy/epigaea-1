@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Hyrax::Workflow::PublishedNotification, :workflow do
   let(:depositor) { FactoryGirl.create(:user) }
   let!(:admin)    { FactoryGirl.create(:admin) }
-  let(:work)      { FactoryGirl.actor_create(:pdf, depositor: depositor.user_key, user: depositor, steward: 'dca', identifier: ['http://handle.net']) }
+  let(:work)      { FactoryGirl.actor_create(:pdf, depositor: depositor.user_key, user: depositor, steward: 'dca', identifier: ['http://dl.tufts.edu/concern/pdfs/5h73pw']) }
 
   let(:recipients) do
     { 'to' => [depositor] }
@@ -20,8 +20,8 @@ RSpec.describe Hyrax::Workflow::PublishedNotification, :workflow do
     expect(notification).to be_instance_of(described_class)
     expect(notification.message).to match(/http/)
   end
-  it "has steward" do
-    expect(notification.handle).to eq "http://handle.net"
+  it "has url for notification email" do
+    expect(notification.handle).to eq "http://dl.tufts.edu/concern/pdfs/5h73pw048"
   end
   it "has contact email" do
     expect(notification.contact_email).to eq "archives@tufts.edu"
