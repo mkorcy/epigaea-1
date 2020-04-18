@@ -20,7 +20,6 @@ module Epigaea
     config.to_prepare do
       factory = Hyrax::CurationConcern.actor_factory
       factory.use(Hyrax::Actors::HandleAssuranceActor)
-      factory.use(Hyrax::Actors::PdfPagesActor)
       factory.swap(Hyrax::Actors::CreateWithFilesActor, Hyrax::Actors::CreateWithFilesAndPassTypesActor)
 
       # Hyrax's instructions don't work

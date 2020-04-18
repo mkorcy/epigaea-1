@@ -22,6 +22,7 @@ class CharacterizeJob < Hyrax::ApplicationJob
 
     def run_local_characterization_services(object, source)
       Tufts::CharacterizationService.run(object, source)
+      PdfPagesJob.perform_later(object)
       Rails.logger.debug "Ran Tufts::CharacterizationService on #{object.id} (#{object.mime_type})"
     end
 end
