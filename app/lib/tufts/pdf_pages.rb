@@ -9,16 +9,19 @@ module Tufts
       @pages_root = CONFIG['pages_root']
     end
 
-    # rubocop:disable Metrics/MethodLength
-    def convert_to_png(object)
+    def convert_object_to_png(object)
       pid = object.id
-      success = false
       return success if pid.nil?
+      obj = ActiveFedora::Base.find(pid)
+      file_set = obj.file_sets[0]
+      convert_file_set_to_png(file_set)
+    end
+
+    def convert_file_set_to_png(file_set)
+      success = false
+      return success if file_set.nil?
 
       begin
-        obj = ActiveFedora::Base.find(pid)
-        file_set = obj.file_sets[0]
-        return if file_set.nil?
         success = process_file_set(file_set)
       rescue Magick::ImageMagickError => ex
         @logger.error($PROGRAM_NAME + ex.message)
