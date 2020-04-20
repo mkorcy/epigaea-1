@@ -12,6 +12,6 @@ class PdfPagesJob < ApplicationJob
   ##
   # @param object [ActiveFedora::Base]
   def perform(object)
-    Tufts::PdfPages.new.convert_to_png(object)
+    Tufts::PdfPages.new.convert_file_set_to_png(object)
   end
 end
