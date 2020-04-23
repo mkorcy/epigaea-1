@@ -46,9 +46,15 @@ module Tufts
       end
 
       def write_pages(file_set, pdf_path)
+        # write blank page
         page_number = 0
-
         pdf_pages = Magick::Image.read(pdf_path) { self.density = '150x150' }
+
+        png = ChunkyPNG::Image.new(page_width(pdf_pages), page_height(pdf_pages), ChunkyPNG::Color::TRANSPARENT)
+        png_path = get_png_path(file_set, page_number)
+        png.save(png_path, :interlace => true)
+        page_number = 1
+
         pdf_pages.each do |pdf_page|
           png_path = get_png_path(file_set, page_number)
           @logger.info('Writing ' + png_path.to_s + '.')
@@ -89,7 +95,7 @@ module Tufts
       end
 
       def page_count(pdf_pages)
-        pdf_pages.length.to_s
+        (pdf_pages.length.to_i + 1).to_s
       end
 
       def get_png_path(file_set, page_number)

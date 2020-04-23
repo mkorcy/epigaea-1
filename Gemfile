@@ -7,6 +7,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 gem 'active-fedora'
+gem 'chunky_png'
 gem 'dotenv-rails'
 gem 'exiftool_vendored'
 # gem 'fedora-migrate', path: '../fedora-migrate'
