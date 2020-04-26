@@ -1,3 +1,5 @@
+require 'byebug'
+
 module Tufts
   CONFIG = YAML.load_file(Rails.root.join('config', 'pdf_pages.yml'))[Rails.env]
 
@@ -45,28 +47,33 @@ module Tufts
         true
       end
 
+      def write_blank_page(file_set, pdf_pages)
+        @logger.info("Writing Blank Page...")
+        png = ChunkyPNG::Image.new(page_width(pdf_pages).to_i, page_height(pdf_pages).to_i, ChunkyPNG::Color::TRANSPARENT)
+        png_path = get_png_path(file_set, 0)
+        png.save(png_path, interlace: true)
+        @logger.info("Done Writing Blank Page...")
+      end
+
       def write_pages(file_set, pdf_path)
-        # write blank page
-        page_number = 0
-        pdf_pages = Magick::Image.read(pdf_path) { self.density = '150x150' }
-
-        png = ChunkyPNG::Image.new(page_width(pdf_pages), page_height(pdf_pages), ChunkyPNG::Color::TRANSPARENT)
-        png_path = get_png_path(file_set, page_number)
-        png.save(png_path, :interlace => true)
-        page_number = 1
-
-        pdf_pages.each do |pdf_page|
-          png_path = get_png_path(file_set, page_number)
-          @logger.info('Writing ' + png_path.to_s + '.')
-
-          pdf_page.write(png_path) { self.quality = 100 }
-          pdf_page.destroy! # this is important - without it RMagick can occasionally be left in a state that causes subsequent failures
-          pdf_pages[page_number] = nil
-
-          page_number += 1
+        pdf_pages = Magick::Image.read(pdf_path + page_suffix(0)) { self.density = '150x150' }
+        write_blank_page(file_set, pdf_pages)
+        count = page_count(pdf_path).to_i
+        (0..(count - 1)).each do |pdf_page_number|
+          pdf_page = Magick::Image.read(pdf_path + page_suffix(pdf_page_number))
+          # pdf_pages.each do |pdf_page|
+          png_path = get_png_path(file_set, (pdf_page_number.to_i + 1).to_s)
+          @logger.info('Writing ' + png_path.to_s)
+          pdf_page[0].write(png_path) { self.quality = 100 }
+          pdf_page[0].destroy! # this is important - without it RMagick can occasionally be left in a state that causes subsequent failures
         end
 
-        @logger.info('Successfully completed ' + file_set.id + '.')
+        @logger.info('Successfully completed ' + file_set.id)
+      end
+
+      def page_suffix(number)
+        str_num = number.to_s
+        "[" + str_num + "]"
       end
 
       def initialize_obj_directory(file_set)
@@ -74,16 +81,16 @@ module Tufts
       end
 
       def write_metadata_file(file_set, pdf_path)
-        pdf_pages = Magick::Image.read(pdf_path) { self.density = '150x150' }
-        @logger.info('Found ' + page_count(pdf_pages) + ' pages (' + page_width(pdf_pages) + ' x ' + page_height(pdf_pages) + ').')
+        pdf_pages = Magick::Image.read(pdf_path + "[0]") { self.density = '150x150' }
+        @logger.info('Found ' + (page_count(pdf_path).to_i + 1).to_s + ' pages (' + page_width(pdf_pages) + ' x ' + page_height(pdf_pages) + ').')
         meta_path = File.join(@pages_root, file_set.id, 'book.json')
-        json = create_meta_json(pdf_pages)
+        json = create_meta_json(pdf_pages, pdf_path)
         @logger.info('Writing ' + json + ' to ' + meta_path + '.')
         File.open(meta_path, 'w') { |file| file.puts(json) }
       end
 
-      def create_meta_json(pdf_pages)
-        '{"page_width":"' + page_width(pdf_pages) + '","page_height":"' + page_height(pdf_pages) + '","page_count":"' + page_count(pdf_pages) + '"}'
+      def create_meta_json(pdf_pages, pdf_path)
+        '{"page_width":"' + page_width(pdf_pages) + '","page_height":"' + page_height(pdf_pages) + '","page_count":"' + (page_count(pdf_path).to_i + 1).to_s + '"}'
       end
 
       def page_height(pdf_pages)
@@ -94,8 +101,9 @@ module Tufts
         pdf_pages[0].columns.to_s
       end
 
-      def page_count(pdf_pages)
-        (pdf_pages.length.to_i + 1).to_s
+      def page_count(pdf_path)
+        reader = PDF::Reader.new(pdf_path)
+        reader.page_count.to_s
       end
 
       def get_png_path(file_set, page_number)
