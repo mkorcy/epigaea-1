@@ -141,7 +141,6 @@ RSpec.feature 'Create a PDF', :clean, js: true do
       expect(page).to have_content 'Subject'
       expect(page).to have_content 'Table of Contents'
       expect(page).to have_content 'Temporal'
-      expect(page).to have_content 'Tufts License'
       expect(page).to have_content 'Text'
 
       expect(page).to have_content "Ingested #{today}"
