@@ -56,7 +56,7 @@ module Hydra::Derivatives::Processors::Video
       end
 
       def default_size_attributes
-        "-2:'min(1080,ih)'"
+        "-vf \"scale=-2:'min(1080,ih)'\""
       end
 
       def default_audio_attributes
