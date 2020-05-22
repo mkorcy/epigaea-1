@@ -10,8 +10,12 @@ module Hydra::Derivatives::Processors::Video
       @video_attributes ||= default_video_attributes
     end
 
-    def size_attributes
-      @size_attributes ||= default_size_attributes
+    def size_attributes(format)
+      if format == "jpg"
+        @image_size_attributes ||= default_image_size_attributes
+      else
+        @video_size_attributes ||= default_video_size_attributes
+      end
     end
 
     def audio_attributes
@@ -48,14 +52,21 @@ module Hydra::Derivatives::Processors::Video
     protected
 
       def default_video_bitrate
-        '345k'
+        # '345k' Unused
       end
 
       def default_video_attributes
-        "-g 30 -b:v #{video_bitrate}"
+        "-g 30"
       end
 
-      def default_size_attributes
+      def default_image_size_attributes
+        "-s 320x240"
+      end
+
+      ##
+      # min(1080,ih) means use 1080 or original height, whichever is smaller
+      # -2 is match width to height if changing height and preserve aspect ratio
+      def default_video_size_attributes
         "-vf \"scale=-2:'min(1080,ih)'\""
       end
 

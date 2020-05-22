@@ -10,7 +10,7 @@ module Hydra::Derivatives::Processors
 
         def options_for(format)
           input_options = ""
-          output_options = "#{config.size_attributes} #{codecs(format)}"
+          output_options = "#{config.size_attributes(format)} #{codecs(format)}"
 
           if format == "jpg"
             input_options += " -itsoffset -2"
