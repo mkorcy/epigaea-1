@@ -19,7 +19,7 @@ RSpec.feature 'Faculty Scholarship', :clean, js: true do
 
     before do
       allow(CharacterizeJob).to receive(:perform_later).and_return(true) # Don't run fits
-      allow(Time).to receive(:now).and_return Time.utc(2015, 1, 1, 12, 0, 0)
+      allow(Time).to receive(:now).and_return Time.utc(2020, 1, 1, 12, 0, 0)
       importer.import_from_csv
       Pdf.delete_all
       Hyrax::UploadedFile.delete_all
@@ -55,7 +55,6 @@ RSpec.feature 'Faculty Scholarship', :clean, js: true do
       expect(created_pdf.visibility).to eq Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
       expect(created_pdf.abstract.first).to eq abstract
       expect(created_pdf.bibliographic_citation.first).to eq bibliographic_citation
-      expect(created_pdf.end_date).to eq "2015-07-01T12:00:00Z"
 
       logout
       login_as admin
