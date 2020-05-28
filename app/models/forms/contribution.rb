@@ -106,7 +106,9 @@ protected
 
   def insert_embargo_date
     return unless @tufts_pdf
-    @tufts_pdf.end_date = (Time.zone.now + embargo.to_i.months).iso8601 unless (embargo || '0').eql? '0'
+    @tufts_pdf.visibility_during_embargo = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE
+    @tufts_pdf.visibility_after_embargo = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+    @tufts_pdf.embargo_release_date = (Time.zone.now + embargo.to_i.months).iso8601 unless (embargo || '0').eql? '0'
   end
 
   def attachment_has_valid_content_type
