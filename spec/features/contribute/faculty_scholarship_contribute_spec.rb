@@ -40,7 +40,7 @@ RSpec.feature 'Faculty Scholarship', :clean, js: true do
       # page.all(:fillable_field, 'contribution[contributor][]')[0].set(coauthor1)
       # click_button "Add Another Author"
       # page.all(:fillable_field, 'contribution[contributor][]')[1].set(coauthor2)
-      select '6 months', from: 'contribution_embargo'
+      select '2 years', from: 'contribution_embargo'
       fill_in "contribution_abstract", with: abstract
       click_button "Agree & Deposit"
       expect(page).to have_content 'Your deposit has been submitted for approval.'
