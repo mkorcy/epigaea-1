@@ -154,6 +154,16 @@ task compute_handles2: :environment do
   end
 end
 
+desc "create pdf pages"
+task create_pdf_pages: :environment do
+  pids = File.open("jumbo_yearbooks.txt").read
+  pids.each_line do |pid|
+    object = ActiveFedora::Base.find(pid.squish)
+    pages = Tufts::PdfPages.new
+    pages.convert_object_to_png(object)
+
+  end
+end
 desc "eradicate records by f4 pid from records_to_eradicate.txt"
 task eradicate_records_from_file: :environment do
   pids = File.open("records_to_eradicate.txt").read
