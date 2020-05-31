@@ -99,18 +99,18 @@ namespace :derivatives do
 
   def rav_seeded_video_ids
     [
-      # '2b88qs25x',
-      # '5138jv13n',
-      # 'xs55ms39s',
-      # 'nv935g29f',
-      # '2801pw03d',
-      # '8910k7346',
-      # 'td96kg27n',
-      # '9g54xx79r',
-      # '7p88cw28h',
-      # 'rb68xs05z',
-      # 'hm50v594w',
-      # '4b29bm16m'
+      '2b88qs25x',
+      '5138jv13n',
+      'xs55ms39s',
+      'nv935g29f',
+      '2801pw03d',
+      '8910k7346',
+      'td96kg27n',
+      '9g54xx79r',
+      '7p88cw28h',
+      'rb68xs05z',
+      'hm50v594w',
+      '4b29bm16m'
     ]
   end
 end
