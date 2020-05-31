@@ -9,6 +9,18 @@ namespace :derivatives do
     puts "Recreated derivatives for #{count} pdfs(s)"
   end
 
+  desc "Recreate derivatives for all Videos"
+  task recreate_all_videos: :environment do
+    puts ''
+    count = 0
+    ids = Video.all.map(&:id)
+    ids = ids - rav_seeded_video_ids
+    ids = ids.unshift(*rav_seeded_video_ids)
+    ids.each do |id|
+      Rake::Task['derivatives:recreate_by_id'].execute(id: id)
+    end
+  end
+
   desc "Recreate derivatives for specified work, e.g., rake derivatives:recreate_by_id['c821gj76b']"
   task :recreate_by_id, [:id] => :environment do |_task, args|
     work_id = args[:id]
@@ -83,5 +95,22 @@ namespace :derivatives do
       asset_path = asset_path[asset_path.index(fs.id.to_s)..-1]
       CharacterizeJob.perform_later(fs, asset_path)
     end
+  end
+
+  def rav_seeded_video_ids
+    [
+      # '2b88qs25x',
+      # '5138jv13n',
+      # 'xs55ms39s',
+      # 'nv935g29f',
+      # '2801pw03d',
+      # '8910k7346',
+      # 'td96kg27n',
+      # '9g54xx79r',
+      # '7p88cw28h',
+      # 'rb68xs05z',
+      # 'hm50v594w',
+      # '4b29bm16m'
+    ]
   end
 end
