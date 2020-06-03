@@ -161,7 +161,6 @@ task create_pdf_pages: :environment do
     object = ActiveFedora::Base.find(pid.squish)
     pages = Tufts::PdfPages.new
     pages.convert_object_to_png(object)
-
   end
 end
 desc "eradicate records by f4 pid from records_to_eradicate.txt"
