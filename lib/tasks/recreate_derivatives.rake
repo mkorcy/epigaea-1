@@ -154,7 +154,9 @@ namespace :derivatives do
       'h989rf779',
       '02871762j',
       'qn59qg58q',
-      'x633fd12k'
+      'x633fd12k',
+      'tq57p3519',
+      'cr56nc70g'
     ]
   end
 
