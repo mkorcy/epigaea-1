@@ -97,17 +97,6 @@ namespace :derivatives do
   end
 
   def file_set_id_list
-    [
-      'q237j469n', 'mk61rv596', 'jd473878t', 'z029ph858', 'bc386w87s', 'm326mc97b',
-      'r494vx27t', 'rr172922k', 'p55483399', 'xg94j254v', 'r781ws62f', 'zk51vv13b',
-      'br86bf971', 'gh93h982s', 'g158bv52t', '05742338h', 'wh247627j', 'bg257t282',
-      'rj430h543', 'mk61rw40p', 'fx71b0881', 'nv935f77w', '9g54xx03d', 'rr172b100',
-      'cj82km64s', 'bn999n23m', 'br86bg73n', 'jw827q56v', '8s45qp185', 'd791sv56z',
-      'hm50v5289', 'n87104393', 's7526r582', '70795n29z', 'th83m987x', '7w62fn54d',
-      'np193p69z', 'n296xb99x', 'j9602c40c', 'qv33s878p', 'k643bd311', 'v405sp68k',
-      'tt44q0818', 'kp78gv14q', 'qz20t5621', 'f7623r61m', '5m60r430c', '3197z0147',
-      '9k41zs47h', 'c534g199v', '6d5709214', '6d5708960', 'r207v2601', 'h989rf779',
-      '02871762j', 'qn59qg58q', 'x633fd12k', 'tq57p3519', 'cr56nc70g'
-    ]
+    [ 'h989rf779', 'kp78gv14q', 'qv33s878p', '9g54xx03d', 'rr172b100', 'bg257t282' ]
   end
 end
