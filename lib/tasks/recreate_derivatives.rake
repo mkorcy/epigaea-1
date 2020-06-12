@@ -97,6 +97,6 @@ namespace :derivatives do
   end
 
   def file_set_id_list
-    [ 'h989rf779', 'kp78gv14q', 'qv33s878p', '9g54xx03d', 'rr172b100', 'bg257t282' ]
+    ['h989rf779', 'kp78gv14q', 'qv33s878p', '9g54xx03d', 'rr172b100', 'bg257t282']
   end
 end

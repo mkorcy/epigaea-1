@@ -1,5 +1,7 @@
 require 'byebug'
 
+# rubocop:disable Metrics/MethodLength
+# rubocop:disable Metrics/ClassLength
 module Tufts
   CONFIG = YAML.load_file(Rails.root.join('config', 'pdf_pages.yml'))[Rails.env]
 
@@ -56,19 +58,28 @@ module Tufts
       end
 
       def write_pages(file_set, pdf_path)
-        pdf_pages = Magick::Image.read(pdf_path + page_suffix(0)) { self.units = Magick::PixelsPerInchResolution
-                                                                    self.density = "300" }
+        pdf_pages = Magick::Image.read(pdf_path + page_suffix(0)) do
+          self.units = Magick::PixelsPerInchResolution
+          self.density = "300"
+        end
+
         write_blank_page(file_set, pdf_pages)
         count = page_count(pdf_path).to_i
         (0..(count - 1)).each do |pdf_page_number|
-          pdf_page = Magick::Image.read(pdf_path + page_suffix(pdf_page_number)) { self.units = Magick::PixelsPerInchResolution
-                                                                                   self.density = "300" }
+          pdf_page = Magick::Image.read(pdf_path + page_suffix(pdf_page_number)) do
+            self.units = Magick::PixelsPerInchResolution
+            self.density = "300"
+          end
+
           # pdf_pages.each do |pdf_page|
           png_path = get_png_path(file_set, (pdf_page_number.to_i + 1).to_s)
           @logger.info('Writing ' + png_path.to_s)
-          pdf_page[0].write(png_path) { self.quality=100 
-                                        self.units= Magick::PixelsPerInchResolution
-                                        self.density="200" }
+          pdf_page[0].write(png_path) do
+            self.quality = 100
+            self.units = Magick::PixelsPerInchResolution
+            self.density = "200"
+          end
+
           pdf_page[0].destroy! # this is important - without it RMagick can occasionally be left in a state that causes subsequent failures
         end
 
@@ -85,8 +96,10 @@ module Tufts
       end
 
       def write_metadata_file(file_set, pdf_path)
-        pdf_pages = Magick::Image.read(pdf_path + "[0]") { self.units = Magick::PixelsPerInchResolution
-                                                           self.density = "300" }
+        pdf_pages = Magick::Image.read(pdf_path + "[0]") do
+          self.units = Magick::PixelsPerInchResolution
+          self.density = "300"
+        end
         @logger.info('Found ' + (page_count(pdf_path).to_i + 1).to_s + ' pages (' + page_width(pdf_pages) + ' x ' + page_height(pdf_pages) + ').')
         meta_path = File.join(@pages_root, file_set.id, 'book.json')
         json = create_meta_json(pdf_pages, pdf_path)
@@ -131,3 +144,5 @@ module Tufts
       end
   end
 end
+# rubocop:enable Metrics/MethodLength
+# rubocop:enable Metrics/ClassLength
