@@ -64,7 +64,6 @@ RSpec.feature 'Faculty Scholarship', :clean, js: true do
       expect(page).to have_content(bibliographic_citation)
       expect(page).to have_content("In Collection")
       expect(page).to have_content("Tufts Published Scholarship, 1987-2014")
-      expect(page).to have_content('End Date')
       visit("/concern/pdfs/#{created_pdf.id}/edit")
       expect(find_by_id("pdf_abstract").value).to eq abstract
       expect(find_by_id("pdf_bibliographic_citation").value).to eq bibliographic_citation
