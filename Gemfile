@@ -88,6 +88,7 @@ gem 'redis-rails' # Will install several other redis-* gems
 gem 'rsolr', '>= 1.0'
 gem 'sanitize', '~> 4.6', '>= 4.6.3'
 gem 'sidekiq'
+gem 'sidekiq-failures'
 gem 'sidekiq-limit_fetch'
 
 group :production do

@@ -847,6 +847,8 @@ GEM
       rack (>= 1.5.0)
       rack-protection (>= 1.5.0)
       redis (>= 3.3.5, < 5)
+    sidekiq-failures (1.0.0)
+      sidekiq (>= 4.0.0)
     sidekiq-limit_fetch (3.4.0)
       sidekiq (>= 4)
     signet (0.11.0)
@@ -1005,6 +1007,7 @@ DEPENDENCIES
   selenium-webdriver
   shoulda-matchers!
   sidekiq
+  sidekiq-failures
   sidekiq-limit_fetch
   solr_wrapper (>= 0.3)
   sqlite3
