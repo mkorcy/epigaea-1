@@ -154,6 +154,28 @@ task compute_handles2: :environment do
   end
 end
 
+desc "add_list_to_parent"
+task add_list_to_parent: :environment do
+  pids = File.open("collections_to_add.txt").read
+  pids.each_line do |pid|
+    obj = Collection.find(pid.squish)
+    col = Collection.find("sn009x76k")
+    obj.member_of_collections << col
+    obj.save!
+  end
+end
+
+desc "collection_parent_check"
+task collection_parent_check: :environment do
+  pids = File.open("collection_parents.txt").read
+  pids.each_line do |pid|
+    object = Collection.find(pid.squish)
+    solr_doc = object.to_solr
+    parent_ids = solr_doc['nesting_collection__parent_ids_ssim']
+    puts "#{pid}, #{parent_ids}"
+  end
+end
+
 desc "create pdf pages"
 task create_pdf_pages: :environment do
   pids = File.open("jumbo_yearbooks.txt").read
