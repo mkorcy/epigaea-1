@@ -37,6 +37,11 @@ class User < ApplicationRecord
     reload
   end
 
+  def read_only?
+    role = Role.find_by(name: "read_only_worker")
+    return !role.nil?
+  end
+
   def remove_role(name)
     role = Role.find_by(name: name)
     role.users.delete(self) if role && role.users && role.users.include?(self)

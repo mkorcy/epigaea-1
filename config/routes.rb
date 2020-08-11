@@ -3,8 +3,13 @@ Rails.application.routes.draw do
   admin_constraint = lambda do |request|
     request.env['warden'].authenticate? && request.env['warden'].user.admin?
   end
+
+  read_only_constraint = lambda do |request|
+    request.env['warden'].authenticate? && request.env['warden'].user.read_only?
+  end
+
   non_admin_constraint = lambda do |request|
-    request.env['warden'].authenticate? && !request.env['warden'].user.admin?
+    request.env['warden'].authenticate? && !request.env['warden'].user.admin? && !request.env['warden'].user.read_only?
   end
   authenticated_constraint = lambda do |request|
     request.env['warden'].authenticate?
@@ -13,7 +18,7 @@ Rails.application.routes.draw do
   # This needs to be firt, but *before* admin and user contrained routes are configured
   devise_for :users
 
-  constraints admin_constraint do
+  constraints (read_only_constraint || admin_constraint do
     root to: 'hyrax/dashboard#show'
 
     concern :exportable, Blacklight::Routes::Exportable.new

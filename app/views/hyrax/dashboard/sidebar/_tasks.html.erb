@@ -5,14 +5,16 @@
             <span class="fa fa-flag"></span><span class="sidebar-action-text"><%= t('hyrax.admin.sidebar.workflow_review') %></span>
         <% end %>
     <% end %>
-
-    <%= menu.nav_link('/advanced') do %>
-        <span class="fa fa-search"></span><span class="sidebar-action-text">Advanced Search</span>
+    <% if current_user.admin? || current_user.read_only? %> 
+      <%= menu.nav_link('/advanced') do %>
+          <span class="fa fa-search"></span><span class="sidebar-action-text">Advanced Search</span>
+      <% end %>
     <% end %>
-
+    <% if current_user.admin? %>
     <%= menu.nav_link('/deposit_types') do %>
         <span class="fa fa-list"></span><span class="sidebar-action-text">Manage Self-Deposit Types</span>
-    <% end %>
+      <% end %>
+    <% end %>     
 <% end %>
 
 <!-- non-admin users can contribute new documents -->

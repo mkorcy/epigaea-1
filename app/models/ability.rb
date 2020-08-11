@@ -19,9 +19,13 @@ class Ability
       can [:manage], Ead
     end
 
+    if current_user.read_only?
+      can [:manage], Contribution
+    end
+
     if registered_user? # rubocop:disable Style/GuardClause
       can [:create], Contribution
-      can [:create], Batch
+    #  can [:create], Batch
     end
     # Limits creating new objects to a specific group
     #
