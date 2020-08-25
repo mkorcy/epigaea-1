@@ -1,0 +1,8 @@
+development:
+  tdl_url: http://localhost:3000
+test:
+  tdl_url:
+stage:
+  tdl_url:
+production:
+  tdl_url:

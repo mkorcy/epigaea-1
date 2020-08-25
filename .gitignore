@@ -55,6 +55,7 @@ config/ldap.yml
 config/fedora3.yml
 config/handle.yml
 config/pdf_pages.yml
+config/tufts.yml
 # Rubymine
 .idea
 
