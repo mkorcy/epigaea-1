@@ -5,11 +5,13 @@
             <span class="fa fa-flag"></span><span class="sidebar-action-text"><%= t('hyrax.admin.sidebar.workflow_review') %></span>
         <% end %>
     <% end %>
+<% end %>
     <% if current_user.admin? || current_user.read_only? %> 
       <%= menu.nav_link('/advanced') do %>
           <span class="fa fa-search"></span><span class="sidebar-action-text">Advanced Search</span>
       <% end %>
     <% end %>
+<% if current_user.admin? %>
     <% if current_user.admin? %>
     <%= menu.nav_link('/deposit_types') do %>
         <span class="fa fa-list"></span><span class="sidebar-action-text">Manage Self-Deposit Types</span>
@@ -27,11 +29,11 @@
     <%= menu.nav_link('/handle/log.html') do %>
         <span class="fa fa-exclamation-triangle"></span><span class="sidebar-action-text">View Handle.net Error Log</span>
     <% end %>
-
+<% end %>
     <%= menu.nav_link('/batches', data: { turbolinks: false }) do %>
         <span class="fa fa-info-circle"></span><span class="sidebar-action-text">View Batch Statuses</span>
     <% end %>
-
+<% if current_user.admin? %>
     <%= menu.nav_link('/sidekiq',  data: { turbolinks: false }) do %>
         <span class="fa fa-hourglass-half"></span><span class="sidebar-action-text">View Background Job Queues</span>
     <% end %>

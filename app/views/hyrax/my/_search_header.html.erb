@@ -24,9 +24,11 @@
      <%= button_tag "Add to Collection", class: 'btn btn-primary submits-batches submits-batches-add',
           data: { toggle: "modal", target: "#collection-list-container" } %>
     <div class="tufts-buttons">
+    <% if current_user.admin? %>
       <%= button_to "Apply Template", main_app.new_template_update_path, method: :get, class: "btn btn-primary submits-batches" %>
       <%= button_to "Publish", main_app.batches_path, method: :post, params: { batch: { batchable_attributes: { batch_type: "Publish" } } }, class: "btn btn-primary submits-batches" %>
       <%= button_to "Unpublish", main_app.batches_path, method: :post, params: { batch: { batchable_attributes: { batch_type: "Unpublish" } } }, class: "btn btn-primary submits-batches" %>
+    <% end %>
       <%= button_to "Export Metadata", main_app.metadata_exports_path, method: :post, class: "btn btn-primary submits-batches" %>
     </div>
   </div>

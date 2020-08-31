@@ -39,7 +39,7 @@ class User < ApplicationRecord
 
   def read_only?
     role = Role.find_by(name: "read_only_worker")
-    return !role.nil?
+    !role.nil?
   end
 
   def remove_role(name)

@@ -2,6 +2,7 @@
   <li class="batch-check">
     <%= check_box_tag 'check_all', 'yes', @all_checked %>
   </li>
+<% if current_user.admin? %>
   <li>
     <%= button_to "Apply Template", new_template_update_path, method: :get, class: "btn btn-primary submits-batches" %>
   </li>
@@ -11,6 +12,7 @@
   <li>
     <%= button_to "Unpublish", batches_path, method: :post, params: { batch: { batchable_attributes: { batch_type: "Unpublish" } } }, class: "btn btn-primary submits-batches" %>
   </li>
+<% end %>
   <li>
     <%= button_to "Export Metadata", metadata_exports_path, method: :post, class: "btn btn-primary submits-batches" %>
   </li>

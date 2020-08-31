@@ -45,7 +45,7 @@
   <% end %>
 
   <!-- if presenter.work_templatable? && presenter.editor? -->
-  <% if presenter.work_templatable? %>
+  <% if presenter.work_templatable? && presenter.editor? %>
   <li>
     <%= link_to raw('<i class="glyphicon glyphicon-list-alt"></i>') + "Apply Template", main_app.new_template_update_path(ids: [presenter.id]), class: 'btn btn-default' %>
   </li>

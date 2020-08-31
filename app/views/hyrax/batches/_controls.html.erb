@@ -1,3 +1,4 @@
+<% if current_user.admin? %>
 <ul class="batch-controls">
   <li>
     <%= button_to "Publish Batch", main_app.batches_path, method: :post, params: { batch: { ids: @batch.object.ids, batchable_attributes: { batch_type: "Publish" } } }, class: "btn btn-primary" %>
@@ -14,3 +15,4 @@
     <%= button_to "Revert to Draft", main_app.batches_path, method: :post, params: { batch: { ids: @batch.object.ids, batchable_attributes: { batch_type: "Revert" } } }, class: "btn btn-primary" %>
   </li>
 </ul>
+<% end %>

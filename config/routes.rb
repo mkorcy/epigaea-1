@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   # This needs to be firt, but *before* admin and user contrained routes are configured
   devise_for :users
 
-  constraints (read_only_constraint || admin_constraint do
+  constraints(read_only_constraint || admin_constraint) do
     root to: 'hyrax/dashboard#show'
 
     concern :exportable, Blacklight::Routes::Exportable.new

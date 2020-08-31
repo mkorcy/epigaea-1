@@ -38,7 +38,7 @@ module Hyrax
       end
 
       def check_permissions
-        authorize! :create, Batch
+        authorize! :status_check, Batch
       end
 
       ##
