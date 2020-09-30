@@ -39,6 +39,11 @@ module Hydra::Derivatives::Processors::Video
       @jpeg ||= CodecConfig.new('-vcodec mjpeg')
     end
 
+    # https://docs.peer5.com/guides/production-ready-hls-vod/
+    def m3u8
+      @hls ||= CodecConfig.new('-vcodec h264 -profile:v main -sc_threshold 0 -hls_time 4 -hls_playlist_type vod')
+    end
+
     class CodecConfig
       attr_writer :codec
 
@@ -52,11 +57,13 @@ module Hydra::Derivatives::Processors::Video
     protected
 
       def default_video_bitrate
-        # '345k' Unused
+        # Changing bitrate settings from default to better support HLS
+        '-b:v 2500k -maxrate 2675k -bufsize 3750k'
       end
 
       def default_video_attributes
-        "-g 30"
+        # Changing keyframe settings from default to better support HLS
+        "-g 48 -keyint_min 48 #{video_bitrate}"
       end
 
       def default_image_size_attributes
@@ -67,11 +74,11 @@ module Hydra::Derivatives::Processors::Video
       # min(1080,ih) means use 1080 or original height, whichever is smaller
       # -2 is match width to height if changing height and preserve aspect ratio
       def default_video_size_attributes
-        "-vf \"scale=-2:'min(1080,ih)'\""
+        "-vf \"scale=w=1280:h=720:force_original_aspect_ratio=decrease\""
       end
 
       def default_audio_attributes
-        "-ac 2 -ab 96k -ar 44100"
+        '-c:a aac -ar 48000 -b:a 128k'
       end
   end
 end
