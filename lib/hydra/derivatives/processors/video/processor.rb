@@ -23,6 +23,7 @@ module Hydra::Derivatives::Processors
               m3u8_path_pieces = directives[:url].split('/')
               m3u8_path_pieces[-1] = '%03d.ts'
               output_options += " -hls_segment_filename #{m3u8_path_pieces.join('/')}"
+              output_options += ' -hls_base_url "?file="'
             end
           end
 
