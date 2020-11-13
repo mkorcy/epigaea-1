@@ -12,11 +12,12 @@ namespace :derivatives do
   desc "Recreate derivatives for all Videos"
   task recreate_all_videos: :environment do
     puts ''
-    file_set_id_list.each do |id|
-      fs = FileSet.find(id)
-      asset_path = fs.original_file.uri.to_s
-      asset_path = asset_path[asset_path.index(fs.id.to_s)..-1]
-      RecreateVideoDerivativesJob.perform_later(fs, asset_path)
+    Video.all.each do |v|
+      v.file_sets.each do |fs|
+        asset_path = fs.original_file.uri.to_s
+        asset_path = asset_path[asset_path.index(fs.id.to_s)..-1]
+        RecreateVideoDerivativesJob.perform_later(fs, asset_path)
+      end
     end
   end
 
