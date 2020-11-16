@@ -22,6 +22,7 @@ module ActiveFedora::File::Streaming
       @headers = headers
     end
 
+    # rubocop:disable Metrics/MethodLength
     def each(no_of_requests_limit = 3, &block)
       raise ArgumentError, 'HTTP redirect too deep' if no_of_requests_limit.zero?
       Net::HTTP.start(uri.host, uri.port, verify_mode: OpenSSL::SSL::VERIFY_NONE, use_ssl: (uri.scheme == 'https')) do |http|
@@ -42,6 +43,7 @@ module ActiveFedora::File::Streaming
         end
       end
     end
+    # rubocop:enable Metrics/MethodLength
   end
 
   private

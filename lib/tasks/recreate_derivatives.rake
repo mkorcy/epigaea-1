@@ -10,9 +10,15 @@ namespace :derivatives do
   end
 
   desc "Recreate derivatives for all Videos"
-  task recreate_all_videos: :environment do
+  task :batch_recreate_videos, [:start, :end] => :environment do |_task, args|
     puts ''
-    Video.all.each do |v|
+    start = args[:start].present? ? args[:start].to_i : 0
+    e_nd = args[:end].present? ? args[:end].to_i : Video.all.count - 1
+    videos_to_process = Video.all[start..e_nd]
+    puts "Processing Videos #{start} through #{e_nd}: #{videos_to_process.count} total Videos"
+
+    puts ''
+    videos_to_process.each do |v|
       v.file_sets.each do |fs|
         asset_path = fs.original_file.uri.to_s
         asset_path = asset_path[asset_path.index(fs.id.to_s)..-1]

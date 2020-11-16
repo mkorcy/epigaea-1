@@ -8,6 +8,7 @@ module Hydra::Derivatives::Processors
 
       protected
 
+        # rubocop:disable Metrics/MethodLength
         def options_for(format)
           input_options = ""
           output_options = "#{config.size_attributes(format)} #{codecs(format)}"
@@ -29,6 +30,7 @@ module Hydra::Derivatives::Processors
 
           { Ffmpeg::OUTPUT_OPTIONS => output_options, Ffmpeg::INPUT_OPTIONS => input_options }
         end
+        # rubocop:enable Metrics/MethodLength
 
         def codecs(format)
           case format
