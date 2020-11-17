@@ -15,7 +15,7 @@
   handle: 5
   fixity_check: 1
   default: 5
-  batch_recreate_video_derivatives: 1
+  batch_recreate_video_derivatives: 2
 
 test:
   :concurrency: 5
