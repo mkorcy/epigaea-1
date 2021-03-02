@@ -1,0 +1,38 @@
+<%
+  def draw_tree(node)
+    nested = node.nested_collection_names_and_links
+    nested.each do |nest|
+      nest.each_with_index do |col,index|
+        unless index == 0
+         %>
+         /
+         <%
+        end
+%>
+       <strong><%= link_to col[:title], dashboard_collection_path(col[:id]) %></strong>
+<%
+      end
+%>
+     <br/>
+<%
+    end
+  end
+%>
+
+<% if presenter.total_parent_collections <= 0 %>
+  <div class="alert alert-warning" role="alert"><%= t('hyrax.collections.show.no_visible_parent_collections') %></div>
+<% else %>
+<% draw_tree(presenter) %>
+<% if false %>
+  <ul class="collections-list">
+    <% presenter.parent_collections.documents.each do |document| %>
+      <%= render 'hyrax/dashboard/collections/show_parent_collection_row', id: presenter.id, document: document %>
+    <% end %>
+  </ul>
+<% end %>
+  <div class="row">
+    <%= render 'hyrax/collections/paginate', solr_response: presenter.parent_collections, page_param_name: :parent_collection_page %>
+  </div>
+  <!-- Remove parent collection Modal window -->
+  <%= render 'modal_remove_from_collection' %>
+<% end %>

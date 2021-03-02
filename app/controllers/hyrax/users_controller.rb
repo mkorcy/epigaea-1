@@ -4,9 +4,9 @@ require_dependency Hyrax::Engine.root.join('app', 'controllers', 'hyrax', 'users
 
 module Hyrax
   class UsersController
-     def find_user
-       @user = ::User.from_url_component(params[:id])
-       redirect_to root_path, alert: "User does not exist" unless @user
-     end
+    def find_user
+      @user = ::User.from_url_component(params[:id])
+      redirect_to root_path, alert: "User does not exist" unless @user
+    end
   end
 end
