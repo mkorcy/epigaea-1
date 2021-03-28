@@ -14,7 +14,7 @@ gem 'exiftool_vendored'
 gem 'fastimage'
 gem 'hydra-role-management'
 gem 'hyrax', '2.5.1'
-gem 'mimemagic'
+gem 'mimemagic', '0.3.10'
 gem 'nokogiri', '>=1.8.2' # 1.8.2 fixes security issue https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15412
 gem 'okcomputer'
 gem 'pdf-reader'

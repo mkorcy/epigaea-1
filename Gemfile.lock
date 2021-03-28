@@ -566,7 +566,9 @@ GEM
     mime-types (3.2.2)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2019.0331)
-    mimemagic (0.3.3)
+    mimemagic (0.3.10)
+      nokogiri (~> 1)
+      rake
     mini_magick (4.10.1)
     mini_mime (1.0.1)
     mini_portile2 (2.4.0)
@@ -982,7 +984,7 @@ DEPENDENCIES
   ladle
   launchy
   listen (~> 3.0.5)
-  mimemagic
+  mimemagic (= 0.3.10)
   mysql2
   nokogiri (>= 1.8.2)
   okcomputer
@@ -1023,4 +1025,4 @@ RUBY VERSION
    ruby 2.6.2p47
 
 BUNDLED WITH
-   1.17.3
+   2.2.15
