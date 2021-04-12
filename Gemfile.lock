@@ -6,14 +6,15 @@ GIT
 
 GIT
   remote: https://github.com/TuftsUniversity/tufts-curation
-  revision: c279abeb4ec0a5a8b75a18729e4e75e8cbcb399e
+  revision: f17757a53c85458784e6c5eba9c47107b4e90894
+  branch: loosen_spec_reqs
   specs:
     tufts-curation (0.1.0)
       active-fedora (>= 11.5, <= 12.99)
       activerecord
       activesupport
       chronic
-      hyrax (>= 2.0.0, < 2.6.0)
+      hyrax (>= 2.1.0, <= 2.9.9)
 
 GIT
   remote: https://github.com/thoughtbot/shoulda-matchers.git
