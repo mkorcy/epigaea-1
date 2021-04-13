@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: https://github.com/TuftsUniversity/tufts-curation
-  revision: f17757a53c85458784e6c5eba9c47107b4e90894
+  revision: cef569b1a42718affdee2be721aa3add82cbf5d2
   branch: loosen_spec_reqs
   specs:
     tufts-curation (0.1.0)

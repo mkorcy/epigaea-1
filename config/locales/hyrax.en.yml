@@ -82,6 +82,10 @@ en:
           tufts_is_part_of_tesim:  'Tufts Is Part Of'
           tufts_license_tesim:  'Tufts License'
           aspace_cuid_tesim: 'Component ID'
+          dc_access_rights_tesim: 'Access Rights'
+          isbn_tesim: 'ISBN'
+          oclc_tesim: 'OCLC No.'
+          doi_tesim: 'DOI'
         show:
           abstract:  'Abstract'
           access_control_id:  'Access Control'
@@ -152,6 +156,10 @@ en:
           tufts_is_part_of:  'Tufts Is Part Of'
           tufts_license:  'Tufts License'
           aspace_cuid: 'Component ID'
+          dc_access_rights: 'Access Rights'
+          isbn: 'ISBN'
+          oclc: 'OCLC No.'
+          doi: 'DOI'
   activefedora:
     models:
       ead: 'EAD'
@@ -265,3 +273,7 @@ en:
           tufts_is_part_of:  'Tufts Is Part Of'
           tufts_license:  'Tufts License'
           aspace_cuid: 'Component ID'
+          dc_access_rights: 'Access Rights'
+          isbn: 'ISBN'
+          oclc: 'OCLC No.'
+          doi: 'DOI'
