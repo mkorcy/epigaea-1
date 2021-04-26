@@ -83,22 +83,22 @@ task :replace_metadata, [:file_name] => [:environment] do |_t, args|
   file_name = args[:file_name]
   puts "Loading File #{file_name}"
   CSV.foreach(file_name, headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
-      pid = row[0]
-      puts "#{pid}"
-      field = row[1]
-      field_sym = field.parameterize.underscore.to_sym
-      field_sym_setter = field.parameterize
-      field_sym_setter = (field_sym_setter + "=").underscore.to_sym
-      val_to_replace = row[2]
-      replacement_value = row[3]
-      a = ActiveFedora::Base.find(pid)
-      names = a.send(field_sym)
-      names = names.to_a
-      names.delete(val_to_replace)
-      names.push(replacement_value)
-      a.send(field_sym_setter, names)
-      puts "Updating #{pid} from #{field} to #{names}"
-      a.save!
+    pid = row[0]
+    puts pid.to_s
+    field = row[1]
+    field_sym = field.parameterize.underscore.to_sym
+    field_sym_setter = field.parameterize
+    field_sym_setter = (field_sym_setter + "=").underscore.to_sym
+    val_to_replace = row[2]
+    replacement_value = row[3]
+    a = ActiveFedora::Base.find(pid)
+    names = a.send(field_sym)
+    names = names.to_a
+    names.delete(val_to_replace)
+    names.push(replacement_value)
+    a.send(field_sym_setter, names)
+    puts "Updating #{pid} from #{field} to #{names}"
+    a.save!
   end
 end
 
@@ -109,35 +109,33 @@ task :delete_value, [:file_name] => [:environment] do |_t, args|
   file_name = args[:file_name]
   puts "Loading File #{file_name}"
   CSV.foreach(file_name, headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
-      pid = row[0]
-      puts "#{pid}"
-      field = row[1]
-      field_sym = field.parameterize.underscore.to_sym
-      field_sym_setter = field.parameterize
-      field_sym_setter = (field_sym_setter + "=").underscore.to_sym
-      val_to_replace = row[2]
-      a = ActiveFedora::Base.find(pid)
-      names = a.send(field_sym)
-      names = names.to_a
-      names.delete(val_to_replace)
-      a.send(field_sym_setter, names)
-      puts "Updating #{pid} from #{field} to #{names}"
-      a.save!
+    pid = row[0]
+    puts pid.to_s
+    field = row[1]
+    field_sym = field.parameterize.underscore.to_sym
+    field_sym_setter = field.parameterize
+    field_sym_setter = (field_sym_setter + "=").underscore.to_sym
+    val_to_replace = row[2]
+    a = ActiveFedora::Base.find(pid)
+    names = a.send(field_sym)
+    names = names.to_a
+    names.delete(val_to_replace)
+    a.send(field_sym_setter, names)
+    puts "Updating #{pid} from #{field} to #{names}"
+    a.save!
   end
 end
-
 
 desc "create_embargo_csv"
 task :create_embargo_csv, [:file_name] => [:environment] do |_t, args|
   file_name = args[:file_name]
   puts "Loading File #{file_name}"
   CSV.foreach(file_name, headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
-      pid = row[0]
-      a = ActiveFedora::Base.find(pid)
-      puts "#{a.id}, #{a.embargo_release_date}"
+    pid = row[0]
+    a = ActiveFedora::Base.find(pid)
+    puts "#{a.id}, #{a.embargo_release_date}"
   end
 end
-
 
 desc "strip subjects"
 task strip_subjects: :environment do
@@ -376,7 +374,7 @@ task remove_from_collection: :environment do
       mem_of.each do |mem|
         puts "adding : #{mem.id}"
         item = ActiveFedora::Base.find(mem.id)
-        obj.member_of_collections  << item
+        obj.member_of_collections << item
       end
       obj.save!
     rescue ActiveFedora::ObjectNotFoundError
@@ -384,7 +382,6 @@ task remove_from_collection: :environment do
     end
   end
 end
-
 
 desc "ead matching"
 task ead_matching: :environment do
@@ -456,7 +453,7 @@ task f3_to_f4: :environment do
       puts "NOPE #{pid}"
     else
       puts "DUPE DUPE DUPE #{a} #{pid}" if a.length > 1
-      puts "#{a.first.id}"
+      puts a.first.id.to_s
     end
   end
 end
@@ -665,51 +662,48 @@ task :export_tei_to_pdf, [:pid] => [:environment] do |_t, args|
     target_file = File.join('/', 'tmp', 'tei', target_filename, target_filename)
     record = File.new target_file, 'wb'
 
-
-
     record.write file_set.original_file.content
     record.flush
     record.close
     doc = File.open(target_file) { |f| Nokogiri::XML(f) }
     pages = doc.xpath("//figure[@rend='page']")
     pages.each_with_index do |id, val|
-       f3_pid =  urn_to_f3_pid(id.attr('n'))
-       page_image = Image.where(legacy_pid_tesim: f3_pid).first
-       page_image.file_sets.each do |file_set|
-         target_filename = "page_" + val.to_s + ".jpg"
-         puts "writing #{target_filename}"
-         target_filename = target_filename.truncate(255)
-         target_filename = sanitize_filename(target_filename)
-         target_file = File.join(parent_dir,target_filename)
-         page_images_array << target_file 
-         record = File.new target_file, 'wb'
-         record.write file_set.original_file.content
-         record.flush
-         record.close
+      f3_pid = urn_to_f3_pid(id.attr('n'))
+      page_image = Image.where(legacy_pid_tesim: f3_pid).first
+      page_image.file_sets.each do |local_file_set|
+        target_filename = "page_" + val.to_s + ".jpg"
+        puts "writing #{target_filename}"
+        target_filename = target_filename.truncate(255)
+        target_filename = sanitize_filename(target_filename)
+        target_file = File.join(parent_dir, target_filename)
+        page_images_array << target_file
+        record = File.new target_file, 'wb'
+        record.write local_file_set.original_file.content
+        record.flush
+        record.close
       end
     end
-
   end
 
   pdf_path = File.join(parent_dir, "images.pdf")
-  system("/usr/bin/convert " +  page_images_array.join(" ") + " #{pdf_path}")
+  system("/usr/bin/convert " + page_images_array.join(" ") + " #{pdf_path}")
 
-  #image_list = Magick::ImageList.new(*page_images_array)
-  #pdf_path = File.join(parent_dir, "images.pdf")
-  #image_list.write(pdf_path)
+  # image_list = Magick::ImageList.new(*page_images_array)
+  # pdf_path = File.join(parent_dir, "images.pdf")
+  # image_list.write(pdf_path)
 end
 def urn_to_f3_pid(urn)
   return urn if is_f3_pid?(urn)
-  pid = ""
   index_of_colon = urn.rindex(':')
   pid = "tufts" + urn[index_of_colon, urn.length]
   pid
 end
 
+# rubocop:disable Naming/PredicateName
 def is_f3_pid?(pid)
-    # if this is a urn say no, otherwise say yes
-    # unless pid.
-    !pid.include? 'central'
+  # if this is a urn say no, otherwise say yes
+  # unless pid.
+  !pid.include? 'central'
 end
 
 def sanitize_filename(filename)
