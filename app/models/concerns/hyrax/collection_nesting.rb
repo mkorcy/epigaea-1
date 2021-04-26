@@ -23,6 +23,12 @@ module Hyrax
       def after_update_nested_collection_relationship_indices
         @during_save = false
         reindex_nested_relationships_for(id: id, extent: reindex_extent)
+        children = find_children_of(destroyed_id: id)
+        ids = []
+        children.each do |child|
+           ids << child.id
+        end
+        IndexChildrenJob.perform_later(ids)
       end
 
       def update_nested_collection_relationship_indices
@@ -43,7 +49,7 @@ module Hyrax
     end
 
     def find_children_of(destroyed_id:)
-      ActiveFedora::SolrService.query(ActiveFedora::SolrQueryBuilder.construct_query(member_of_collection_ids_ssim: destroyed_id))
+      ActiveFedora::SolrService.query(ActiveFedora::SolrQueryBuilder.construct_query(member_of_collection_ids_ssim: destroyed_id), rows: 500_000)
     end
 
     # Only models which include Hyrax::CollectionNesting will respond to this method.
