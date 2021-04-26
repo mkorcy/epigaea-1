@@ -6,8 +6,8 @@ GIT
 
 GIT
   remote: https://github.com/TuftsUniversity/tufts-curation
-  revision: cef569b1a42718affdee2be721aa3add82cbf5d2
-  branch: loosen_spec_reqs
+  revision: a602480b8bdd52dadfaa51280bfd26200aaf7647
+  tag: v1.2.1
   specs:
     tufts-curation (0.1.0)
       active-fedora (>= 11.5, <= 12.99)
