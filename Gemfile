@@ -50,7 +50,7 @@ gem 'blacklight', '~> 6.20.0'
 gem 'blacklight_advanced_search'
 gem 'whenever', require: false
 
-gem 'tufts-curation', git: 'https://github.com/TuftsUniversity/tufts-curation'
+gem 'tufts-curation', git: 'https://github.com/TuftsUniversity/tufts-curation', branch: 'loosen_spec_reqs'
 # gem 'tufts-curation', git: 'https://github.com/TuftsUniversity/tufts-curation', tag: '1.1.0'
 
 group :development, :test do
