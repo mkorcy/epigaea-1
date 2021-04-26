@@ -12,14 +12,13 @@ class IndexChildrenJob < ApplicationJob
   ##
   def perform(children)
     children.each do |child|
-      puts "#{child}"
       reindex_nested_relationships_for(id: child, extent: Hyrax::Adapters::NestingIndexAdapter::LIMITED_REINDEX)
     end
   end
 
   private
 
-  def reindex_nested_relationships_for(id:, extent:)
-    Hyrax.config.nested_relationship_reindexer.call(id: id, extent: extent)
-  end
+    def reindex_nested_relationships_for(id:, extent:)
+      Hyrax.config.nested_relationship_reindexer.call(id: id, extent: extent)
+    end
 end

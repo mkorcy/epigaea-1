@@ -3,6 +3,7 @@ module Hyrax
   # This is part of the after update index because it is a potentially very expensive process.
   #
   # @todo Consider extracting the update_index callback to ActiveFedora::Base
+  # rubocop:disable Metrics/BlockLength
   module CollectionNesting
     extend ActiveSupport::Concern
 
@@ -26,7 +27,7 @@ module Hyrax
         children = find_children_of(destroyed_id: id)
         ids = []
         children.each do |child|
-           ids << child.id
+          ids << child.id
         end
         IndexChildrenJob.perform_later(ids)
       end
