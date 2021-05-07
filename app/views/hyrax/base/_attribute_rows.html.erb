@@ -1,4 +1,5 @@
 <%= presenter.attribute_to_html(:abstract, render_as: :linked, search_field: 'all_fields' ) %>
+<%= presenter.attribute_to_html(:dc_access_rights, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:accrual_policy, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:alternative_title, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:aspace_cuid, render_as: :linked, search_field: 'all_fields') %>
@@ -17,6 +18,7 @@
 <%= presenter.attribute_to_html(:date_modified, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:date_uploaded, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:depositor, render_as: :linked, search_field: 'all_fields') %>
+<%= presenter.attribute_to_html(:doi, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:displays_in, render_as: :faceted) %>
 <%= presenter.attribute_to_html(:downloadable, render_as: :linked) %>
 <%= presenter.attribute_to_html(:embargo_note, render_as: :linked, search_field: 'all_fields') %>
@@ -32,10 +34,12 @@
 <%= presenter.attribute_to_html(:internal_note, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:is_replaced_by, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:is_part_of, render_as: :linked, search_field: 'all_fields') %>
+<%= presenter.attribute_to_html(:isbn, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:language, render_as: :faceted) %>
 <%= presenter.attribute_to_html(:legacy_pid, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:license, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:identifier, render_as: :linked, search_field: 'all_fields') %>
+<%= presenter.attribute_to_html(:oclc, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:personal_name, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:primary_date, render_as: :linked, search_field: 'all_fields') %>
 <%= presenter.attribute_to_html(:provenance, render_as: :linked, search_field: 'all_fields') %>

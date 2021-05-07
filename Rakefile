@@ -7,6 +7,7 @@
 require File.expand_path('../config/application', __FILE__)
 require 'byebug'
 require 'fileutils'
+require 'rmagick'
 
 Rails.application.load_tasks
 
@@ -75,23 +76,64 @@ task apply_embargos: :environment do
   end
 end
 
-desc "scattering"
-task scattering: :environment do
-  puts "Loading File"
-  CSV.foreach("/usr/local/hydra/epigaea/scattering.txt", headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
-    begin
-      pid = row[0]
-      a = ActiveFedora::Base.find(pid)
-      names = a.personal_name
-      names.delete("scattering")
-      subjects = a.subject
-      subjects.push("Scattering votes")
-      a.subject = subjects
-      a.personal_name = names
-      a.save!
-    rescue ActiveFedora::ObjectNotFoundError
-      puts "ERROR not found #{pid}"
-    end
+# previously called scattering, used for replacing the term scattering with scattering votes, now
+# generalized for replacing metadata in any field assumes array not for use on single value fields
+desc "replace_metadata"
+task :replace_metadata, [:file_name] => [:environment] do |_t, args|
+  file_name = args[:file_name]
+  puts "Loading File #{file_name}"
+  CSV.foreach(file_name, headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
+    pid = row[0]
+    puts pid.to_s
+    field = row[1]
+    field_sym = field.parameterize.underscore.to_sym
+    field_sym_setter = field.parameterize
+    field_sym_setter = (field_sym_setter + "=").underscore.to_sym
+    val_to_replace = row[2]
+    replacement_value = row[3]
+    a = ActiveFedora::Base.find(pid)
+    names = a.send(field_sym)
+    names = names.to_a
+    names.delete(val_to_replace)
+    names.push(replacement_value)
+    a.send(field_sym_setter, names)
+    puts "Updating #{pid} from #{field} to #{names}"
+    a.save!
+  end
+end
+
+# previously called scattering, used for replacing the term scattering with scattering votes, now
+# generalized for replacing metadata in any field assumes array not for use on single value fields
+desc "delete_value"
+task :delete_value, [:file_name] => [:environment] do |_t, args|
+  file_name = args[:file_name]
+  puts "Loading File #{file_name}"
+  CSV.foreach(file_name, headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
+    pid = row[0]
+    puts pid.to_s
+    field = row[1]
+    field_sym = field.parameterize.underscore.to_sym
+    field_sym_setter = field.parameterize
+    field_sym_setter = (field_sym_setter + "=").underscore.to_sym
+    val_to_replace = row[2]
+    a = ActiveFedora::Base.find(pid)
+    names = a.send(field_sym)
+    names = names.to_a
+    names.delete(val_to_replace)
+    a.send(field_sym_setter, names)
+    puts "Updating #{pid} from #{field} to #{names}"
+    a.save!
+  end
+end
+
+desc "create_embargo_csv"
+task :create_embargo_csv, [:file_name] => [:environment] do |_t, args|
+  file_name = args[:file_name]
+  puts "Loading File #{file_name}"
+  CSV.foreach(file_name, headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
+    pid = row[0]
+    a = ActiveFedora::Base.find(pid)
+    puts "#{a.id}, #{a.embargo_release_date}"
   end
 end
 
@@ -286,6 +328,61 @@ task add_to_collection_descriptions: :environment do
   end
 end
 
+desc "safely add to collection"
+task safe_add_to_collection: :environment do
+  puts "Loading File"
+  CSV.foreach("/usr/local/hydra/epigaea/to_move.txt", headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
+    begin
+      pid = row[0]
+      obj = ActiveFedora::Base.find(pid)
+      col = Collection.find("8910jt56k")
+
+      obj.member_of_collections << col
+
+      obj.save!
+    rescue ActiveFedora::ObjectNotFoundError
+      puts "ERROR not found #{pid}"
+    end
+  end
+end
+
+desc "set_steward_to_tisch"
+task set_steward_to_tisch: :environment do
+  puts "Loading File"
+  CSV.foreach("/usr/local/hydra/epigaea/tisch.txt", headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
+    begin
+      pid = row[0]
+      obj = ActiveFedora::Base.find(pid)
+      obj.steward = "tisch"
+      obj.save!
+    rescue ActiveFedora::ObjectNotFoundError
+      puts "ERROR not found #{pid}"
+    end
+  end
+end
+
+desc "remove_from_collection"
+task remove_from_collection: :environment do
+  puts "Loading File"
+  CSV.foreach("/usr/local/hydra/epigaea/to_remove.txt", headers: false, header_converters: :symbol, encoding: "ISO8859-1:utf-8") do |row|
+    begin
+      pid = row[0]
+      obj = ActiveFedora::Base.find(pid)
+      mem_of = obj.member_of_collections
+      c = Collection.find('gx41mw94n')
+      mem_of.delete(c)
+      mem_of.each do |mem|
+        puts "adding : #{mem.id}"
+        item = ActiveFedora::Base.find(mem.id)
+        obj.member_of_collections << item
+      end
+      obj.save!
+    rescue ActiveFedora::ObjectNotFoundError
+      puts "ERROR not found #{pid}"
+    end
+  end
+end
+
 desc "ead matching"
 task ead_matching: :environment do
   puts "Loading File"
@@ -356,7 +453,7 @@ task f3_to_f4: :environment do
       puts "NOPE #{pid}"
     else
       puts "DUPE DUPE DUPE #{a} #{pid}" if a.length > 1
-      puts "YEP #{a.first.id}"
+      puts a.first.id.to_s
     end
   end
 end
@@ -548,6 +645,83 @@ task get_class_for_objects: :environment do
     puts "insert into sipity_entities (proxy_for_global_id, workflow_id, workflow_state_id, created_at, updated_at) values ('gid://epigaea/#{a.class}/#{a.id}/',1,1, NOW(), NOW());"
   end
 end
+
+desc "export_tei_to_pdf"
+task :export_tei_to_pdf, [:pid] => [:environment] do |_t, args|
+  pid = args[:pid]
+  puts "Loading TEI..#{pid}."
+  obj = Tei.find(pid.squish)
+  parent_dir = "/tmp"
+  page_images_array = []
+  obj.file_sets.each do |file_set|
+    target_filename = file_set.id + "_" + file_set.title.first
+    target_filename = target_filename.truncate(255)
+    target_filename = sanitize_filename(target_filename)
+    FileUtils.mkdir_p File.join('/', 'tmp', 'tei', target_filename)
+    parent_dir = File.join('/', 'tmp', 'tei', target_filename)
+    target_file = File.join('/', 'tmp', 'tei', target_filename, target_filename)
+    record = File.new target_file, 'wb'
+
+    record.write file_set.original_file.content
+    record.flush
+    record.close
+    doc = File.open(target_file) { |f| Nokogiri::XML(f) }
+    pages = doc.xpath("//figure[@rend='page']")
+    pages.each_with_index do |id, val|
+      f3_pid = urn_to_f3_pid(id.attr('n'))
+      page_image = Image.where(legacy_pid_tesim: f3_pid).first
+      page_image.file_sets.each do |local_file_set|
+        target_filename = "page_" + val.to_s + ".jpg"
+        puts "writing #{target_filename}"
+        target_filename = target_filename.truncate(255)
+        target_filename = sanitize_filename(target_filename)
+        target_file = File.join(parent_dir, target_filename)
+        page_images_array << target_file
+        record = File.new target_file, 'wb'
+        record.write local_file_set.original_file.content
+        record.flush
+        record.close
+      end
+    end
+  end
+
+  pdf_path = File.join(parent_dir, "images.pdf")
+  system("/usr/bin/convert " + page_images_array.join(" ") + " #{pdf_path}")
+
+  # image_list = Magick::ImageList.new(*page_images_array)
+  # pdf_path = File.join(parent_dir, "images.pdf")
+  # image_list.write(pdf_path)
+end
+def urn_to_f3_pid(urn)
+  return urn if is_f3_pid?(urn)
+  index_of_colon = urn.rindex(':')
+  pid = "tufts" + urn[index_of_colon, urn.length]
+  pid
+end
+
+# rubocop:disable Naming/PredicateName
+def is_f3_pid?(pid)
+  # if this is a urn say no, otherwise say yes
+  # unless pid.
+  !pid.include? 'central'
+end
+
+def sanitize_filename(filename)
+  # Split the name when finding a period which is preceded by some
+  # character, and is followed by some character other than a period,
+  # if there is no following period that is followed by something
+  # other than a period (yeah, confusing, I know)
+  fn = filename.split(/(?<=.)\.(?=[^.])(?!.*\.[^.])/m)
+
+  # We now have one or two parts (depending on whether we could find
+  # a suitable period). For each of these parts, replace any unwanted
+  # sequence of characters with an underscore
+  fn.map! { |s| s.gsub(/[^a-z0-9\-]+/i, '_') }
+
+  # Finally, join the parts with a period and return the result
+  fn.join '.'
+end
+
 desc "put object in workflow"
 task put_objects_in_workflow: :environment do
   puts "Loading File"

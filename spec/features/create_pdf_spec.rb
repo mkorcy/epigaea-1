@@ -40,6 +40,10 @@ RSpec.feature 'Create a PDF', :clean, js: true do
       fill_in "Title", with: "Example Title   ", match: :prefer_exact
       find(:xpath, '//option[contains(text(), "nowhere")]').select_option
       fill_in 'Abstract', with: 'Abstract'
+      fill_in 'DOI', with: 'DOI'
+      fill_in 'ISBN', with: 'ISBN'
+      fill_in 'OCLC No.', with: 'OCLC No.'
+      fill_in 'Access Rights', with: 'AccessRights'
       fill_in 'Alternate Title', with: 'Alternate Title'
       fill_in 'Bibliographic Citation', with: 'Bibliographic Citation'
       fill_in 'Contributor', with: 'Contributor'
@@ -106,6 +110,10 @@ RSpec.feature 'Create a PDF', :clean, js: true do
       expect(page).to have_content 'Contributor'
       expect(page).to have_content 'Corporate Name'
       expect(page).to have_content 'Created By'
+      expect(page).to have_content 'DOI'
+      expect(page).to have_content 'ISBN'
+      expect(page).to have_content 'OCLC No.'
+      expect(page).to have_content 'AccessRights'
       # Creators should be in the correct order
       expect(page).to have_content 'Creator 1'
       expect(page).to have_content 'Creator 2'
