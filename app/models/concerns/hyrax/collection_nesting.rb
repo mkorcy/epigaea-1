@@ -39,7 +39,9 @@ module Hyrax
 
       def update_child_nested_collection_relationship_indices
         children = find_children_of(destroyed_id: id)
+        # puts children.to_s
         children.each do |child|
+          # puts child.id.to_s
           reindex_nested_relationships_for(id: child.id, extent: Hyrax::Adapters::NestingIndexAdapter::LIMITED_REINDEX)
         end
       end

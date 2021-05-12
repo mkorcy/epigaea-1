@@ -7,6 +7,7 @@
   - [tdr_derivative_queue, 3]
   - [fixity_check, 1]
   - [batch_recreate_video_derivatives, 1]
+  - [collection_indexer, 1]
 
 :limits:
   tdr_derivative_queue: 3
@@ -16,6 +17,7 @@
   fixity_check: 1
   default: 5
   batch_recreate_video_derivatives: 2
+  collection_indexer: 1
 
 test:
   :concurrency: 5

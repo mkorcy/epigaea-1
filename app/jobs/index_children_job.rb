@@ -7,7 +7,9 @@
 #
 # @see ActiveJob::Base, HandleDispatcher.assign_for!
 class IndexChildrenJob < ApplicationJob
-  queue_as Hyrax.config.ingest_queue_name
+  include ActiveJob::Plugins::Resque::Solo
+
+  queue_as :collection_indexer
 
   ##
   def perform(children)
