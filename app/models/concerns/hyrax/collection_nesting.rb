@@ -24,16 +24,18 @@ module Hyrax
       def after_update_nested_collection_relationship_indices
         @during_save = false
         reindex_nested_relationships_for(id: id, extent: reindex_extent)
-        children = find_children_of(destroyed_id: id)
-        ids = []
-        children.each do |child|
-          ids << child.id
-        end
+        if self.class.to_s == "Collection"
+          children = find_children_of(destroyed_id: id)
+          ids = []
+          children.each do |child|
+            ids << child.id
+          end
 
-        begin
-          IndexChildrenJob.perform_later(ids)
-        rescue ActiveJob::Uniqueness::JobNotUnique
-          Rails.logger.warn "Tried to queue non-unique IndexChildren job for #{ids}"
+          begin
+            IndexChildrenJob.perform_later(ids)
+          rescue ActiveJob::Uniqueness::JobNotUnique
+            Rails.logger.warn "Tried to queue non-unique IndexChildren job for #{ids}"
+          end
         end
       end
 
