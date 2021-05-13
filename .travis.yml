@@ -7,6 +7,8 @@ jdk:
   - oraclejdk8
 rvm:
   - 2.6.2
+before_install:
+    - gem install bundler
 before_script:
   - cp config/fedora.yml.sample config/fedora.yml
   - cp config/solr.yml.sample config/solr.yml
