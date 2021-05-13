@@ -7,7 +7,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 gem 'active-fedora'
-gem 'active_job_resque_solo'
+gem 'activejob-uniqueness', '0.2.0', require: 'active_job/uniqueness/sidekiq_patch'
 gem 'chunky_png'
 gem 'dotenv-rails'
 gem 'exiftool_vendored'
@@ -24,6 +24,7 @@ gem 'rack-protection', '~> 2.0.1' # 2.0.1 fixes security issue https://github.co
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.7'
 gem 'rmagick', '2.16.0'
+
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use Puma as the app server

@@ -29,7 +29,12 @@ module Hyrax
         children.each do |child|
           ids << child.id
         end
-        IndexChildrenJob.perform_later(ids)
+
+        begin
+          IndexChildrenJob.perform_later(ids)
+        rescue ActiveJob::Uniqueness::JobNotUnique
+          Rails.logger.warn "Tried to queue non-unique IndexChildren job for #{ids}"
+        end
       end
 
       def update_nested_collection_relationship_indices

@@ -7,7 +7,7 @@
 #
 # @see ActiveJob::Base, HandleDispatcher.assign_for!
 class IndexChildrenJob < ApplicationJob
-  include ActiveJob::Plugins::Resque::Solo
+  unique :until_executed
 
   queue_as :collection_indexer
 

@@ -69,14 +69,15 @@ GEM
       rdf-vocab (>= 2.0, < 4.0)
     active_encode (0.5.0)
       rails
-    active_job_resque_solo (1.0.1)
-      rails (>= 4.2.0)
     active_job_status (1.2.1)
       activejob (> 4.2)
       activesupport (> 4.2)
     activejob (5.1.7)
       activesupport (= 5.1.7)
       globalid (>= 0.3.6)
+    activejob-uniqueness (0.2.0)
+      activejob (>= 4.2, < 7)
+      redlock (>= 1.2, < 2)
     activemodel (5.1.7)
       activesupport (= 5.1.7)
     activerecord (5.1.7)
@@ -763,7 +764,7 @@ GEM
       redis-store (>= 1.2, < 2)
     redis-store (1.6.0)
       redis (>= 2.2, < 5)
-    redlock (1.0.1)
+    redlock (1.2.1)
       redis (>= 3.0.0, < 5.0)
     ref (2.0.0)
     regexp_parser (1.5.1)
@@ -953,8 +954,8 @@ PLATFORMS
 
 DEPENDENCIES
   active-fedora
-  active_job_resque_solo
   active_job_status (~> 1.2.1)
+  activejob-uniqueness (= 0.2.0)
   bixby
   blacklight (~> 6.20.0)
   blacklight_advanced_search
