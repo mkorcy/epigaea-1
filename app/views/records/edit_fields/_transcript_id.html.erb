@@ -1,4 +1,4 @@
-<% if @form.transcript_files.length  %>
+<% if @form.transcript_files(f.object.human_readable_type).length  %>
 <div id="transcript">
  <div class="row">
     <div class="col-md-12">
@@ -6,9 +6,13 @@
         <legend>
            Transcription
         </legend>
-        <p>You will need to attach an XML file to to this work to select a transcript.</p>
+        <% if f.object.human_readable_type == "Audio" %>
+          <p>You will need to attach an TEI XMLfile to to this work to select a transcript.</p>
+        <% else %>
+          <p>You will need to attach an TEI, VTT, or SRT file to to this work to select a transcript.</p>
+        <% end %>
         <p>Select the file to be used as the transcription for this <%= f.object.human_readable_type %>.</p>
-        <%= f.select :transcript_id, @form.transcript_files, {}, { class: 'form-control' } %>
+        <%= f.select :transcript_id, @form.transcript_files(f.object.human_readable_type), {}, { class: 'form-control' } %>
       </fieldset>
     </div>
 </div>
