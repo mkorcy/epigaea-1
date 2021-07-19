@@ -17,6 +17,6 @@ RSpec.shared_examples 'a work that has transcript UI on the form' do
   end
 
   it 'has the transcript UI' do
-    expect(page).to have_content('You will need to attach an XML file to to this work to select a transcript.')
+    expect(page).to have_content('You will need to attach a')
   end
 end
