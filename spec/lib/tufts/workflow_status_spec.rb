@@ -34,7 +34,7 @@ describe Tufts::WorkflowStatus, :workflow, :clean do
     # rubocop:disable RSpec/MultipleExpectations
     # rubocop:disable RSpec/ExampleLength
     it "publishes a work" do
-      optional 'this sometimes fails on travis' if ENV['TRAVIS']
+      # optional 'this sometimes fails on travis' if ENV['TRAVIS']
       expect(workflow_status.status(work.id)).to eq('unpublished')
       Tufts::WorkflowStatus.publish(work: work, current_user: current_user, comment: "Published by #{current_user}")
       expect(workflow_status.status(work.id)).to eq('published')
@@ -59,7 +59,7 @@ describe Tufts::WorkflowStatus, :workflow, :clean do
   describe "#unpublish" do
     # rubocop:disable RSpec/MultipleExpectations
     it "unpublishes a work" do
-      optional 'this sometimes fails on travis' if ENV['TRAVIS']
+      # optional 'this sometimes fails on travis' if ENV['TRAVIS']
       expect(workflow_status.status(work.id)).to eq('unpublished')
       Tufts::WorkflowStatus.publish(work: work, current_user: current_user, comment: "Published by #{current_user}")
       expect(workflow_status.status(work.id)).to eq('published')
