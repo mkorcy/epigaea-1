@@ -64,16 +64,14 @@ end
 module Hyrax::User
   module ClassMethods
     def find_or_create_system_user(user_key)
-      begin
-        u = ::User.find_or_create_by(username: user_key)
-        u.display_name = user_key
-        u.email = "#{user_key}@example.com"
-        u.password = ('a'..'z').to_a.shuffle(random: Random.new).join
-        u.save
-        u
-      rescue ActiveRecord::RecordNotUnique
-        retry
-      end
+      u = ::User.find_or_create_by(username: user_key)
+      u.display_name = user_key
+      u.email = "#{user_key}@example.com"
+      u.password = ('a'..'z').to_a.shuffle(random: Random.new).join
+      u.save
+      u
+    rescue ActiveRecord::RecordNotUnique
+      retry
     end
   end
 end
