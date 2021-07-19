@@ -34,14 +34,21 @@ module Tufts
         # a behavior spec.
         graph.group_by(&:subject).each do |subject, statements|
           if subject == model.rdf_subject
-            values = statements.map(&:object).to_a
+            values = statements.map { |c| c.object.to_s }
+            values = values.to_a
+
+            next if values.first.to_s == "[]"
 
             if config.multiple?
               if config.term == :title
                 model.public_send("#{property}=".to_sym, [values.first]) if
                   model.public_send(property).empty?
               else
-                values += model.public_send(property).to_a
+                old_values = []
+                old_values += model.public_send(property).to_a
+                old_values = old_values.map(&:to_s)
+                old_values = old_values.to_a
+                values = old_values + values
                 model.public_send("#{property}=".to_sym, values)
               end
             else
