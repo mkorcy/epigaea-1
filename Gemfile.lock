@@ -1017,6 +1017,7 @@ DEPENDENCIES
   sidekiq-limit_fetch
   solr_wrapper (>= 0.3)
   sqlite3
+  term-ansicolor
   therubyracer
   tufts-curation!
   turbolinks (~> 5)

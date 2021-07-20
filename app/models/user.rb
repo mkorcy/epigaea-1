@@ -70,6 +70,8 @@ module Hyrax::User
       u.password = ('a'..'z').to_a.shuffle(random: Random.new).join
       u.save
       u
+    rescue ActiveRecord::RecordNotUnique
+      retry
     end
   end
 end

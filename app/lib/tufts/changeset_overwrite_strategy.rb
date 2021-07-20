@@ -21,7 +21,9 @@ module Tufts
     ##
     # @return [void] applies the changeset to the model
     # @raise [RuntimeError] when the changeset is invalid for the model
-    def apply # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/AbcSize
+    def apply
       changeset.changes.each do |predicate, graph|
         config = config_for(predicate: predicate)
 
@@ -34,7 +36,11 @@ module Tufts
 
         graph.group_by(&:subject).each do |subject, statements|
           if subject == model.rdf_subject
-            values = statements.map(&:object)
+
+            values = statements.map { |c| c.object.to_s }
+            values = values.to_a
+
+            next if values.first.to_s == "[]"
             values = values.first unless config.multiple?
             values = [values.first] if config.term == :title
 

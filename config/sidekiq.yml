@@ -20,7 +20,7 @@
   collection_indexer: 1
 
 test:
-  :concurrency: 5
+  :concurrency: 1
 
 development:
   :concurrency: 5

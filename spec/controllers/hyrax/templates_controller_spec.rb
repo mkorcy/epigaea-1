@@ -23,7 +23,7 @@ RSpec.describe Hyrax::TemplatesController, :clean, type: :controller do
       end
 
       it 'assigns templates' do
-        optional 'it sometimes fails on travis' if ENV['TRAVIS']
+        # optional 'it sometimes fails on travis' if ENV['TRAVIS']
         get :index
 
         expect(assigns(:templates).map(&:name))
