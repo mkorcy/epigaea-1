@@ -59,6 +59,7 @@ group :development, :test do
   gem 'byebug', platform: :mri
   gem 'launchy'
   gem 'pry'
+  gem 'term-ansicolor'
 end
 
 group :development do
