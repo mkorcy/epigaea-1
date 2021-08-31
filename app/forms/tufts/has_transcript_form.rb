@@ -7,9 +7,9 @@ module Tufts
 
     def transcript?(file, type)
       if type == "Video"
-        file.mime_type.include?('xml') || file.mime_type.include?('plain')
+        file.mime_type.nil? || file.mime_type.include?('xml') || file.mime_type.include?('plain')
       else
-        file.mime_type.include?('xml')
+        file.mime_type.nil? || file.mime_type.include?('xml')
       end
     end
   end
