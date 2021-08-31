@@ -5,7 +5,7 @@ class Chronopolis::Exporter
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
-  def perform_export(pid)
+  def perform_export(pid, include_metadata = true)
     @logger.info "PROCESSING PID : #{pid}"
     obj = ActiveFedora::Base.find(pid)
 
@@ -40,6 +40,7 @@ class Chronopolis::Exporter
       record.flush
       record.close
 
+      next unless include_metadata
       json = JSON.parse(file_set.characterization_proxy.metadata.attributes.to_json)
       json = JSON.pretty_generate(json)
       metadata = File.new metadata_file, "w"
@@ -52,16 +53,18 @@ class Chronopolis::Exporter
     end
 
     # write out metadata
-    json = JSON.parse(obj.to_json)
-    json = JSON.pretty_generate(json)
-    metadata_file = File.join('/', 'tdr', 'chronopolis', steward, collection, obj_dir, "metadata.json")
-    metadata = File.new metadata_file, "w"
+    if include_metadata
+      json = JSON.parse(obj.to_json)
+      json = JSON.pretty_generate(json)
+      metadata_file = File.join('/', 'tdr', 'chronopolis', steward, collection, obj_dir, "metadata.json")
+      metadata = File.new metadata_file, "w"
 
-    @logger.info "Writing metadata to #{metadata_file}"
+      @logger.info "Writing metadata to #{metadata_file}"
 
-    metadata.write json
-    metadata.flush
-    metadata.close
+      metadata.write json
+      metadata.flush
+      metadata.close
+    end
   rescue ActiveFedora::ObjectNotFoundError
     @logger.error "ERROR Pid not found #{pid}"
   rescue Ldp::Gone
