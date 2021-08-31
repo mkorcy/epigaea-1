@@ -5,7 +5,7 @@ module Hyrax
 
     # Terms that appear above the accordion
     def primary_terms
-      [:title, :ead]
+      [:title, :description, :ead]
     end
   end
 end
