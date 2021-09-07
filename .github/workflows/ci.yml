@@ -89,15 +89,35 @@ jobs:
         PGPASSWORD: password
       run: |
         psql -c 'create database hyrax_test with owner hyrax;'
-
+    - name: Configure test environment
+      run: |
+        cp config/fedora.yml.sample config/fedora.yml
+        cp config/solr.yml.sample config/solr.yml
+        cp config/devise.yml.sample config/devise.yml
+        cp config/redis.yml.sample config/redis.yml
+        cp config/database.yml.sample config/database.yml
+        cp config/blacklight.yml.sample config/blacklight.yml
+        cp config/handle.yml.sample config/handle.yml
+        cp config/secrets.yml.sample config/secrets.yml
+    - name: Create database    
+      run: |
+        RAILS_ENV=test bundle exec rake db:create
+        RAILS_ENV=test bundle exec rake db:migrate --trace
+    - name: Set up sipity
+      run: |
+        RAILS_ENV=test bundle exec rake hyrax:workflow:load
     - name: Setup hyrax test environment
       run: |
         bundle exec rake hydra:test_server &
-        sleep 150
-        bundle exec rake test_setup RAILS_ENV=test
-
+        sleep 150        
+    - name: Rubbocop
+      run: |
+        bundle exec rubocop
+    - name: Compile assets
+      run: |
+        bundle exec rails assets:precompile &> /dev/null
     - name: Run tests
-      run: bundle exec rspec
+      run: xvfb-run -a bundle exec rake travis
       env:
         RAILS_ENV: test
         REDIS_URL: redis://redis
