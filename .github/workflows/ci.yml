@@ -22,7 +22,10 @@ jobs:
       DATA_STORAGE: ./public
       TEMP_STORAGE: ./public
       ALLOW_NOTIFICATIONS: true
-      
+      DB_DATABASE: epigaea_test
+      DB_USER: root
+      DB_PASSWORD: root
+
     services:
       redis:
         image: redis
@@ -32,19 +35,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
         ports:
-          - 6379:6379
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: hyrax
-          POSTGRES_PASSWORD: password
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-        ports: ["5432:5432"]
-      
+          - 6379:6379      
     strategy:
       fail-fast: false
       matrix:
@@ -78,17 +69,10 @@ jobs:
         curl -o $HOME/fits-1.0.5.zip https://projects.iq.harvard.edu/files/fits/files/fits-1.0.5.zip | cat
         unzip $HOME/fits-1.0.5.zip -d $HOME
         chmod u=u+x $HOME/fits-1.0.5/fits.sh
-
-    - name: Setup test database
-      env:
-        RAILS_ENV: test
-        PGHOST: localhost
-        PGUSER: hyrax
-        # Variable needs to be PGPASSWORD so postgres cli can read it.
-        # Variable is supposedly deprecated in postgres, but can't find the notice in postgres docs
-        PGPASSWORD: password
+    - name: Set up MySQL
       run: |
-        psql -c 'create database hyrax_test with owner hyrax;'
+        sudo /etc/init.d/mysql start
+        mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
     - name: Configure test environment
       run: |
         cp config/fedora.yml.sample config/fedora.yml
@@ -119,8 +103,5 @@ jobs:
     - name: Run tests
       run: xvfb-run -a bundle exec rake travis
       env:
-        RAILS_ENV: test
-        REDIS_URL: redis://redis
-        POSTGRES_USER: hyrax
-        POSTGRES_PASSWORD: password
+        RAILS_ENV: test        
         TMPDIR: /tmp
