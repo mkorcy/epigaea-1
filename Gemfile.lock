@@ -16,14 +16,6 @@ GIT
       chronic
       hyrax (>= 2.1.0, <= 2.9.9)
 
-GIT
-  remote: https://github.com/thoughtbot/shoulda-matchers.git
-  revision: 4b160bd19ecca7f97d7ac22dccd5fde9b0da5a9f
-  branch: rails-5
-  specs:
-    shoulda-matchers (3.1.2)
-      activesupport (>= 4.2.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -847,6 +839,8 @@ GEM
       rdf-xsd (>= 2.2, < 4.0)
       sparql (>= 2.2, < 4.0)
       sxp (~> 1.0)
+    shoulda-matchers (4.5.1)
+      activesupport (>= 4.2.0)
     sidekiq (5.2.7)
       connection_pool (~> 2.2, >= 2.2.2)
       rack (>= 1.5.0)
@@ -1011,7 +1005,7 @@ DEPENDENCIES
   sanitize (~> 4.6, >= 4.6.3)
   sass-rails (~> 5.0)
   selenium-webdriver
-  shoulda-matchers!
+  shoulda-matchers (~> 4.5.1)
   sidekiq
   sidekiq-failures
   sidekiq-limit_fetch
