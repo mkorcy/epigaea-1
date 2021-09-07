@@ -101,7 +101,7 @@ jobs:
       run: |
         bundle exec rails assets:precompile &> /dev/null
     - name: Run tests
-      run: xvfb-run -a bundle exec rake travis
+      run: xvfb-run -a bundle exec rake spec
       env:
         RAILS_ENV: test        
         TMPDIR: /tmp
